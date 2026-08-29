@@ -1,0 +1,68 @@
+[
+  {
+    "file": "hero.jpg",
+    "desc": "House exterior at dusk",
+    "source": "Unsplash",
+    "url": "https://unsplash.com/photos/1600585154340-be6161a56a0c"
+  },
+  {
+    "file": "living-room.jpg",
+    "desc": "Living room with plants",
+    "source": "Unsplash",
+    "url": "https://unsplash.com/photos/1502672260266-1c1ef2d93688"
+  },
+  {
+    "file": "room.jpg",
+    "desc": "Bedroom",
+    "source": "Unsplash",
+    "url": "https://unsplash.com/photos/1540518614846-7eded433c457"
+  },
+  {
+    "file": "balcony.jpg",
+    "desc": "Curtains, plants and a small table",
+    "source": "Unsplash",
+    "url": "https://unsplash.com/photos/1519710164239-da123dc03ef4"
+  },
+  {
+    "file": "corner.jpg",
+    "desc": "Warm wooden interior",
+    "source": "Unsplash",
+    "url": "https://unsplash.com/photos/1618221195710-dd6b41faaea6"
+  },
+  {
+    "file": "street.jpg",
+    "desc": "Tree canopy",
+    "source": "Unsplash",
+    "url": "https://unsplash.com/photos/1518495973542-4542c06a5843"
+  },
+  {
+    "file": "breakfast.jpg",
+    "desc": "Breakfast laid out on a table",
+    "source": "Unsplash",
+    "url": "https://unsplash.com/photos/1493770348161-369560ae357d"
+  },
+  {
+    "file": "experience-house.jpg",
+    "desc": "Wooden interior with plants",
+    "source": "Unsplash",
+    "url": "https://unsplash.com/photos/1591825729269-caeb344f6df2"
+  },
+  {
+    "file": "experience-street.jpg",
+    "desc": "Tree canopy, wide crop",
+    "source": "Unsplash",
+    "url": "https://unsplash.com/photos/1518495973542-4542c06a5843"
+  },
+  {
+    "file": "experience-breakfast.jpg",
+    "desc": "Shared dishes on a table, from above",
+    "source": "Unsplash",
+    "url": "https://unsplash.com/photos/1498654896293-37aacf113fd9"
+  },
+  {
+    "file": "experience-host.jpg",
+    "desc": "Sitting area with plants",
+    "source": "Unsplash",
+    "url": "https://unsplash.com/photos/1567767292278-a4f21aa2d36e"
+  }
+]
