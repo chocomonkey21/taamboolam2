@@ -417,13 +417,20 @@
    ========================================================================== */
 
 @layer components {
-  /* Gentle reveal, driven by IntersectionObserver setting data-shown. */
+  /* Gentle reveal, driven by IntersectionObserver setting data-shown.
+
+     Kept short on purpose: at normal reading/scroll speed a fade this brief
+     is felt rather than watched, and text is never left half-legible while a
+     reader is already trying to read it. Photographs can afford to linger —
+     nobody reads a photograph at 0.4 opacity as a defect — but body copy and
+     headings cannot, so they resolve well before a scrolling reader reaches
+     them (see the earlier trigger point in Reveal.tsx). */
   .reveal {
     opacity: 0;
-    transform: translate3d(0, 18px, 0);
+    transform: translate3d(0, 10px, 0);
     transition:
-      opacity 780ms var(--ease-material),
-      transform 780ms var(--ease-material);
+      opacity 320ms var(--ease-material),
+      transform 320ms var(--ease-material);
     transition-delay: var(--reveal-delay, 0ms);
   }
 
@@ -439,8 +446,8 @@
     transform: scale(1.06);
     opacity: 0;
     transition:
-      transform 1200ms var(--ease-soft),
-      opacity 900ms var(--ease-material);
+      transform 900ms var(--ease-soft),
+      opacity 550ms var(--ease-material);
     transition-delay: var(--reveal-delay, 0ms);
   }
 
@@ -534,6 +541,106 @@
   /* Over the hero the header sits on a dark photograph, so it inverts. */
   .nav-shell[data-over-hero="true"] {
     color: var(--color-paper);
+  }
+
+  /* ------------------------------------------------------------------------
+     Disclosure — native <details>, styled.
+     ---------------------------------------------------------------------- */
+
+  /* Both are needed: WebKit still ships the older pseudo-element. */
+  .disclosure summary::-webkit-details-marker {
+    display: none;
+  }
+  .disclosure summary::marker {
+    content: "";
+  }
+
+  /* The vertical stroke of the cross retracts, so + becomes −. */
+  .disclosure-tick {
+    transition: transform 240ms var(--ease-material);
+  }
+
+  .disclosure[open] .disclosure-tick {
+    transform: translateX(-50%) scaleY(0);
+  }
+
+  .disclosure[open] .disclosure-panel {
+    animation: disclosure-open 260ms var(--ease-material) both;
+  }
+
+  @keyframes disclosure-open {
+    from {
+      opacity: 0;
+      transform: translate3d(0, -4px, 0);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  /* ------------------------------------------------------------------------
+     The floor ledger — the house read as a stack rather than a row of cards.
+     Each stratum carries its own atmosphere token, so the colour genuinely
+     warms as the reader climbs.
+     ---------------------------------------------------------------------- */
+
+  .ledger-row {
+    transition: background-color 300ms var(--ease-material);
+  }
+
+  @media (hover: hover) {
+    .ledger-row:hover {
+      background-color: var(--atmos-tint);
+    }
+  }
+
+  .ledger-row:focus-within {
+    background-color: var(--atmos-tint);
+  }
+
+  /* ------------------------------------------------------------------------
+     Select — native menu, house chevron.
+     ---------------------------------------------------------------------- */
+
+  .select-control {
+    appearance: none;
+    cursor: pointer;
+    padding-right: 2.75rem;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8' fill='none'%3E%3Cpath d='M1 1.5 6 6.5 11 1.5' stroke='%235f574a' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+    background-size: 12px 8px;
+  }
+
+  /* Firefox keeps a focus ring inside the control; the field already has one. */
+  .select-control:-moz-focusring {
+    color: transparent;
+    text-shadow: 0 0 0 var(--color-ink);
+  }
+
+  /* The floor number, set in the display face at ledger scale. */
+  .ledger-index {
+    font-family: var(--font-heading);
+    font-weight: 400;
+    font-optical-sizing: auto;
+    font-variation-settings: "SOFT" 40;
+    font-size: clamp(2.25rem, 5vw, 3.75rem);
+    line-height: 0.9;
+    letter-spacing: -0.02em;
+    color: var(--atmos-accent-ink);
+    font-variant-numeric: lining-nums tabular-nums;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .disclosure-tick,
+  .ledger-row {
+    transition: none;
+  }
+
+  .disclosure[open] .disclosure-panel {
+    animation: none;
   }
 }
 

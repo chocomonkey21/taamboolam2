@@ -1,26 +1,14 @@
 "use client";
 
-import type { FloorId } from "@/lib/content";
-import type { PhotoId } from "@/lib/photos";
+import { Arrangement } from "../Arrangement";
 import { ButtonLink, TextLink } from "../Button";
+import { FloorLedger } from "../FloorLedger";
 import { HouseValues } from "../HouseValues";
 import { Photo } from "../Photo";
 import { Reveal } from "../Reveal";
 import { useSite } from "../SiteProvider";
 import { TileField, TileGlyph, TileRule } from "../TileMotif";
 import { Wordmark } from "../Wordmark";
-
-/** Which photograph and which atmosphere stands for each floor in the preview. */
-const FLOOR_PREVIEW: {
-  id: FloorId;
-  photo: PhotoId;
-  atmosphere: string;
-}[] = [
-  { id: "floor1", photo: "floor1a", atmosphere: "floor-1" },
-  { id: "floor2", photo: "floor2a", atmosphere: "floor-2" },
-  { id: "floor3", photo: "floor3a", atmosphere: "floor-3" },
-  { id: "floor4", photo: "floor4a", atmosphere: "floor-4" },
-];
 
 export function HomeScreen() {
   const { t } = useSite();
@@ -139,7 +127,11 @@ export function HomeScreen() {
         </div>
       </section>
 
-      {/* ── What staying here means ──────────────────────────────────────── */}
+      {/* ── The house, floor by floor ────────────────────────────────────
+          The arrangement (stated once) and the four floors now sit in one
+          section, because they are one idea: every floor is the same plan, and
+          what differs is atmosphere. Splitting them across two sections meant
+          saying the plan twice and reading as two marketing blocks. */}
       <section
         className="texture-limewash relative overflow-hidden bg-atmos-tint"
         data-atmosphere="house"
@@ -147,95 +139,23 @@ export function HomeScreen() {
         <TileField className="-bottom-24 -left-20 h-[340px] w-[340px]" />
 
         <div className="container-content section-rhythm relative">
-          <Reveal className="measure">
-            <p className="type-eyebrow">{t.home.staying.eyebrow}</p>
-            <h2 className="type-h1 mt-6">{t.home.staying.heading}</h2>
-            <p className="type-lead mt-6 text-ink-soft">{t.home.staying.body}</p>
-          </Reveal>
+          <Arrangement />
 
-          <div className="mt-14 grid gap-10 md:grid-cols-12 md:gap-10">
-            <dl className="order-2 grid gap-7 md:order-1 md:col-span-5 md:content-start">
-              {t.home.staying.points.map((point, index) => (
-                <Reveal
-                  key={point.title}
-                  delay={index * 60}
-                  className="rule-atmos border-t pt-4"
-                >
-                  <dt className="type-h3">{point.title}</dt>
-                  <dd className="type-body mt-2 text-ink-soft">{point.body}</dd>
-                </Reveal>
-              ))}
-            </dl>
+          <div className="mt-20 md:mt-28">
+            <Reveal className="measure">
+              <p className="type-eyebrow">{t.home.floors.eyebrow}</p>
+              <h2 className="type-h1 mt-6">{t.home.floors.heading}</h2>
+              <p className="type-body mt-6 text-ink-soft">
+                {t.home.floors.body}
+              </p>
+            </Reveal>
 
-            {/* Two photographs at different weights, offset — a spread, not a
-                row of equal cards. */}
-            <div className="order-1 grid gap-6 md:order-2 md:col-span-6 md:col-start-7">
-              <Reveal variant="photo">
-                <Photo
-                  id="stayingShared"
-                  sizes="(min-width: 768px) 46vw, 92vw"
-                  caption="below"
-                />
-              </Reveal>
-              <div className="grid grid-cols-2 gap-6">
-                <Reveal variant="photo" delay={80}>
-                  <Photo id="stayingBalcony" sizes="(min-width: 768px) 23vw, 45vw" />
-                </Reveal>
-                <Reveal variant="photo" delay={150} className="md:pt-10">
-                  <Photo
-                    id="stayingMorning"
-                    sizes="(min-width: 768px) 23vw, 45vw"
-                  />
-                </Reveal>
-              </div>
-            </div>
+            <FloorLedger />
+
+            <Reveal className="mt-10">
+              <TextLink href="/experience">{t.home.floors.link}</TextLink>
+            </Reveal>
           </div>
-        </div>
-      </section>
-
-      {/* ── The four floors ──────────────────────────────────────────────── */}
-      <section className="bg-atmos" data-atmosphere="house">
-        <div className="container-content section-rhythm">
-          <Reveal className="measure">
-            <p className="type-eyebrow">{t.home.floors.eyebrow}</p>
-            <h2 className="type-h1 mt-6">{t.home.floors.heading}</h2>
-            <p className="type-body mt-6 text-ink-soft">{t.home.floors.body}</p>
-          </Reveal>
-
-          {/* All four carry equal weight — same crop, same type, same space.
-              The only things that separate them are the atmosphere each one
-              brings with it, and a small stepped offset that makes the row
-              read as a climb rather than as four cards in a tray. */}
-          <ul className="mt-14 grid gap-8 sm:grid-cols-2 lg:grid-cols-4 lg:items-start lg:gap-6">
-            {FLOOR_PREVIEW.map((floor, index) => {
-              const copy = t.floors[floor.id];
-              const step = ["lg:mt-0", "lg:mt-8", "lg:mt-16", "lg:mt-24"][index];
-              return (
-                <li
-                  key={floor.id}
-                  data-atmosphere={floor.atmosphere}
-                  className={step}
-                >
-                  <Reveal variant="photo" delay={index * 70}>
-                    <Photo
-                      id={floor.photo}
-                      sizes="(min-width: 1024px) 23vw, (min-width: 640px) 46vw, 92vw"
-                    />
-                  </Reveal>
-                  <Reveal delay={index * 70 + 60}>
-                    <p className="type-eyebrow mt-5 text-atmos-accent">
-                      {copy.label}
-                    </p>
-                    <p className="type-body mt-2.5">{copy.lead}</p>
-                  </Reveal>
-                </li>
-              );
-            })}
-          </ul>
-
-          <Reveal className="mt-12">
-            <TextLink href="/experience">{t.home.floors.link}</TextLink>
-          </Reveal>
         </div>
       </section>
 
@@ -303,35 +223,54 @@ export function HomeScreen() {
         </div>
       </section>
 
-      {/* ── Food ─────────────────────────────────────────────────────────── */}
+      {/* ── Food ─────────────────────────────────────────────────────────
+          Deliberately the quietest section on the page, and the only one that
+          is mostly empty. It comes straight after the densest stretch (craft,
+          three photographs and a column of text), so it works as a pause in
+          the page's rhythm.
+
+          The photograph bleeds off the right edge rather than sitting in a
+          column, which is what keeps this from being another image-beside-text
+          block: the picture is not balanced against the words, it runs past
+          them and off the page. */}
       <section className="bg-atmos" data-atmosphere="floor-3">
-        <div className="container-content section-rhythm">
-          <div className="grid items-center gap-12 md:grid-cols-12 md:gap-10">
-            <div className="md:col-span-7">
-              <Reveal variant="photo">
-                <Photo
-                  id="foodTable"
-                  sizes="(min-width: 768px) 56vw, 92vw"
-                  caption="below"
-                />
-              </Reveal>
-            </div>
-            <div className="md:col-span-4 md:col-start-9">
-              <Reveal>
-                <p className="type-eyebrow">{t.home.food.eyebrow}</p>
-                <h2 className="type-h2 mt-5">{t.home.food.heading}</h2>
-              </Reveal>
-              {t.home.food.body.map((paragraph, index) => (
-                <Reveal key={index} delay={70 + index * 60}>
-                  <p className="type-body mt-5 text-ink-soft">{paragraph}</p>
+        <div className="section-rhythm relative overflow-hidden">
+          <div className="container-content">
+            <div className="grid items-center gap-10 md:grid-cols-12">
+              <div className="md:col-span-5 lg:col-span-4">
+                <Reveal>
+                  <p className="type-eyebrow">{t.home.food.eyebrow}</p>
+                  <h2 className="type-h1 mt-6">{t.home.food.heading}</h2>
                 </Reveal>
-              ))}
-              <Reveal delay={200}>
-                <p className="type-caption rule-atmos mt-7 border-t pt-4">
-                  {t.home.food.note}
-                </p>
-              </Reveal>
+                {t.home.food.body.map((paragraph, index) => (
+                  <Reveal key={index} delay={80}>
+                    <p className="type-body mt-6 text-ink-soft">{paragraph}</p>
+                  </Reveal>
+                ))}
+                <Reveal delay={160}>
+                  <p className="type-caption rule-atmos mt-8 border-t pt-4">
+                    {t.home.food.note}
+                  </p>
+                </Reveal>
+              </div>
             </div>
+          </div>
+
+          {/* Positioned out of flow on desktop so it can run past the container
+              edge. On small screens it returns to the flow underneath, where
+              there is no edge to run off. */}
+          <div className="container-content mt-12 md:mt-0">
+            <Reveal
+              variant="photo"
+              className="md:absolute md:top-1/2 md:left-[52%] md:w-[48vw] md:-translate-y-1/2 lg:left-[50%] lg:w-[46vw]"
+            >
+              <Photo
+                id="foodTable"
+                ratio="4 / 3"
+                sizes="(min-width: 768px) 48vw, 92vw"
+                zoomable
+              />
+            </Reveal>
           </div>
         </div>
       </section>
@@ -363,7 +302,7 @@ export function HomeScreen() {
           </div>
 
           <div className="mt-16">
-            <HouseValues />
+            <HouseValues variant="embedded" />
           </div>
         </div>
       </section>

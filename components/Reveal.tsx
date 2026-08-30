@@ -15,7 +15,7 @@ export function Reveal({
   delay = 0,
   variant = "rise",
   className = "",
-  amount = 0.18,
+  amount = 0.02,
 }: {
   children: ReactNode;
   as?: ElementType;
@@ -50,7 +50,10 @@ export function Reveal({
           }
         }
       },
-      { threshold: amount, rootMargin: "0px 0px -8% 0px" },
+      // A positive bottom margin extends the trigger zone past the viewport
+      // edge, so an element starts its (now short) fade before it is actually
+      // on screen rather than after — the reader meets it already settled.
+      { threshold: amount, rootMargin: "0px 0px 12% 0px" },
     );
 
     observer.observe(node);

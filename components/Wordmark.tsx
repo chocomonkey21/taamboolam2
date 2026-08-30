@@ -50,16 +50,24 @@ export function Wordmark({
           large enough to be read as a word — below about 11px Kannada
           conjuncts turn to texture — and never letterspaced, which damages
           them. It is decorative here because the primary already names the
-          house, so it is hidden from screen readers. */}
-      <span
-        aria-hidden="true"
-        className={`font-heading text-[0.62em] leading-none opacity-70 ${
-          size === "sm" ? "hidden xs:inline" : ""
-        }`}
-        lang={kannadaFirst ? "en" : "kn"}
-      >
-        {kannadaFirst ? site.name : site.nameKn}
-      </span>
+          house, so it is hidden from screen readers.
+
+          Shown only at the "lg" hero size, where it is large enough to clear
+          that floor and genuinely reads as an authored bilingual mark. At
+          nav size the companion would render at or below the 11px floor
+          itself — texture, not type — inside an already-tight oval that sits
+          beside the English/ಕನ್ನಡ toggle, which already states the second
+          language plainly. Dropping it there is a legibility fix, not a
+          simplification for its own sake. */}
+      {size === "lg" ? (
+        <span
+          aria-hidden="true"
+          className="font-heading text-[0.62em] leading-none opacity-70"
+          lang={kannadaFirst ? "en" : "kn"}
+        >
+          {kannadaFirst ? site.name : site.nameKn}
+        </span>
+      ) : null}
     </span>
   );
 
