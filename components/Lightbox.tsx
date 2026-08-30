@@ -38,16 +38,35 @@ export function useLightbox(): LightboxValue | null {
 export function LightboxProvider({ children }: { children: ReactNode }) {
   const { t } = useSite();
   const [active, setActive] = useState<PhotoId | null>(null);
+  const [closing, setClosing] = useState(false);
   const returnFocusTo = useRef<HTMLElement | null>(null);
   const closeRef = useRef<HTMLButtonElement>(null);
 
   const open = useCallback((id: PhotoId, returnTo: HTMLElement | null) => {
     returnFocusTo.current = returnTo;
+    setClosing(false);
     setActive(id);
   }, []);
 
+  /**
+   * Closing runs the exit animation first, then unmounts.
+   *
+   * Focus goes back to the photograph immediately rather than after the
+   * animation — a keyboard reader should never be left waiting on a fade to
+   * finish before their focus is somewhere real. The dialog is already
+   * inert-by-intent at that point: it is fading and accepts no pointer events.
+   */
   const close = useCallback(() => {
-    setActive(null);
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      setActive(null);
+      setClosing(false);
+    } else {
+      setClosing(true);
+      window.setTimeout(() => {
+        setActive(null);
+        setClosing(false);
+      }, 180);
+    }
     // Put the reader back where they were, not at the top of the document.
     returnFocusTo.current?.focus();
     returnFocusTo.current = null;
@@ -91,7 +110,11 @@ export function LightboxProvider({ children }: { children: ReactNode }) {
           role="dialog"
           aria-modal="true"
           aria-label={copy.alt}
-          className="fixed inset-0 z-[100] flex flex-col items-center justify-center p-4 sm:p-8"
+          data-state={closing ? "closing" : "open"}
+          /* zoom-out on the backdrop: this closes on click, and nothing else
+             says so. It mirrors the zoom-in cursor on the photograph that
+             opened it. */
+          className="lightbox fixed inset-0 z-[100] flex cursor-zoom-out flex-col items-center justify-center p-4 sm:p-8"
           style={{ backgroundColor: "rgb(22 17 12 / 0.94)" }}
           onClick={close}
         >
@@ -105,7 +128,7 @@ export function LightboxProvider({ children }: { children: ReactNode }) {
           </button>
 
           <div
-            className="flex max-h-full w-full max-w-5xl flex-col items-center gap-4"
+            className="lightbox-figure flex max-h-full w-full max-w-5xl cursor-default flex-col items-center gap-4"
             /* Clicks on the picture itself should not fall through to close. */
             onClick={(event) => event.stopPropagation()}
           >

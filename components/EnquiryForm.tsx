@@ -200,6 +200,23 @@ export function EnquiryForm() {
         ) : null}
       </div>
 
+      {/* First, because everything under it depends on the answer. Dates and
+          a phone number are required for a stay and optional otherwise, and
+          the gathering question only exists for one of the three — asking
+          "how many adults" before asking what the message is even about made
+          the reader fill in fields the form might not want. */}
+      <RadioGroup<VisitType>
+        name={field("visit")}
+        legend={t.form.visitType}
+        value={values.visitType}
+        onChange={(next) => set("visitType", next)}
+        options={[
+          { value: "stay", label: t.form.visitStay },
+          { value: "gathering", label: t.form.visitGathering },
+          { value: "other", label: t.form.visitOther },
+        ]}
+      />
+
       <div className="grid gap-6 sm:grid-cols-2">
         <Field id={field("name")} label={t.form.name} error={errors.name}>
           {(props) => (
@@ -335,18 +352,6 @@ export function EnquiryForm() {
           )}
         </Field>
       </div>
-
-      <RadioGroup<VisitType>
-        name={field("visit")}
-        legend={t.form.visitType}
-        value={values.visitType}
-        onChange={(next) => set("visitType", next)}
-        options={[
-          { value: "stay", label: t.form.visitStay },
-          { value: "gathering", label: t.form.visitGathering },
-          { value: "other", label: t.form.visitOther },
-        ]}
-      />
 
       <Field
         id={field("floor")}

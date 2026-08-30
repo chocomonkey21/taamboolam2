@@ -10,11 +10,25 @@ import type { ComponentProps, ReactNode } from "react";
  * different corner treatments depending on where it happened to sit; this is
  * the one place that decides the shape for both.
  */
+/**
+ * `btn` carries the easing and the press feedback — see globals.css.
+ *
+ * Two things it fixes. The transition used Tailwind's default curve, which has
+ * an ease-in front half: it delays the first moment of movement, which is
+ * exactly the moment a reader is watching after a click. The site already
+ * defines a proper ease-out and this now uses it. And the press was
+ * `translate-y-px` — a one-pixel nudge, below the threshold at which a person
+ * registers that the interface heard them. A small scale is what reads as a
+ * press.
+ */
 const base =
-  "type-label inline-flex items-center justify-center gap-2 rounded-full px-7 py-3.5 text-center transition-[background-color,border-color,color,transform] duration-200 active:translate-y-px disabled:cursor-not-allowed disabled:opacity-60 disabled:active:translate-y-0";
+  "btn type-label inline-flex items-center justify-center gap-2 rounded-full px-7 py-3.5 text-center disabled:cursor-not-allowed disabled:opacity-60";
 
 const variants = {
-  solid: "bg-clay text-paper hover:bg-clay-deep",
+  /* The solid button is clay on clay when focused, so it takes a paper ring
+     instead of the global clay one — otherwise the focus indicator disappears
+     into the button it is indicating. */
+  solid: "btn-solid bg-clay text-paper hover:bg-clay-deep",
   outline:
     "border border-current/35 hover:border-current/70 hover:bg-current/[0.06]",
 } as const;

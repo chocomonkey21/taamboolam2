@@ -106,7 +106,7 @@ export function Nav() {
             <Link
               href="/enquire"
               aria-current={pathname.startsWith("/enquire") ? "page" : undefined}
-              className="type-label hidden rounded-full bg-clay px-5 py-2.5 text-paper transition-colors duration-200 hover:bg-clay-deep md:inline-flex"
+              className="btn btn-solid type-label hidden rounded-full bg-clay px-5 py-2.5 text-paper hover:bg-clay-deep md:inline-flex"
             >
               {t.nav.enquire}
             </Link>
@@ -159,7 +159,7 @@ export function MobileEnquire() {
           </span>
           <Link
             href="/enquire"
-            className="type-label ml-auto rounded-full bg-clay px-5 py-2.5 text-paper transition-colors duration-200 active:bg-clay-deep"
+            className="btn btn-solid type-label ml-auto rounded-full bg-clay px-5 py-2.5 text-paper active:bg-clay-deep"
           >
             {t.nav.mobileEnquire}
           </Link>

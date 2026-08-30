@@ -640,6 +640,89 @@
   }
 
   /* ------------------------------------------------------------------------
+     Buttons.
+     ---------------------------------------------------------------------- */
+
+  .btn {
+    transition-property: background-color, border-color, color, transform;
+    transition-duration: 160ms;
+    transition-timing-function: var(--ease-material);
+  }
+
+  /* Scale, not a nudge. The whole button scales including its label, which
+     is what makes it read as being pressed rather than shifted. */
+  .btn:active:not(:disabled) {
+    transform: scale(0.97);
+  }
+
+  /* A clay ring on a clay fill is invisible. Filled buttons take the paper
+     ring instead, with an inner clay line so it still reads on a pale
+     ground. */
+  .btn-solid:focus-visible {
+    outline-color: var(--color-paper);
+    outline-offset: -5px;
+    box-shadow: 0 0 0 2px var(--color-clay-deep);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .btn {
+      transition: none;
+    }
+    .btn:active:not(:disabled) {
+      transform: none;
+    }
+  }
+  /* ------------------------------------------------------------------------
+     The photograph viewer.
+
+     It used to appear instantly — a full-screen dark ground snapping in,
+     the one genuinely jarring moment on a site where nothing else arrives
+     from nothing. The backdrop fades; the photograph comes up from 0.96,
+     never from zero, because nothing in the world appears from no size at
+     all. Exit is faster than entry: opening is the reader deciding, closing
+     is the interface getting out of the way.
+     ---------------------------------------------------------------------- */
+
+  @media (scripting: enabled) {
+    .lightbox {
+      transition: opacity 200ms var(--ease-material);
+    }
+
+    .lightbox-figure {
+      transition:
+        opacity 200ms var(--ease-material),
+        transform 240ms var(--ease-material);
+    }
+
+    @starting-style {
+      .lightbox {
+        opacity: 0;
+      }
+      .lightbox-figure {
+        opacity: 0;
+        transform: scale(0.96);
+      }
+    }
+
+    .lightbox[data-state="closing"] {
+      opacity: 0;
+      transition-duration: 160ms;
+    }
+
+    .lightbox[data-state="closing"] .lightbox-figure {
+      opacity: 0;
+      transform: scale(0.98);
+      transition-duration: 160ms;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .lightbox,
+    .lightbox-figure {
+      transition: none;
+    }
+  }
+  /* ------------------------------------------------------------------------
      Select — native menu, house chevron.
      ---------------------------------------------------------------------- */
 
