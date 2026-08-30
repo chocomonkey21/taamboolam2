@@ -80,10 +80,25 @@ export function validateEnquiry(values: EnquiryFields): EnquiryErrors {
     errors.phone = "phoneShort";
   }
 
-  if (!values.arrival) errors.arrival = "arrival";
-  if (!values.departure) {
-    errors.departure = "departure";
-  } else if (values.arrival && values.departure < values.arrival) {
+  /**
+   * Dates are only demanded of somebody actually asking to stay. A gathering
+   * is often being planned before a date exists, and "Something else" may not
+   * involve a date at all — requiring them there turned a form that says it
+   * "starts a conversation" into one that refused to send without an itinerary.
+   *
+   * They are still validated whenever they are supplied, whatever the reason
+   * for writing: a departure before an arrival is wrong in every case.
+   */
+  if (values.visitType === "stay") {
+    if (!values.arrival) errors.arrival = "arrival";
+    if (!values.departure) errors.departure = "departure";
+  }
+
+  if (
+    values.arrival &&
+    values.departure &&
+    values.departure < values.arrival
+  ) {
     errors.departure = "departureOrder";
   }
 

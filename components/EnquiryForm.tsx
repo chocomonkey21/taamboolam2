@@ -52,6 +52,7 @@ export function EnquiryForm() {
   }, [rejectedAt]);
 
   const isGathering = values.visitType === "gathering";
+  const isStay = values.visitType === "stay";
   const field = (name: string) => `${uid}-${name}`;
 
   function set<K extends keyof EnquiryFields>(key: K, value: EnquiryFields[K]) {
@@ -258,10 +259,14 @@ export function EnquiryForm() {
           </Field>
         </div>
 
+        {/* Only a stay actually needs dates. A gathering is usually being
+            planned before one exists, so they are offered rather than
+            demanded — and marked Optional so the form says which it is. */}
         <Field
           id={field("arrival")}
           label={t.form.arrival}
           error={errors.arrival}
+          optional={!isStay}
         >
           {(props) => (
             <input
@@ -269,7 +274,7 @@ export function EnquiryForm() {
               type="date"
               name="arrival"
               min={today()}
-              required
+              required={isStay}
               value={values.arrival}
               onChange={(e) => set("arrival", e.target.value)}
             />
@@ -280,6 +285,7 @@ export function EnquiryForm() {
           id={field("departure")}
           label={t.form.departure}
           error={errors.departure}
+          optional={!isStay}
         >
           {(props) => (
             <input
@@ -287,7 +293,7 @@ export function EnquiryForm() {
               type="date"
               name="departure"
               min={values.arrival || today()}
-              required
+              required={isStay}
               value={values.departure}
               onChange={(e) => set("departure", e.target.value)}
             />

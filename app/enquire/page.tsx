@@ -1,11 +1,14 @@
 import type { Metadata } from "next";
 import { EnquireScreen } from "@/components/screens/EnquireScreen";
-import { content } from "@/lib/content";
+import { activeCopy } from "@/lib/server-locale";
 
-export const metadata: Metadata = {
-  title: content.en.meta.enquireTitle,
-  description: content.en.meta.enquireDescription,
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const t = await activeCopy();
+  return {
+    title: t.meta.enquireTitle,
+    description: t.meta.enquireDescription,
+  };
+}
 
 export default function EnquirePage() {
   return <EnquireScreen />;

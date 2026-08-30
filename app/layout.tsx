@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { cookies } from "next/headers";
 import {
   Figtree,
   Fraunces,
@@ -7,20 +6,16 @@ import {
   Noto_Serif_Kannada,
 } from "next/font/google";
 import { Footer } from "@/components/Footer";
+import { HashScroll } from "@/components/HashScroll";
 import { LightboxProvider } from "@/components/Lightbox";
 import { MobileEnquire, Nav } from "@/components/Nav";
 import { Opening } from "@/components/Opening";
 import { PageShell } from "@/components/PageShell";
 import { SiteProvider } from "@/components/SiteProvider";
 import { SkipLink } from "@/components/SkipLink";
-import {
-  content,
-  DEFAULT_LOCALE,
-  HTML_LANG,
-  isLocale,
-  LOCALE_COOKIE,
-} from "@/lib/content";
+import { content, HTML_LANG } from "@/lib/content";
 import { readPhotoManifest } from "@/lib/photo-manifest";
+import { activeLocale } from "@/lib/server-locale";
 import { site } from "@/lib/site";
 import "./globals.css";
 
@@ -57,36 +52,45 @@ const kannadaSans = Noto_Sans_Kannada({
   variable: "--font-kannada-sans",
 });
 
-export const metadata: Metadata = {
-  metadataBase: new URL(site.url),
-  title: {
-    default: content.en.meta.homeTitle,
-    template: `%s · ${site.name}`,
-  },
-  description: content.en.meta.homeDescription,
-  openGraph: {
-    type: "website",
-    siteName: site.name,
-    title: content.en.meta.homeTitle,
-    description: content.en.meta.homeDescription,
-    locale: "en_IN",
-    alternateLocale: "kn_IN",
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: content.en.meta.homeTitle,
-    description: content.en.meta.homeDescription,
-  },
-  robots: { index: true, follow: true },
-};
+/**
+ * Built per request rather than exported as a constant, so the tab title and
+ * the link preview follow the reader's language the way the page itself does.
+ */
+export async function generateMetadata(): Promise<Metadata> {
+  const locale = await activeLocale();
+  const t = content[locale];
+  const ogLocale = locale === "kn" ? "kn_IN" : "en_IN";
+
+  return {
+    metadataBase: new URL(site.url),
+    title: {
+      default: t.meta.homeTitle,
+      template: `%s · ${site.name}`,
+    },
+    description: t.meta.homeDescription,
+    openGraph: {
+      type: "website",
+      siteName: site.name,
+      title: t.meta.homeTitle,
+      description: t.meta.homeDescription,
+      locale: ogLocale,
+      alternateLocale: locale === "kn" ? "en_IN" : "kn_IN",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: t.meta.homeTitle,
+      description: t.meta.homeDescription,
+    },
+    robots: { index: true, follow: true },
+  };
+}
 
 export default async function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   // Seeded on the server so a returning Kannada reader gets Kannada in the
   // first byte of HTML, rather than a flash of English after hydration.
-  const stored = (await cookies()).get(LOCALE_COOKIE)?.value;
-  const locale = isLocale(stored) ? stored : DEFAULT_LOCALE;
+  const locale = await activeLocale();
 
   return (
     <html
@@ -97,6 +101,7 @@ export default async function RootLayout({
         <SiteProvider initialLocale={locale} photoManifest={readPhotoManifest()}>
           <LightboxProvider>
             <SkipLink />
+            <HashScroll />
             <Opening />
             <Nav />
             <main id="main" className="flex-1">

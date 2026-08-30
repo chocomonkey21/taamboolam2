@@ -35,10 +35,24 @@ export function Opening() {
 
   if (!play) return null;
 
+  const kannada = locale === "kn";
+
   return (
     <div className="opening-veil pointer-events-none" aria-hidden="true">
-      <span className="font-heading text-[clamp(1.5rem,6vw,2.75rem)] leading-none tracking-[0.24em] uppercase">
-        {locale === "kn" ? site.nameKn : site.name}
+      {/* Uppercase and open tracking are a Latin setting only. Kannada has no
+          capitals, and letterspacing pulls its conjuncts apart into separate
+          marks — ತಂಬೋಲಂ must be set solid, the same rule the wordmark follows.
+          It also sets a little larger, because losing that treatment loses the
+          weight it carries. */}
+      <span
+        lang={kannada ? "kn" : "en"}
+        className={`font-heading leading-none ${
+          kannada
+            ? "text-[clamp(1.75rem,7vw,3.25rem)]"
+            : "text-[clamp(1.5rem,6vw,2.75rem)] tracking-[0.24em] uppercase"
+        }`}
+      >
+        {kannada ? site.nameKn : site.name}
       </span>
     </div>
   );

@@ -5,7 +5,9 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "check:content": "node scripts/check-placeholders.mjs",
+    "prebuild": "node scripts/check-placeholders.mjs"
   },
   "dependencies": {
     "next": "16.3.3",
