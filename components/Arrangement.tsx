@@ -91,12 +91,14 @@ export function Arrangement({ compact = false }: { compact?: boolean }) {
           It stacks plainly below md, where there is no column to break out of
           and an overlap would only crowd. */}
       <div className="md:col-span-6 md:col-start-7">
+        {/* No caption on this one. Its caption reads "Each floor keeps its own
+            hall. It is shared only by that floor." — which is item 3 of the
+            numbered plan sitting directly beside it, said twice. Dropping it
+            also clears the space the overlapping detail below needs: with the
+            caption present the two collided, and the detail covered the first
+            half of the line. */}
         <Reveal variant="photo">
-          <Photo
-            id="stayingShared"
-            sizes="(min-width: 768px) 46vw, 92vw"
-            caption="below"
-          />
+          <Photo id="stayingShared" sizes="(min-width: 768px) 46vw, 92vw" />
         </Reveal>
         <Reveal
           variant="photo"
