@@ -1,33 +1,25 @@
-import fs from "node:fs";
-import path from "node:path";
 import { photos, type PhotoId } from "./photos";
-
-// TAAMBOOLAM_ROOT is set in next.config.ts from that file's own location, so
-// this resolves correctly however the server was started. process.cwd() is the
-// fallback for tooling that loads this module outside Next.
-const IMAGE_DIR = path.join(
-  process.env.TAAMBOOLAM_ROOT ?? process.cwd(),
-  "public",
-  "images",
-);
 
 let cached: Record<string, boolean> | null = null;
 
 /**
  * Photographs arrive in batches. Rather than shipping broken <img> tags while
- * we wait, each slot is checked once on the server and the result is handed to
- * the client, which renders a designed placeholder of the same shape for any
- * file that has not landed. Nothing collapses mid-swap and nothing shifts.
+ * we wait, each slot is checked once and the result is handed to the client,
+ * which renders a designed placeholder of the same shape for any file that
+ * has not landed. Nothing collapses mid-swap and nothing shifts.
  *
- * Read once per process in production; re-read in development so dropping a
- * photo in shows up on the next refresh.
+ * The list of files that actually exist is not read here — see the long
+ * comment on TAAMBOOLAM_PHOTO_FILES in next.config.ts for why a runtime
+ * `fs.readdirSync` silently produced an empty manifest (and therefore every
+ * photo on the site) once deployed to Vercel. It is baked into that env var
+ * at build time instead, so this function only has to parse a string.
  */
 export function readPhotoManifest(): Record<string, boolean> {
-  if (cached && process.env.NODE_ENV === "production") return cached;
+  if (cached) return cached;
 
   let present: Set<string>;
   try {
-    present = new Set(fs.readdirSync(IMAGE_DIR));
+    present = new Set(JSON.parse(process.env.TAAMBOOLAM_PHOTO_FILES ?? "[]"));
   } catch {
     present = new Set();
   }

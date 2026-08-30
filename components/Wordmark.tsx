@@ -23,10 +23,23 @@ export function Wordmark({
   const { locale } = useSite();
   const kannadaFirst = locale === "kn";
 
+  /* Kannada carries neither the uppercase transform nor the 0.2em tracking
+     the Latin setting gets — both would break its conjuncts apart, see the
+     span below. Losing that treatment also loses the visual weight it gives
+     the name, so at an identical font-size the Kannada wordmark reads as
+     conspicuously smaller and quieter than "TAAMBOOLAM" does, even though the
+     glyphs themselves are not shorter. The same trade already exists for
+     .type-eyebrow in globals.css (uppercase+tracking traded for a ~18% size
+     increase); this applies that same ratio here rather than leaving the
+     wordmark looking like it shrank when the language switches. */
   const scale =
     size === "lg"
-      ? "text-[clamp(1.95rem,6.4vw,3.75rem)]"
-      : "text-[17px] sm:text-[19px]";
+      ? kannadaFirst
+        ? "text-[clamp(2.3rem,7.5vw,4.4rem)]"
+        : "text-[clamp(1.95rem,6.4vw,3.75rem)]"
+      : kannadaFirst
+        ? "text-[20px] sm:text-[22px]"
+        : "text-[17px] sm:text-[19px]";
 
   const inner = (
     <span
