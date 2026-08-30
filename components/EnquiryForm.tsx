@@ -142,22 +142,20 @@ export function EnquiryForm() {
      there is nothing left to submit twice. */
   if (status.kind === "sent") {
     return (
-      <div
-        role="status"
-        aria-live="polite"
-        className="rounded-md border p-8 sm:p-10"
-        style={{
-          borderColor: "var(--color-stone)",
-          backgroundColor: "var(--color-lime)",
-        }}
-      >
-        <TileGlyph className="w-10 text-clay opacity-45" />
-        <h2 className="type-h2 mt-6">{t.form.successHeading}</h2>
-        <p className="type-lead measure mt-4">{t.form.successBody}</p>
+      <div role="status" aria-live="polite" className="py-6 md:py-10">
+        <TileGlyph className="w-10 text-clay opacity-40" />
+        <h2 className="type-h1 mt-8 max-w-[14ch]">{t.form.successHeading}</h2>
+        <p className="type-lead measure mt-6 text-ink-soft">
+          {t.form.successBody}
+        </p>
         {!status.delivered ? (
           <p className="type-caption measure mt-5">{t.form.devNote}</p>
         ) : null}
-        <div className="mt-8">
+
+        {/* A hairline, then the way back. The button is quiet on purpose: the
+            reader has just done the thing this page exists for, and offering
+            them a second loud action would undo the moment. */}
+        <div className="rule-atmos mt-10 border-t pt-7">
           <Button
             variant="outline"
             onClick={() => {

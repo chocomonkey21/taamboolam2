@@ -3,7 +3,6 @@
 import type { FloorId } from "@/lib/content";
 import type { PhotoId } from "@/lib/photos";
 import { TextLink } from "./Button";
-import { Disclosure } from "./Disclosure";
 import { Photo } from "./Photo";
 import { Reveal } from "./Reveal";
 import { useSite } from "./SiteProvider";
@@ -130,21 +129,17 @@ export function FloorChapter({
         </ul>
       ) : null}
 
-      {copy.more.length > 0 ? (
-        <Disclosure
-          label={t.experience.floorMoreLabel}
-          className={copy.distinct.length > 0 ? "mt-7" : "mt-8"}
-        >
-          {copy.more.map((paragraph, i) => (
-            <p
-              key={i}
-              className={`type-body text-ink-soft ${i ? "mt-4" : ""}`}
-            >
-              {paragraph}
-            </p>
-          ))}
-        </Disclosure>
-      ) : null}
+      {/* What used to sit behind "More about this floor". It is set exactly
+          like the paragraph above it, because it IS that paragraph continued
+          — the split is a note to the owner about which half is essential,
+          not a distinction a reader has any use for. Shrinking it to caption
+          scale, which is what the first pass at removing the disclosure did,
+          only replaced a click with a squint. */}
+      {copy.more.map((paragraph, i) => (
+        <p key={i} className="type-body mt-5 text-ink-soft">
+          {paragraph}
+        </p>
+      ))}
 
       {/* The one moment a reader is most likely to want this floor: they have
           just finished reading about it. The floor travels with the link, so

@@ -109,10 +109,7 @@ export type Content = {
     eyebrow: string;
     heading: string;
     opening: string[];
-    progressLabel: string;
     floorsIntro: string;
-    /** Summary label on each floor chapter's disclosure. */
-    floorMoreLabel: string;
     food: { eyebrow: string; heading: string; body: string[] };
     gatherings: {
       eyebrow: string;

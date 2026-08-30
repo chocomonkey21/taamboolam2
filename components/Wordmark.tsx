@@ -28,10 +28,11 @@ export function Wordmark({
      span below. Losing that treatment also loses the visual weight it gives
      the name, so at an identical font-size the Kannada wordmark reads as
      conspicuously smaller and quieter than "TAAMBOOLAM" does, even though the
-     glyphs themselves are not shorter. The same trade already exists for
-     .type-eyebrow in globals.css (uppercase+tracking traded for a ~18% size
-     increase); this applies that same ratio here rather than leaving the
-     wordmark looking like it shrank when the language switches. */
+     glyphs themselves are not shorter. The same trade is made for
+     .type-annotation in globals.css, which gives the Kannada setting a ~8%
+     size increase in exchange for the tracking it cannot take; this applies
+     the same idea here rather than leaving the wordmark looking like it
+     shrank when the language switches. */
   const scale =
     size === "lg"
       ? kannadaFirst

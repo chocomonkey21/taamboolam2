@@ -187,9 +187,7 @@ export const en: Content = {
     opening: [
       "A house is not a set of rooms. It is a sequence: what you see from the street, what the stairwell does with the light, and how long it takes before you stop noticing that you are a guest. Four guest floors, finished in different moods, and nobody has tried to even them out. None of them is the good floor.",
     ],
-    progressLabel: "Reading progress",
     floorsIntro: "Four floors. Three rooms on each.",
-    floorMoreLabel: "More about this floor",
 
     food: {
       eyebrow: "Food",
