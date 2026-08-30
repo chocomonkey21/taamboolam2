@@ -73,9 +73,16 @@ export function validateEnquiry(values: EnquiryFields): EnquiryErrors {
     errors.email = "emailInvalid";
   }
 
+  /**
+   * A number is worth insisting on when somebody is actually coming to stay —
+   * arrivals get coordinated by phone here, not by email. For a gathering
+   * enquiry or a general question, an email address is enough to reply to, and
+   * demanding a phone number is friction on a form whose whole claim is that
+   * it only starts a conversation. Validated whenever it is given, either way.
+   */
   const phoneDigits = values.phone.replace(/\D/g, "");
   if (!values.phone.trim()) {
-    errors.phone = "phoneMissing";
+    if (values.visitType === "stay") errors.phone = "phoneMissing";
   } else if (phoneDigits.length < 7) {
     errors.phone = "phoneShort";
   }

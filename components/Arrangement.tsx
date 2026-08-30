@@ -81,8 +81,15 @@ export function Arrangement({ compact = false }: { compact?: boolean }) {
         <div className="mt-8">{booking}</div>
       </div>
 
-      {/* Two photographs at different weights and heights, so the right side
-          is a composition rather than a single balancing block. */}
+      {/* Two photographs, overlapped rather than stacked.
+          The detail used to float alone at 68% width under the wide shot,
+          which left a hole to its left and read as an afterthought — it was
+          near the other picture without belonging to it. Pulling it up into
+          the wide shot's lower edge and letting it break the column's left
+          margin makes the pair one object: the detail is now clearly a
+          fragment of the room above it, and the overlap is what says so.
+          It stacks plainly below md, where there is no column to break out of
+          and an overlap would only crowd. */}
       <div className="md:col-span-6 md:col-start-7">
         <Reveal variant="photo">
           <Photo
@@ -91,13 +98,16 @@ export function Arrangement({ compact = false }: { compact?: boolean }) {
             caption="below"
           />
         </Reveal>
-        {/* Offset right and smaller — a detail set against the wide shot
-            above it, not a second panel balancing it. */}
-        <Reveal variant="photo" delay={90} className="mt-6 ml-auto w-[68%]">
+        <Reveal
+          variant="photo"
+          delay={90}
+          className="mt-6 w-[72%] md:-mt-16 md:-ml-14 md:w-[58%]"
+        >
           <Photo
             id="stayingBalcony"
             ratio="4 / 3"
-            sizes="(min-width: 768px) 31vw, 63vw"
+            sizes="(min-width: 768px) 27vw, 66vw"
+            className="ring-4 ring-[var(--atmos-bg)]"
           />
         </Reveal>
       </div>

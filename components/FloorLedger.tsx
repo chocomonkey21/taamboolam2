@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { useEffect, useRef, useState } from "react";
 import type { FloorId } from "@/lib/content";
 import type { PhotoId } from "@/lib/photos";
 import { Photo } from "./Photo";
@@ -29,9 +30,55 @@ const FLOORS: { id: FloorId; photo: PhotoId; atmosphere: string }[] = [
  */
 export function FloorLedger() {
   const { t } = useSite();
+  const listRef = useRef<HTMLUListElement>(null);
+  const [shown, setShown] = useState(false);
+
+  /* One observer for the whole ledger rather than a Reveal per row, so the
+     four rows share a single trigger and their stagger stays in order however
+     fast the reader scrolls. Same reduced-motion and no-observer escape
+     hatches as Reveal: show everything at once and stop. */
+  useEffect(() => {
+    /* Armed first, before any early return. These four rows are the home
+       page's route into the house and their resting state is opacity 0, so a
+       path that skips the observer — a null ref, a zero-height viewport, a
+       browser that mis-measures a transformed ancestor — must still end with
+       them visible. Worst case they appear without the stagger, which is the
+       correct way for this to fail. */
+    const failsafe = window.setTimeout(() => setShown(true), 1500);
+    const done = () => window.clearTimeout(failsafe);
+
+    const node = listRef.current;
+    if (!node) return done;
+
+    if (
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches ||
+      typeof IntersectionObserver === "undefined"
+    ) {
+      setShown(true);
+      return done;
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) {
+            setShown(true);
+            observer.disconnect();
+          }
+        }
+      },
+      { threshold: 0.02, rootMargin: "0px 0px 12% 0px" },
+    );
+    observer.observe(node);
+
+    return () => {
+      observer.disconnect();
+      done();
+    };
+  }, []);
 
   return (
-    <ul className="rule-atmos mt-12 border-t md:mt-16">
+    <ul ref={listRef} className="rule-atmos mt-12 border-t md:mt-16">
       {FLOORS.map((floor, index) => {
         const copy = t.floors[floor.id];
         return (
@@ -42,7 +89,11 @@ export function FloorLedger() {
           >
             <Link
               href={`/experience#${floor.id}`}
-              className="group grid grid-cols-[auto_1fr] items-center gap-x-5 gap-y-4 px-2 py-6 sm:gap-x-8 sm:py-7 md:grid-cols-[5.5rem_1fr_13rem] md:px-4 lg:grid-cols-[7rem_1fr_18rem]"
+              /* Staggered, so the four rows arrive as a climb rather than as
+                 one block — the same order the house is read in. */
+              style={{ "--reveal-delay": `${index * 70}ms` } as React.CSSProperties}
+              data-shown={shown ? "true" : "false"}
+              className="reveal group grid grid-cols-[auto_1fr] items-center gap-x-5 gap-y-4 px-2 py-6 sm:gap-x-8 sm:py-7 md:grid-cols-[5.5rem_1fr_13rem] md:px-4 lg:grid-cols-[7rem_1fr_18rem]"
             >
               {/* The floor number, at ledger scale. It is the anchor of the
                   row and the only thing that changes size between breakpoints. */}

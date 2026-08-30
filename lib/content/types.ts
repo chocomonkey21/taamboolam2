@@ -60,6 +60,8 @@ export type Content = {
     enquire: string;
     explore: string;
     readTheStory: string;
+    /** Ends each floor chapter, and carries that floor into the form. */
+    askAboutFloor: string;
     backHome: string;
   };
 
@@ -149,6 +151,9 @@ export type Content = {
     pendingBathrooms: string;
   };
 
+  /** The page that exists only when a reader has arrived somewhere wrong. */
+  notFound: { eyebrow: string; heading: string; body: string };
+
   footer: {
     findUs: string;
     heading: string;
@@ -194,6 +199,8 @@ export type Content = {
     optional: string;
     required: string;
     submitStay: string;
+    /** Offered beside the submit button, for readers who would rather talk. */
+    orWhatsapp: string;
     submitGathering: string;
     submitting: string;
     successHeading: string;

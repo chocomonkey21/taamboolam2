@@ -5,6 +5,7 @@ import { ButtonLink } from "../Button";
 import { ExperienceProgress } from "../ExperienceProgress";
 import { FLOOR_CHAPTERS, FloorChapter } from "../FloorChapter";
 import { HouseValues } from "../HouseValues";
+import { Parallax } from "../Parallax";
 import { Photo } from "../Photo";
 import { Reveal } from "../Reveal";
 import { useSite } from "../SiteProvider";
@@ -151,7 +152,13 @@ export function ExperienceScreen() {
         </div>
       </section>
 
-      {/* ── Gatherings ───────────────────────────────────────────────────── */}
+      {/* ── Gatherings ──────────────────────────────────────────────────
+          The last photo-beside-text block on the site, recomposed. A gathering
+          is the exception here, not an offering, so the section reads as an
+          aside: the explanation first in a narrow column, the one hard limit
+          pulled out beside it, and the photograph last and wide — the room as
+          evidence after the point has been made, rather than a picture being
+          sold alongside it. */}
       <section
         className="texture-limewash relative bg-atmos-tint"
         data-atmosphere="house"
@@ -159,15 +166,6 @@ export function ExperienceScreen() {
         <div className="container-content section-rhythm">
           <div className="grid gap-10 md:grid-cols-12 md:gap-10">
             <div className="md:col-span-6">
-              <Reveal variant="photo">
-                <Photo
-                  id="experienceGathering"
-                  sizes="(min-width: 768px) 46vw, 92vw"
-                  caption="below"
-                />
-              </Reveal>
-            </div>
-            <div className="md:col-span-5 md:col-start-8">
               <Reveal>
                 <p className="type-eyebrow">{t.experience.gatherings.eyebrow}</p>
                 <h2 className="type-h2 mt-5">
@@ -179,13 +177,33 @@ export function ExperienceScreen() {
                   <p className="type-body mt-6 text-ink-soft">{paragraph}</p>
                 </Reveal>
               ))}
-              <Reveal delay={220}>
-                <p className="type-body rule-atmos mt-8 border-t pt-5">
-                  {t.experience.gatherings.note}
-                </p>
-              </Reveal>
             </div>
+
+            {/* The one thing this section has to be unambiguous about, set
+                apart so it cannot be skimmed past with the rest. */}
+            <Reveal
+              delay={140}
+              className="rule-atmos md:col-span-4 md:col-start-9 md:mt-14 md:border-l md:pl-8"
+            >
+              <p className="type-lead">{t.experience.gatherings.note}</p>
+            </Reveal>
           </div>
+        </div>
+
+        <Reveal variant="photo" className="mt-4 md:mt-8">
+          <Photo
+            id="experienceGathering"
+            ratio="21 / 9"
+            rounded={false}
+            sizes="100vw"
+            className="!min-h-[18rem] md:!min-h-0"
+          />
+        </Reveal>
+
+        <div className="container-content pt-6 pb-[clamp(4.5rem,9vw,8.5rem)]">
+          <p className="type-caption">
+            {t.photos.experienceGathering.caption}
+          </p>
         </div>
       </section>
 
@@ -199,13 +217,15 @@ export function ExperienceScreen() {
       {/* ── Closing invitation ───────────────────────────────────────────── */}
       <section className="relative overflow-hidden" data-atmosphere="house">
         <div className="relative">
-          <Photo
-            id="experienceClose"
-            ratio="21 / 9"
-            rounded={false}
-            sizes="100vw"
-            className="!min-h-[55svh]"
-          />
+          <Parallax>
+            <Photo
+              id="experienceClose"
+              ratio="21 / 9"
+              rounded={false}
+              sizes="100vw"
+              className="!min-h-[55svh]"
+            />
+          </Parallax>
           <div
             aria-hidden="true"
             className="absolute inset-0"

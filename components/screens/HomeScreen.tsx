@@ -4,6 +4,7 @@ import { Arrangement } from "../Arrangement";
 import { ButtonLink, TextLink } from "../Button";
 import { FloorLedger } from "../FloorLedger";
 import { HouseValues } from "../HouseValues";
+import { Parallax } from "../Parallax";
 import { Photo } from "../Photo";
 import { Reveal } from "../Reveal";
 import { useSite } from "../SiteProvider";
@@ -324,13 +325,15 @@ export function HomeScreen() {
       {/* ── The invitation ───────────────────────────────────────────────── */}
       <section className="relative overflow-hidden" data-atmosphere="house">
         <div className="relative">
-          <Photo
-            id="invitation"
-            ratio="21 / 9"
-            rounded={false}
-            sizes="100vw"
-            className="!min-h-[60svh]"
-          />
+          <Parallax>
+            <Photo
+              id="invitation"
+              ratio="21 / 9"
+              rounded={false}
+              sizes="100vw"
+              className="!min-h-[60svh]"
+            />
+          </Parallax>
           <div
             aria-hidden="true"
             className="absolute inset-0"

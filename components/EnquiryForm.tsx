@@ -3,6 +3,7 @@
 import { useEffect, useId, useRef, useState } from "react";
 import {
   emptyEnquiry,
+  FLOOR_PREFERENCES,
   resolveErrors,
   today,
   validateEnquiry,
@@ -10,6 +11,7 @@ import {
   type FloorPreference,
   type VisitType,
 } from "@/lib/enquiry";
+import { site } from "@/lib/site";
 import { Button } from "./Button";
 import { Field, RadioGroup, selectClass } from "./Field";
 import { useSite } from "./SiteProvider";
@@ -50,6 +52,27 @@ export function EnquiryForm() {
   useEffect(() => {
     if (rejectedAt > 0) summaryRef.current?.focus();
   }, [rejectedAt]);
+
+  /**
+   * Arriving from "Ask about this floor" at the end of a chapter, with that
+   * floor already chosen. A reader who has just spent a page deciding they
+   * like Floor 3 should not have to remember it and find it again in a menu.
+   *
+   * Read from the URL in an effect rather than through useSearchParams, so
+   * this stays a progressive enhancement — the form is identical without it,
+   * and it adds no Suspense boundary to a page that otherwise needs none.
+   * Anything unrecognised is ignored; the select cannot be pushed into a
+   * state it does not have.
+   */
+  useEffect(() => {
+    const asked = new URLSearchParams(window.location.search).get("floor");
+    if (asked && (FLOOR_PREFERENCES as readonly string[]).includes(asked)) {
+      setValues((current) => ({
+        ...current,
+        floorPreference: asked as FloorPreference,
+      }));
+    }
+  }, []);
 
   const isGathering = values.visitType === "gathering";
   const isStay = values.visitType === "stay";
@@ -206,7 +229,12 @@ export function EnquiryForm() {
           )}
         </Field>
 
-        <Field id={field("phone")} label={t.form.phone} error={errors.phone}>
+        <Field
+          id={field("phone")}
+          label={t.form.phone}
+          error={errors.phone}
+          optional={!isStay}
+        >
           {(props) => (
             <input
               {...props}
@@ -214,23 +242,30 @@ export function EnquiryForm() {
               name="phone"
               autoComplete="tel"
               inputMode="tel"
-              required
+              required={isStay}
               value={values.phone}
               onChange={(e) => set("phone", e.target.value)}
             />
           )}
         </Field>
 
+        {/* text + inputMode + pattern, not type="number".
+            iOS Safari ignores inputMode on a real number input and shows the
+            full keyboard with a number strip, when what is wanted is the plain
+            numeric pad. This combination is what actually produces it, and the
+            range is enforced by the shared validator either way — nothing here
+            relied on the browser's own min/max. It also loses the spinner,
+            which nobody wants on a count of two. */}
         <div className="grid grid-cols-2 gap-4">
           <Field id={field("adults")} label={t.form.adults} error={errors.adults}>
             {(props) => (
               <input
                 {...props}
-                type="number"
+                type="text"
                 name="adults"
-                min={1}
-                max={30}
                 inputMode="numeric"
+                pattern="[0-9]*"
+                autoComplete="off"
                 required
                 value={values.adults}
                 onChange={(e) => set("adults", e.target.value)}
@@ -246,11 +281,11 @@ export function EnquiryForm() {
             {(props) => (
               <input
                 {...props}
-                type="number"
+                type="text"
                 name="children"
-                min={0}
-                max={30}
                 inputMode="numeric"
+                pattern="[0-9]*"
+                autoComplete="off"
                 required
                 value={values.children}
                 onChange={(e) => set("children", e.target.value)}
@@ -409,6 +444,22 @@ export function EnquiryForm() {
               ? t.form.submitGathering
               : t.form.submitStay}
         </Button>
+
+        {/* For a house in Bengaluru, WhatsApp is not a fallback — it is how a
+            lot of people would rather open a conversation. Offered as a plain
+            alternative next to the button rather than a floating bubble, so it
+            is available without competing with the form. */}
+        <a
+          href={`https://wa.me/${site.contact.whatsapp}`}
+          target="_blank"
+          rel="noreferrer noopener"
+          className="type-label inline-block py-1.5 text-ink-soft underline decoration-transparent decoration-1 underline-offset-4 transition-colors duration-200 hover:text-ink hover:decoration-current"
+        >
+          {t.form.orWhatsapp}
+        </a>
+      </div>
+
+      <div>
         <p className="type-caption measure">{t.form.noPrices}</p>
       </div>
     </form>

@@ -2,6 +2,7 @@
 
 import type { FloorId } from "@/lib/content";
 import type { PhotoId } from "@/lib/photos";
+import { TextLink } from "./Button";
 import { Disclosure } from "./Disclosure";
 import { Photo } from "./Photo";
 import { Reveal } from "./Reveal";
@@ -85,7 +86,7 @@ export function FloorChapter({ spec }: { spec: FloorChapterSpec }) {
       {/* The floor number is the anchor of the chapter. All four are set
           identically — no floor is presented as the good one, and no floor is
           given an invented theme name. */}
-      <h2 className="type-h1" id={`${spec.id}-heading`}>
+      <h2 className="type-h1 text-atmos-ink" id={`${spec.id}-heading`}>
         {copy.label}
       </h2>
       <p className="type-lead mt-4 text-atmos-accent">{copy.lead}</p>
@@ -136,6 +137,18 @@ export function FloorChapter({ spec }: { spec: FloorChapterSpec }) {
           </Disclosure>
         </Reveal>
       ) : null}
+
+      {/* The one moment a reader is most likely to want this floor: they have
+          just finished reading about it. The floor travels with the link, so
+          the form arrives with it already chosen rather than asking them to
+          remember which one they liked. */}
+      <Reveal delay={260}>
+        <p className="mt-9">
+          <TextLink href={`/enquire?floor=${spec.id}`}>
+            {t.cta.askAboutFloor}
+          </TextLink>
+        </p>
+      </Reveal>
     </>
   );
 
@@ -197,7 +210,7 @@ export function FloorChapter({ spec }: { spec: FloorChapterSpec }) {
         <div className="relative">
           <div className="container-content pt-[clamp(4.5rem,9vw,8.5rem)]">
             <Reveal className="max-w-[38rem]">
-              <h2 className="type-h1" id={`${spec.id}-heading`}>
+              <h2 className="type-h1 text-atmos-ink" id={`${spec.id}-heading`}>
                 {copy.label}
               </h2>
               <p className="type-lead mt-4 text-atmos-accent">{copy.lead}</p>

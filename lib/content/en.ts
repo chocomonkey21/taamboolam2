@@ -32,6 +32,7 @@ export const en: Content = {
     enquire: "Enquire about a stay",
     explore: "Explore Taamboolam",
     readTheStory: "Walk through all four floors",
+    askAboutFloor: "Ask about this floor",
     backHome: "Back to the beginning",
   },
 
@@ -334,6 +335,12 @@ export const en: Content = {
       "Bathroom arrangements are being confirmed with the owner. Ask in your enquiry and you will get a straight answer rather than a guess.",
   },
 
+  notFound: {
+    eyebrow: "Not found",
+    heading: "There is no page here",
+    body: "The house has three pages, and this is not one of them. The link may be old, or slightly mistyped.",
+  },
+
   footer: {
     findUs: "Find us",
     heading: "Taamboolam",
@@ -385,6 +392,7 @@ export const en: Content = {
     optional: "Optional",
     required: "Required",
     submitStay: "Ask about staying",
+    orWhatsapp: "or message on WhatsApp",
     submitGathering: "Ask about your gathering",
     submitting: "Sending…",
     successHeading: "Thank you",
