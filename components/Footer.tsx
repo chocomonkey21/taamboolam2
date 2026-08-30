@@ -4,26 +4,40 @@ import Link from "next/link";
 import { NAV_ITEMS, site } from "@/lib/site";
 import { ButtonLink } from "./Button";
 import { LanguageToggle } from "./LanguageToggle";
+import { MapPanel } from "./MapPanel";
 import { useSite } from "./SiteProvider";
-import { TileField } from "./TileMotif";
+import { MaterialStrip, TileCourse } from "./TileMotif";
 import { Wordmark } from "./Wordmark";
 
 /**
  * Find Us — the closing scene of every page, not a page of its own and not a
  * drawer of links.
  *
- * It is composed as two halves that belong together: the last invitation on
- * the left, and the map with everything needed to actually arrive on the
- * right. The map is part of the composition rather than an embed dropped
- * underneath it — same panel, same hairline, same ground.
+ * Three things changed here.
+ *
+ * The map is drawn now instead of embedded. A Google iframe put that
+ * company's blue links, orange restaurant pins and grey road fills into the
+ * middle of a limewash page — the loudest colours anywhere on the site — while
+ * loading a third-party frame onto a site whose whole position is that it runs
+ * nothing of the sort. See MapPanel.
+ *
+ * The panel is no longer a bordered box dropped into a column. The drawing sits
+ * directly on the footer's own ground with the address ruled underneath it, so
+ * it is part of the composition rather than a window cut into it.
+ *
+ * And the left half is no longer three quarters empty. It used to hold a
+ * wordmark, one line and a button in a column six units wide, which left a
+ * large rectangle of nothing beside the map. It now carries everything a
+ * reader might want at the end of a page: the name, the invitation, the way to
+ * reach a person, and the one sentence about gatherings.
  */
 export function Footer() {
   const { t } = useSite();
 
-  /* inline-block + py is what lifts these inline links to a comfortable
-     touch target; the text does not move, only the hit area grows. */
+  /* inline-block + py is what lifts these inline links to a comfortable touch
+     target; the text does not move, only the hit area grows. */
   const linkClass =
-    "type-body inline-block py-1 text-ink-soft underline decoration-transparent decoration-1 underline-offset-4 transition-colors duration-200 hover:text-ink hover:decoration-current";
+    "type-body inline-flex min-h-11 items-center text-ink-soft underline decoration-transparent decoration-1 underline-offset-4 transition-colors duration-200 hover:text-ink hover:decoration-current";
 
   const labels: Record<string, string> = {
     home: t.nav.home,
@@ -33,118 +47,98 @@ export function Footer() {
 
   return (
     <footer
-      className="texture-limewash relative mt-auto overflow-hidden"
+      className="texture-plaster relative mt-auto"
       style={{ backgroundColor: "var(--color-lime)" }}
       data-atmosphere="house"
     >
-      <TileField className="-top-16 -right-24 h-[380px] w-[380px]" opacity={0.1} />
+      {/* A laid course closes the page the way one opens each chapter. */}
+      <TileCourse className="relative z-10" />
 
-      <div className="container-content section-rhythm relative">
+      <div className="relative z-10 container-content pt-10 pb-14 md:pt-14 md:pb-16">
         <div className="grid gap-14 md:grid-cols-12 md:gap-10">
           {/* ── The last invitation ───────────────────────────────────── */}
-          <div className="md:col-span-5 md:pt-2">
-            <p className="type-eyebrow">{t.footer.findUs}</p>
-            <div className="mt-6">
+          <div className="md:col-span-5">
+            <p className="type-annotation">{t.footer.findUs}</p>
+
+            <div className="mt-5">
               <Wordmark size="lg" asLink={false} />
             </div>
-            <p className="type-lead mt-5 max-w-[26ch] text-ink-soft">
+            <p className="type-lead mt-4 max-w-[26ch] text-ink-soft">
               {t.wordmarkContext}
             </p>
+
             <div className="mt-8">
               <ButtonLink href="/enquire">{t.cta.enquire}</ButtonLink>
             </div>
-            <p className="type-caption mt-6 max-w-[44ch]">
-              {t.footer.gatherings}
-            </p>
-          </div>
 
-          {/* ── Arriving ──────────────────────────────────────────────── */}
-          <div className="md:col-span-6 md:col-start-7">
-            <div
-              className="overflow-hidden rounded-md border"
-              style={{ borderColor: "var(--color-stone)" }}
-            >
-              <iframe
-                src={site.location.mapEmbed}
-                title={t.footer.mapTitle}
-                loading="lazy"
-                referrerPolicy="no-referrer-when-downgrade"
-                className="block h-[240px] w-full border-0 sm:h-[280px]"
-              />
-
-              <div
-                className="border-t p-6"
-                style={{
-                  borderColor: "var(--color-stone)",
-                  backgroundColor: "var(--color-paper)",
-                }}
-              >
-                <h2 className="type-eyebrow">{t.footer.address}</h2>
-                <address className="type-body mt-4 not-italic">
-                  {site.location.addressLines.map((line) => (
-                    <span key={line} className="block">
-                      {line}
-                    </span>
-                  ))}
-                </address>
-                <p className="type-body mt-3 text-ink-soft">
-                  {t.footer.landmark}
-                </p>
-
-                <div className="mt-5 flex flex-wrap items-center gap-x-6 gap-y-2">
-                  <a
-                    href={site.location.mapLink}
-                    target="_blank"
-                    rel="noreferrer noopener"
-                    className={linkClass}
-                  >
-                    {t.footer.mapLink}
-                  </a>
-                  <a
-                    href={`https://wa.me/${site.contact.whatsapp}`}
-                    target="_blank"
-                    rel="noreferrer noopener"
-                    className={linkClass}
-                  >
-                    {t.footer.whatsapp}
-                  </a>
-                  <a href={`mailto:${site.contact.email}`} className={linkClass}>
-                    {t.footer.email}
-                  </a>
-                  <a
-                    href={site.contact.instagram}
-                    target="_blank"
-                    rel="noreferrer noopener"
-                    className={linkClass}
-                  >
-                    {t.footer.instagram}
-                  </a>
-                </div>
-
-                {site.location.mapLinkIsPlaceholder ? (
-                  <p className="type-caption mt-4">{t.footer.mapPending}</p>
-                ) : null}
-              </div>
-            </div>
-
-            {/* Contact in full, under the panel it belongs to. */}
-            <ul className="mt-5 flex flex-wrap gap-x-8 gap-y-2">
-              <li>
+            {/* Reaching a person. Set as a ruled list rather than as a row of
+                inline links, because these are four different ways to do one
+                thing and a reader is picking, not scanning. */}
+            <ul className="rule-atmos mt-10 border-t">
+              <li className="rule-atmos border-b py-2.5">
                 <a
                   href={`https://wa.me/${site.contact.whatsapp}`}
                   target="_blank"
                   rel="noreferrer noopener"
                   className={linkClass}
                 >
-                  {site.contact.phone}
+                  {t.footer.whatsapp} — {site.contact.phone}
                 </a>
               </li>
-              <li>
+              <li className="rule-atmos border-b py-2.5">
                 <a href={`mailto:${site.contact.email}`} className={linkClass}>
                   {site.contact.email}
                 </a>
               </li>
+              <li className="rule-atmos border-b py-2.5">
+                <a
+                  href={site.contact.instagram}
+                  target="_blank"
+                  rel="noreferrer noopener"
+                  className={linkClass}
+                >
+                  {t.footer.instagram}
+                </a>
+              </li>
             </ul>
+
+            <p className="type-caption mt-6 max-w-[46ch]">
+              {t.footer.gatherings}
+            </p>
+          </div>
+
+          {/* ── Arriving ──────────────────────────────────────────────── */}
+          <div className="md:col-span-6 md:col-start-7">
+            <MapPanel />
+
+            <div className="rule-atmos mt-7 border-t pt-6">
+              <h2 className="type-annotation">{t.footer.address}</h2>
+              <address className="type-h3 mt-3 not-italic">
+                {site.location.addressLines.map((line) => (
+                  <span key={line} className="block">
+                    {line}
+                  </span>
+                ))}
+              </address>
+              <p className="type-body mt-4 max-w-[42ch] text-ink-soft">
+                {t.footer.landmark}
+              </p>
+
+              <p className="mt-4">
+                <a
+                  href={site.location.mapLink}
+                  target="_blank"
+                  rel="noreferrer noopener"
+                  className="type-label inline-flex min-h-11 items-center text-clay-deep underline decoration-clay-deep/35 decoration-1 underline-offset-[7px] transition-colors duration-200 hover:decoration-clay-deep"
+                >
+                  {t.footer.mapLink}
+                </a>
+              </p>
+
+              {site.location.mapLinkIsPlaceholder ? (
+                <p className="type-caption mt-3">{t.footer.mapPending}</p>
+              ) : null}
+            </div>
           </div>
         </div>
       </div>
@@ -152,7 +146,10 @@ export function Footer() {
       {/* ── The base line ─────────────────────────────────────────────────
           pb-24 on small screens clears the persistent Enquire strip, which is
           fixed over the bottom of the viewport there. */}
-      <div className="border-t" style={{ borderColor: "var(--color-stone)" }}>
+      <div
+        className="relative z-10 border-t"
+        style={{ borderColor: "var(--color-stone)" }}
+      >
         <div className="container-content flex flex-col gap-5 py-6 pb-24 md:flex-row md:items-center md:justify-between md:pb-6">
           <nav aria-label={t.footer.pages}>
             <ul className="flex flex-wrap items-center gap-x-7 gap-y-2">
@@ -160,7 +157,7 @@ export function Footer() {
                 <li key={item.href}>
                   <Link
                     href={item.href}
-                    className="type-caption inline-block py-1.5 hover:text-ink"
+                    className="type-caption inline-flex min-h-11 items-center hover:text-ink"
                   >
                     {labels[item.key]}
                   </Link>
@@ -180,6 +177,9 @@ export function Footer() {
           </div>
         </div>
       </div>
+
+      {/* The materials, one last time, as the very bottom edge of the page. */}
+      <MaterialStrip height="0.375rem" />
     </footer>
   );
 }

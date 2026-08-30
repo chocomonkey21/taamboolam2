@@ -9,25 +9,67 @@ import { useSite } from "./SiteProvider";
 import { Wordmark } from "./Wordmark";
 
 /**
- * A floating oval header.
+ * The header: two small plates on the wall, one at each end of the page.
  *
- * Over the home page's hero it is transparent and light, so the photograph is
- * uninterrupted. As soon as the page moves it settles onto a warm, slightly
- * translucent ground. Enquire is the only filled control anywhere in it.
+ * It used to be a single centred oval that hugged its contents — which meant a
+ * translucent pill roughly 580px wide sat permanently over the MIDDLE of the
+ * page. On a site whose reading column is centred, that is exactly where the
+ * words are: captions, floor headings and body copy scrolled underneath it and
+ * were unreadable for the whole time they passed behind it. It was the single
+ * worst thing on the site and it was invisible in a static screenshot of the
+ * top of a page.
+ *
+ * Splitting it fixes that outright — the middle of the viewport is now clear
+ * from edge to edge — and it is also the better object: a nameplate by the
+ * door and a small set of controls, rather than one floating capsule that
+ * belongs to a web application.
  *
  * There is no hamburger. With three pages there is nothing worth hiding: on
- * small screens the header keeps the wordmark and the language, and Enquire
+ * small screens the plates keep the wordmark and the two links, and Enquire
  * lives in a persistent strip at the bottom of the screen where a thumb is.
  */
 export function Nav() {
   const pathname = usePathname();
   const { t } = useSite();
   const [scrolled, setScrolled] = useState(false);
+  const [retracted, setRetracted] = useState(false);
 
   const isHome = pathname === "/";
 
+  /**
+   * Two pieces of state from one listener.
+   *
+   * `scrolled` settles the plates onto a ground once the page has moved.
+   *
+   * `retracted` lifts them out of the way while the reader is going down the
+   * page, and puts them back the moment the reader goes up. A fixed header
+   * covers content by definition, and on a page whose reading column starts at
+   * the container's own left edge the nameplate lands squarely on the first
+   * words of every heading it passes. Retracting is the only fix that does not
+   * involve making the header worse: while you are reading it is not there,
+   * and the instant you look for it — which is an upward flick — it is.
+   *
+   * It never retracts near the top of the page, so the header a reader arrives
+   * to is always present, and never under reduced motion, where a control that
+   * comes and goes is a nuisance rather than an accommodation.
+   */
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 56);
+    const mayRetract = !window.matchMedia("(prefers-reduced-motion: reduce)")
+      .matches;
+    let last = window.scrollY;
+
+    const onScroll = () => {
+      const y = window.scrollY;
+      setScrolled(y > 56);
+      if (mayRetract) {
+        // A small threshold, so a trackpad's jitter at rest does not flicker it.
+        if (Math.abs(y - last) > 8) {
+          setRetracted(y > last && y > 240);
+          last = y;
+        }
+      }
+    };
+
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
@@ -42,25 +84,37 @@ export function Nav() {
     enquire: t.nav.enquire,
   };
 
+  const plate = `nav-plate rounded-full border ${
+    overHero ? "text-paper" : "text-ink"
+  }`;
+  const plateState = {
+    "data-scrolled": scrolled ? "true" : "false",
+    "data-over-hero": overHero ? "true" : "false",
+  } as const;
+
   return (
-    <header className="pointer-events-none fixed inset-x-0 top-0 z-50 pt-3 sm:pt-5">
+    <header
+      data-retracted={retracted ? "true" : "false"}
+      className="nav-header pointer-events-none fixed inset-x-0 top-0 z-50 pt-3 sm:pt-5"
+    >
       <div className="container-content">
         <nav
           aria-label={t.nav.mainLabel}
-          data-scrolled={scrolled ? "true" : "false"}
-          data-over-hero={overHero ? "true" : "false"}
-          /* The oval hugs its contents and centres, rather than stretching the
-             full width — a bar pinned to both edges is a chrome, and this is
-             meant to read as an object floating over the photograph. On small
-             screens it still spans, because there it genuinely is the width of
-             the content. */
-          className={`nav-shell pointer-events-auto mx-auto flex w-full items-center justify-between gap-4 rounded-full border py-2 pr-2 pl-4 sm:w-fit sm:gap-8 sm:py-2.5 sm:pr-2.5 sm:pl-7 ${
-            overHero ? "text-paper" : "text-ink"
-          }`}
+          className="flex items-center justify-between gap-3"
         >
-          <Wordmark />
+          {/* ── The nameplate ─────────────────────────────────────────── */}
+          <div
+            {...plateState}
+            className={`${plate} pointer-events-auto px-4 py-2 sm:px-5 sm:py-2.5`}
+          >
+            <Wordmark />
+          </div>
 
-          <div className="flex items-center gap-1 sm:gap-4">
+          {/* ── The controls ──────────────────────────────────────────── */}
+          <div
+            {...plateState}
+            className={`${plate} pointer-events-auto flex items-center gap-1 py-1 pr-2 pl-2 sm:gap-3 sm:py-2 sm:pr-2 sm:pl-5`}
+          >
             <ul className="hidden items-center gap-5 md:flex">
               {NAV_ITEMS.filter((item) => item.key !== "enquire").map((item) => {
                 const active =
@@ -75,7 +129,7 @@ export function Nav() {
                       className={`type-label border-b pb-0.5 transition-colors duration-200 ${
                         active
                           ? "border-current/60"
-                          : "border-transparent opacity-70 hover:opacity-100"
+                          : "border-transparent opacity-75 hover:opacity-100"
                       }`}
                     >
                       {labels[item.key]}
@@ -85,13 +139,17 @@ export function Nav() {
               })}
             </ul>
 
-            {/* On small screens the one page a reader might be looking for. */}
+            {/* On small screens the one page a reader might be looking for.
+                whitespace-nowrap is load-bearing: the plate is sized by its
+                contents, and at 390px "The Experience" wrapped to two lines,
+                which turned a small object on the wall into a tall lozenge
+                nearly touching the nameplate. */}
             <Link
               href="/experience"
               aria-current={
                 pathname.startsWith("/experience") ? "page" : undefined
               }
-              className="type-label border-b border-transparent py-2 pb-0.5 opacity-75 transition-opacity duration-200 hover:opacity-100 md:hidden"
+              className="type-label inline-flex min-h-11 items-center px-1.5 whitespace-nowrap opacity-80 transition-opacity duration-200 hover:opacity-100 md:hidden"
             >
               {t.nav.experience}
             </Link>

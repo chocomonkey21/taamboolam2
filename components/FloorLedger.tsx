@@ -1,7 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useRef, useState } from "react";
 import type { FloorId } from "@/lib/content";
 import type { PhotoId } from "@/lib/photos";
 import { Photo } from "./Photo";
@@ -15,70 +14,35 @@ const FLOORS: { id: FloorId; photo: PhotoId; atmosphere: string }[] = [
 ];
 
 /**
- * The four floors, read as a section through the building rather than as four
- * cards in a tray.
+ * The four floors, read as a section drawn through the building rather than as
+ * four cards in a tray.
  *
  * The house's defining fact is that it is stacked, and a row of equal tiles
  * throws that away — it says "four options" when the truth is "one house, four
- * levels". So each floor is a full-width stratum, separated by a hairline, and
- * each carries its own atmosphere token: the ground and the accent warm
- * measurably as the reader climbs, which is the same tonal move the Experience
- * page makes at full scale.
+ * levels". So each floor is a full-width stratum separated by a hairline, each
+ * carries its own atmosphere token so the ground and the accent warm
+ * measurably as the reader climbs, and each has a bearing line down its
+ * leading edge in that level's own colour (see .ledger-row in globals.css).
+ *
+ * The proportions changed here. The text column used to take all the leftover
+ * width and the photograph was pinned to a 13–18rem strip at the end, so every
+ * row had a long horizontal hole in the middle between a two-line description
+ * and a small picture. Now the text is capped at a readable measure and the
+ * photograph takes everything that is left, which closes the hole and lets the
+ * pictures do what they are there for: showing that the floors differ.
  *
  * Every floor gets identical treatment — same photo size, same type, same
  * space. None of them is presented as the good one.
+ *
+ * Nothing here is hidden and revealed. These four rows are the home page's
+ * route into the house; an observer that has not fired yet used to leave them
+ * as blank strips, and a stagger is not worth that.
  */
 export function FloorLedger() {
   const { t } = useSite();
-  const listRef = useRef<HTMLUListElement>(null);
-  const [shown, setShown] = useState(false);
-
-  /* One observer for the whole ledger rather than a Reveal per row, so the
-     four rows share a single trigger and their stagger stays in order however
-     fast the reader scrolls. Same reduced-motion and no-observer escape
-     hatches as Reveal: show everything at once and stop. */
-  useEffect(() => {
-    /* Armed first, before any early return. These four rows are the home
-       page's route into the house and their resting state is opacity 0, so a
-       path that skips the observer — a null ref, a zero-height viewport, a
-       browser that mis-measures a transformed ancestor — must still end with
-       them visible. Worst case they appear without the stagger, which is the
-       correct way for this to fail. */
-    const failsafe = window.setTimeout(() => setShown(true), 1500);
-    const done = () => window.clearTimeout(failsafe);
-
-    const node = listRef.current;
-    if (!node) return done;
-
-    if (
-      window.matchMedia("(prefers-reduced-motion: reduce)").matches ||
-      typeof IntersectionObserver === "undefined"
-    ) {
-      setShown(true);
-      return done;
-    }
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        for (const entry of entries) {
-          if (entry.isIntersecting) {
-            setShown(true);
-            observer.disconnect();
-          }
-        }
-      },
-      { threshold: 0.02, rootMargin: "0px 0px 12% 0px" },
-    );
-    observer.observe(node);
-
-    return () => {
-      observer.disconnect();
-      done();
-    };
-  }, []);
 
   return (
-    <ul ref={listRef} className="rule-atmos mt-12 border-t md:mt-16">
+    <ul className="rule-atmos mt-10 border-t md:mt-12">
       {FLOORS.map((floor, index) => {
         const copy = t.floors[floor.id];
         return (
@@ -89,25 +53,23 @@ export function FloorLedger() {
           >
             <Link
               href={`/experience#${floor.id}`}
-              /* Staggered, so the four rows arrive as a climb rather than as
-                 one block — the same order the house is read in. */
-              style={{ "--reveal-delay": `${index * 70}ms` } as React.CSSProperties}
-              data-shown={shown ? "true" : "false"}
-              className="reveal group grid grid-cols-[auto_1fr] items-center gap-x-5 gap-y-4 px-2 py-6 sm:gap-x-8 sm:py-7 md:grid-cols-[5.5rem_1fr_13rem] md:px-4 lg:grid-cols-[7rem_1fr_18rem]"
+              className="group grid grid-cols-[auto_1fr] items-center gap-x-5 gap-y-4 px-3 py-6 sm:gap-x-7 sm:py-7 md:grid-cols-[4.75rem_minmax(0,24rem)_1fr] md:px-5 lg:grid-cols-[6rem_minmax(0,26rem)_1fr]"
             >
-              {/* The floor number, at ledger scale. It is the anchor of the
-                  row and the only thing that changes size between breakpoints. */}
-              <span className="ledger-index" aria-hidden="true">
+              {/* The floor number, at the scale of the drawing rather than of
+                  a list marker. It is the anchor of the row. */}
+              <span className="type-numeral" aria-hidden="true">
                 {String(index + 1).padStart(2, "0")}
               </span>
 
               <span className="min-w-0">
-                <span className="type-h3 block">{copy.label}</span>
+                <span className="type-h3 block text-atmos-ink">
+                  {copy.label}
+                </span>
                 <span className="type-body mt-1.5 block text-ink-soft">
                   {copy.lead}
                 </span>
                 {copy.distinct.length > 0 ? (
-                  <span className="type-caption mt-2 block text-atmos-accent">
+                  <span className="type-caption mt-2.5 block text-atmos-accent">
                     {copy.distinct.join(" · ")}
                   </span>
                 ) : null}
@@ -118,8 +80,8 @@ export function FloorLedger() {
               <span className="col-span-2 block md:col-span-1">
                 <Photo
                   id={floor.photo}
-                  ratio="16 / 9"
-                  sizes="(min-width: 1024px) 18rem, (min-width: 768px) 13rem, 92vw"
+                  ratio="21 / 9"
+                  sizes="(min-width: 1024px) 34vw, (min-width: 768px) 30vw, 92vw"
                 />
               </span>
             </Link>

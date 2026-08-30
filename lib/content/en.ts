@@ -134,15 +134,14 @@ export const en: Content = {
     hero: {
       location: "Jayanagar, Bengaluru",
       description:
-        "A family home of four guest floors, kept as a homestay. Three rooms to a floor, a hall and kitchen shared only by that floor, and a balcony on every one.",
+        "A family home of four guest floors, kept as a homestay. Three rooms on each, taken one at a time, by enquiry.",
     },
 
     intro: {
       eyebrow: "What this is",
       heading: "A home, kept as a homestay",
       body: [
-        "Taamboolam is a house in Jayanagar that a family built and still cares for. It was not converted into a hotel and it does not behave like one. There is no front desk, no key card and no menu card.",
-        "What there is instead: four floors of guest rooms, each floor with its own hall, its own kitchen and its own balcony. You can book a single room. You can also, if you are enough people, end up with a whole floor to yourselves.",
+        "A house in Jayanagar that a family built and still cares for. It was not converted into a hotel and it does not behave like one: no front desk, no key card, no menu card.",
       ],
     },
 
@@ -157,8 +156,7 @@ export const en: Content = {
       eyebrow: "How it is made",
       heading: "Made slowly, by people, from materials that age well",
       body: [
-        "The surfaces here were chosen rather than specified. Athangudi tiles, made by hand and cured in the sun, carry small irregularities a machine would have corrected.",
-        "Much of the work was done by artisans the family has worked with before. That is why the house does not repeat itself: things were made one at a time, and it shows.",
+        "The surfaces were chosen rather than specified, and much of the work was done by artisans the family has worked with before. Athangudi tiles, made by hand and cured in the sun, carry small irregularities a machine would have corrected. Things were made one at a time, and it shows.",
       ],
     },
 
@@ -166,7 +164,7 @@ export const en: Content = {
       eyebrow: "Eating here",
       heading: "Food, if you ask for it",
       body: [
-        "Home-style meals, cooked on request by a kitchen the family has trusted for years. No restaurant, no menu on the wall. Or use the kitchen on your floor and cook for yourself — both are ordinary here.",
+        "Home-style meals, cooked on request by a kitchen the family has trusted for years. Or use the kitchen on your floor and cook for yourself.",
       ],
       note: "Arranged by request, in advance.",
     },
@@ -174,12 +172,12 @@ export const en: Content = {
     values: {
       eyebrow: "How the house is lived in",
       heading: "This suits some people more than others",
-      body: "We would rather say this plainly than have you find it out on arrival. Taamboolam is slow, quiet and rooted in its street. If that is what you are looking for, you will like it here.",
+      body: "Taamboolam is slow, quiet and rooted in its street. Better said plainly here than discovered on arrival.",
     },
 
     invitation: {
       heading: "Come and see whether it fits",
-      body: "Read the house floor by floor, or write to us. Either way, a person reads what you send and answers it themselves.",
+      body: "A person reads what you send, and answers it themselves.",
     },
   },
 
@@ -187,8 +185,7 @@ export const en: Content = {
     eyebrow: "The Experience",
     heading: "The whole house, from the door upwards",
     opening: [
-      "A house is not a set of rooms. It is a sequence: what you see from the street, what the stairwell does with the light, and how long it takes before you stop noticing that you are a guest.",
-      "Four guest floors, finished in different moods, and nobody has tried to even them out. None of them is the good floor.",
+      "A house is not a set of rooms. It is a sequence: what you see from the street, what the stairwell does with the light, and how long it takes before you stop noticing that you are a guest. Four guest floors, finished in different moods, and nobody has tried to even them out. None of them is the good floor.",
     ],
     progressLabel: "Reading progress",
     floorsIntro: "Four floors. Three rooms on each.",
@@ -199,8 +196,7 @@ export const en: Content = {
       heading: "A quiet extension of the house",
       body: [
         "Meals are not a service here, they are an offer. Home-style food can be arranged on request through a kitchen partner the family has worked with for years — the same cooking they would put on their own table.",
-        "Ask when you enquire, or ask once you are here. Nothing is automatic, which is the point: food arrives because somebody agreed to make it, not because a booking system added it to a total.",
-        "Every floor also has its own kitchen, and cooking is allowed. Many guests do both.",
+        "Ask when you enquire, or once you are here. Every floor also has its own kitchen, and cooking is allowed. Many guests do both.",
       ],
     },
 
@@ -208,8 +204,7 @@ export const en: Content = {
       eyebrow: "Gatherings",
       heading: "Occasionally, the house holds more than guests",
       body: [
-        "Sometimes the house is used for something other than a stay — a workshop, a small singing evening, a family occasion, a short creative retreat. Roughly twenty to twenty-five people is the size the house takes well.",
-        "These are never listed and never bookable. They happen because somebody wrote and asked, and because the fit was right for both sides.",
+        "Sometimes the house is used for something other than a stay — a workshop, a small singing evening, a family occasion. Roughly twenty to twenty-five people is the size it takes well. These are never listed and never bookable: they happen because somebody wrote and asked, and the fit was right for both sides.",
       ],
       note: "If you have something in mind, say so in your enquiry and describe it. Parties are the one thing the house does not do.",
     },
@@ -271,7 +266,7 @@ export const en: Content = {
     eyebrow: "House values",
     heading: "How the house is lived in",
     intro:
-      "None of this is unusual. It is written down so that nobody has to guess, and so that the people who would enjoy staying here can recognise themselves in it.",
+      "Written down so nobody has to guess, and so the people who would enjoy staying here can recognise themselves in it.",
     core: [
       {
         title: "No smoking",
@@ -347,6 +342,8 @@ export const en: Content = {
     landmark: "Next to Sampradha Hospitals and Sangeetha Mobiles.",
     mapLink: "Directions",
     mapPending: "The exact pin is still being confirmed.",
+    mapSchematic:
+      "A drawing of the block, not a survey. Use Directions for the route.",
     mapTitle: "Map of the neighbourhood around Taamboolam",
     address: "The address",
     reachUs: "Reach us",
@@ -365,7 +362,7 @@ export const en: Content = {
     heading: "Ask about staying",
     intro: [
       "There is no booking button on this site, and there will not be one. Rooms are given out by conversation.",
-      "Tell us who is coming and when. The owner reads every enquiry personally and replies to it themselves.",
+      "The owner reads every enquiry personally, and replies to it themselves.",
     ],
     noPrices:
       "This form does not show prices, does not check availability and does not confirm anything. It starts a conversation.",

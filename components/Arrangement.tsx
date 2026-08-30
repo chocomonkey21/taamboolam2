@@ -1,5 +1,6 @@
 "use client";
 
+import { Datum } from "./Datum";
 import { Photo } from "./Photo";
 import { Reveal } from "./Reveal";
 import { useSite } from "./SiteProvider";
@@ -8,111 +9,111 @@ import { useSite } from "./SiteProvider";
  * The plan of a floor, stated once for the whole site.
  *
  * Every floor is the same arrangement, so it is described here and nowhere
- * else. Previously each of the four chapters carried its own identical list of
- * facts — the same four lines, four times — which read as padding and made the
- * floors seem interchangeable when the point is that only their atmosphere
- * differs.
+ * else. Each of the four chapters used to carry its own identical list of the
+ * same four facts, which read as padding and made the floors seem
+ * interchangeable when the point is that only their atmosphere differs.
  *
  * Set as a numbered plan rather than a bulleted list: these are the parts of
- * one thing, not an unordered set of features.
+ * one thing, not an unordered set of features. The numerals are set in the
+ * display face and hung outside the text column, so the list reads as a
+ * schedule on a drawing rather than as an ordered list in a document.
  *
  * `compact` drops the photographs. The Experience page uses it, because the
  * two pictures here would be the third and fourth of that page's photographs
  * before the reader has reached a single floor — and they are already on the
- * home page. There the block runs wide instead, text against list.
+ * home page.
  */
 export function Arrangement({ compact = false }: { compact?: boolean }) {
   const { t } = useSite();
   const a = t.arrangement;
 
   const intro = (
-    <Reveal>
-      <p className="type-eyebrow">{a.eyebrow}</p>
-      <h2 className="type-h2 mt-5">{a.heading}</h2>
+    <>
+      <h2 className="type-h1 max-w-[14ch]">{a.heading}</h2>
       <p className="type-body measure mt-5 text-ink-soft">{a.body}</p>
-    </Reveal>
+    </>
   );
 
   const plan = (
-    <Reveal delay={90}>
-      <ol className="rule-atmos border-t">
-        {a.items.map((item, index) => (
-          <li
-            key={item}
-            className="rule-atmos flex items-baseline gap-4 border-b py-3.5"
+    <ol className="rule-atmos border-t">
+      {a.items.map((item, index) => (
+        <li
+          key={item}
+          className="rule-atmos flex items-baseline gap-5 border-b py-4"
+        >
+          <span
+            aria-hidden="true"
+            className="type-caption w-5 shrink-0 tabular-nums text-atmos-accent"
           >
-            <span
-              aria-hidden="true"
-              className="type-caption w-4 shrink-0 tabular-nums text-atmos-accent"
-            >
-              {index + 1}
-            </span>
-            <span className="type-body">{item}</span>
-          </li>
-        ))}
-      </ol>
-      <p className="type-caption mt-4">{a.sameNote}</p>
-    </Reveal>
+            {String(index + 1).padStart(2, "0")}
+          </span>
+          <span className="type-body">{item}</span>
+        </li>
+      ))}
+    </ol>
   );
 
-  const booking = (
-    <Reveal delay={150}>
-      <p className="type-lead max-w-[34ch]">{a.bookingNote}</p>
-    </Reveal>
-  );
+  /* The one thing in this block that changes what a reader does next, so it
+     is the only thing set at lead scale. */
+  const booking = <p className="type-lead max-w-[32ch]">{a.bookingNote}</p>;
 
   if (compact) {
     return (
-      <div className="grid gap-10 md:grid-cols-12 md:gap-10">
-        <div className="md:col-span-5">
-          {intro}
-          <div className="mt-8">{booking}</div>
+      <Datum note={a.eyebrow}>
+        <div className="grid gap-10 md:grid-cols-12 md:gap-8">
+          <div className="md:col-span-5">
+            {intro}
+            <div className="mt-8">{booking}</div>
+          </div>
+          <div className="md:col-span-6 md:col-start-7">
+            {plan}
+            <p className="type-caption mt-4">{a.sameNote}</p>
+          </div>
         </div>
-        <div className="md:col-span-6 md:col-start-7">{plan}</div>
-      </div>
+      </Datum>
     );
   }
 
   return (
-    <div className="grid gap-10 md:grid-cols-12 md:gap-10">
-      <div className="md:col-span-5">
-        {intro}
-        <div className="mt-8">{plan}</div>
-        <div className="mt-8">{booking}</div>
-      </div>
+    <Datum note={a.eyebrow}>
+      <div className="grid gap-10 md:grid-cols-12 md:gap-8">
+        <div className="md:col-span-5">
+          {intro}
+          <div className="mt-9">{plan}</div>
+          <p className="type-caption mt-4">{a.sameNote}</p>
+          <div className="mt-8">{booking}</div>
+        </div>
 
-      {/* Two photographs, overlapped rather than stacked.
-          The detail used to float alone at 68% width under the wide shot,
-          which left a hole to its left and read as an afterthought — it was
-          near the other picture without belonging to it. Pulling it up into
-          the wide shot's lower edge and letting it break the column's left
-          margin makes the pair one object: the detail is now clearly a
-          fragment of the room above it, and the overlap is what says so.
-          It stacks plainly below md, where there is no column to break out of
-          and an overlap would only crowd. */}
-      <div className="md:col-span-6 md:col-start-7">
-        {/* No caption on this one. Its caption reads "Each floor keeps its own
-            hall. It is shared only by that floor." — which is item 3 of the
-            numbered plan sitting directly beside it, said twice. Dropping it
-            also clears the space the overlapping detail below needs: with the
-            caption present the two collided, and the detail covered the first
-            half of the line. */}
-        <Reveal variant="photo">
-          <Photo id="stayingShared" sizes="(min-width: 768px) 46vw, 92vw" />
-        </Reveal>
-        <Reveal
-          variant="photo"
-          delay={90}
-          className="mt-6 w-[72%] md:-mt-16 md:-ml-14 md:w-[58%]"
-        >
-          <Photo
-            id="stayingBalcony"
-            ratio="4 / 3"
-            sizes="(min-width: 768px) 27vw, 66vw"
-            className="ring-4 ring-[var(--atmos-bg)]"
-          />
-        </Reveal>
+        {/* Two photographs, overlapped rather than stacked.
+            The detail used to float alone under the wide shot, which left a
+            hole to its left and read as an afterthought — it was near the
+            other picture without belonging to it. Pulling it up into the wide
+            shot's lower edge and letting it break the column's left margin
+            makes the pair one object: the detail is now clearly a fragment of
+            the room above it, and the overlap is what says so. It stacks
+            plainly below md, where there is no column to break out of and an
+            overlap would only crowd. */}
+        <div className="md:col-span-6 md:col-start-7">
+          <Reveal variant="photo">
+            <Photo id="stayingShared" sizes="(min-width: 768px) 46vw, 92vw" />
+          </Reveal>
+          <Reveal
+            variant="photo"
+            delay={90}
+            className="mt-6 w-[72%] md:-mt-20 md:-ml-16 md:w-[56%]"
+          >
+            <Photo
+              id="stayingBalcony"
+              ratio="4 / 3"
+              sizes="(min-width: 768px) 26vw, 66vw"
+              className="ring-8 ring-[var(--atmos-bg)]"
+            />
+          </Reveal>
+          <p className="type-caption mt-4 md:ml-[6%]">
+            {t.photos.stayingBalcony.caption}
+          </p>
+        </div>
       </div>
-    </div>
+    </Datum>
   );
 }

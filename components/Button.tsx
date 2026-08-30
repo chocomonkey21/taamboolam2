@@ -84,7 +84,7 @@ export function TextLink({
   return (
     <Link
       href={href}
-      className={`type-label inline-block py-1.5 text-clay-deep underline decoration-clay-deep/35 decoration-1 underline-offset-[7px] transition-colors duration-200 hover:decoration-clay-deep ${className}`}
+      className={`type-label inline-flex min-h-11 items-center text-clay-deep underline decoration-clay-deep/35 decoration-1 underline-offset-[7px] transition-colors duration-200 hover:decoration-clay-deep ${className}`}
     >
       {children}
     </Link>
