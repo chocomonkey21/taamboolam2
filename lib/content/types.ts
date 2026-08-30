@@ -13,12 +13,18 @@ export type FloorId = "floor1" | "floor2" | "floor3" | "floor4";
 export type FloorCopy = {
   /** "Floor 1" — never a theme name, never a room name. */
   label: string;
-  /** One line, shown under the label in the preview. */
+  /** One line, shown under the label in the preview and the ledger. */
   lead: string;
-  /** Two or three short paragraphs for the Experience chapter. */
+  /** What stays visible in the Experience chapter. One or two paragraphs. */
   body: string[];
-  /** Short factual lines: rooms, beds, shared spaces, balcony. */
-  facts: string[];
+  /** The rest, behind "More about this floor". May be empty. */
+  more: string[];
+  /**
+   * Only what this floor has that the shared arrangement does not already
+   * cover. Empty for floors that are simply the standard plan — the
+   * arrangement is stated once, for all four floors, and never repeated here.
+   */
+  distinct: string[];
 };
 
 export type ValueItem = { title: string; body: string };
@@ -65,15 +71,26 @@ export type Content = {
     close: string;
   };
 
+  /**
+   * The physical arrangement of a floor, stated once for the whole site.
+   *
+   * Every floor is the same plan, so it is described in one place and shown
+   * on both pages from here. Repeating it inside each of the four chapters is
+   * what made the Experience page read as four copies of one paragraph.
+   */
+  arrangement: {
+    eyebrow: string;
+    heading: string;
+    body: string;
+    /** Rooms, bed, shared hall and kitchen, balcony. Four short lines. */
+    items: string[];
+    sameNote: string;
+    bookingNote: string;
+  };
+
   home: {
     hero: { location: string; description: string };
     intro: { eyebrow: string; heading: string; body: string[] };
-    staying: {
-      eyebrow: string;
-      heading: string;
-      body: string;
-      points: ValueItem[];
-    };
     floors: {
       eyebrow: string;
       heading: string;
@@ -92,6 +109,8 @@ export type Content = {
     opening: string[];
     progressLabel: string;
     floorsIntro: string;
+    /** Summary label on each floor chapter's disclosure. */
+    floorMoreLabel: string;
     food: { eyebrow: string; heading: string; body: string[] };
     gatherings: {
       eyebrow: string;
@@ -109,9 +128,18 @@ export type Content = {
     eyebrow: string;
     heading: string;
     intro: string;
+    /**
+     * Order matters. The first five are the ones that decide whether this
+     * house suits a reader at all, and they are never disclosed away — they
+     * stay on the page. The rest sit behind `moreLabel`.
+     */
     house: ValueItem[];
+    moreLabel: string;
     practicalHeading: string;
+    practicalLabel: string;
     practical: string[];
+    /** Stays visible. How a room is got is not a detail. */
+    enquiryOnly: string;
     /** Rendered only when the matching value in lib/config.ts is filled in. */
     pendingBathrooms: string;
   };
@@ -122,6 +150,10 @@ export type Content = {
     landmark: string;
     mapLink: string;
     mapPending: string;
+    /** Accessible title on the map frame. */
+    mapTitle: string;
+    /** Heading over the address block. */
+    address: string;
     reachUs: string;
     whatsapp: string;
     email: string;

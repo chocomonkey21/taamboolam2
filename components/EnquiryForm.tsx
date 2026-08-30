@@ -1,6 +1,6 @@
 "use client";
 
-import { useId, useRef, useState } from "react";
+import { useEffect, useId, useRef, useState } from "react";
 import {
   emptyEnquiry,
   resolveErrors,
@@ -11,7 +11,7 @@ import {
   type VisitType,
 } from "@/lib/enquiry";
 import { Button } from "./Button";
-import { Field, RadioGroup } from "./Field";
+import { Field, RadioGroup, selectClass } from "./Field";
 import { useSite } from "./SiteProvider";
 import { TileGlyph } from "./TileMotif";
 
@@ -38,6 +38,18 @@ export function EnquiryForm() {
   >({});
   const [status, setStatus] = useState<Status>({ kind: "idle" });
   const summaryRef = useRef<HTMLDivElement>(null);
+  /**
+   * Bumped every time a submission is rejected. The focus move has to happen
+   * after React has committed the summary's new content, so it runs in an
+   * effect keyed on this counter rather than in a requestAnimationFrame from
+   * inside the submit handler — that fires before the commit, and the reader
+   * is left at the bottom of the form with no idea what went wrong.
+   */
+  const [rejectedAt, setRejectedAt] = useState(0);
+
+  useEffect(() => {
+    if (rejectedAt > 0) summaryRef.current?.focus();
+  }, [rejectedAt]);
 
   const isGathering = values.visitType === "gathering";
   const field = (name: string) => `${uid}-${name}`;
@@ -63,7 +75,7 @@ export function EnquiryForm() {
       setErrors(resolveErrors(found, t));
       setStatus({ kind: "idle" });
       // Move the reader to the explanation, not just to a red border.
-      requestAnimationFrame(() => summaryRef.current?.focus());
+      setRejectedAt((n) => n + 1);
       return;
     }
 
@@ -89,7 +101,7 @@ export function EnquiryForm() {
         };
         setErrors(resolveErrors(body.errors ?? {}, t));
         setStatus({ kind: "idle" });
-        requestAnimationFrame(() => summaryRef.current?.focus());
+        setRejectedAt((n) => n + 1);
         return;
       }
 
@@ -303,6 +315,7 @@ export function EnquiryForm() {
         {(props) => (
           <select
             {...props}
+            className={selectClass}
             name="floorPreference"
             value={values.floorPreference}
             onChange={(e) =>

@@ -34,6 +34,19 @@ export const site = {
     mapLink:
       "https://www.google.com/maps/search/?api=1&query=50-1+46th+Cross+Sarakki+Main+Road+8th+Block+Jayanagar+Bengaluru+560070",
     mapLinkIsPlaceholder: true,
+    /**
+     * The embedded map.
+     *
+     * This geocodes the confirmed address string — it does NOT assert a
+     * latitude and longitude we have not been given, so the panel cannot
+     * silently show a wrong pin. When the owner confirms the exact location,
+     * replace this with their own share link and set mapLinkIsPlaceholder to
+     * false; nothing else has to change.
+     *
+     * The frame is lazy-loaded and carries no cookies until it is scrolled to.
+     */
+    mapEmbed:
+      "https://www.google.com/maps?q=50-1,+46th+Cross,+Sarakki+Main+Road,+8th+Block,+Jayanagar,+Bengaluru+560070&output=embed",
   },
 } as const;
 

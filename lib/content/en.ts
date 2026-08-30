@@ -114,6 +114,21 @@ export const en: Content = {
     close: "Close",
   },
 
+  arrangement: {
+    eyebrow: "The arrangement",
+    heading: "A floor is a household",
+    body: "Every floor is the same plan. What changes between them is the light, the height and the materials — never the layout.",
+    items: [
+      "Three rooms",
+      "A queen bed in each, suitable for two adults",
+      "A hall and kitchen shared only by that floor",
+      "A balcony",
+    ],
+    sameNote: "The same on all four floors.",
+    bookingNote:
+      "Rooms are taken one at a time. With enough people, a floor becomes yours.",
+  },
+
   home: {
     hero: {
       location: "Jayanagar, Bengaluru",
@@ -130,34 +145,10 @@ export const en: Content = {
       ],
     },
 
-    staying: {
-      eyebrow: "What staying here means",
-      heading: "Rooms are taken one at a time",
-      body: "The arrangement is simple, and it is the same on every floor. Three rooms. A queen bed in each, suitable for two adults. A hall and a kitchen that belong to those three rooms and nobody else. A balcony.",
-      points: [
-        {
-          title: "One room, or several",
-          body: "Individual rooms can be booked. Tell us who is coming and we will suggest what fits.",
-        },
-        {
-          title: "Shared, but only by your floor",
-          body: "The hall and the kitchen on your floor are used by the guests staying on that floor, and by nobody else.",
-        },
-        {
-          title: "Cooking is allowed",
-          body: "The kitchen is a real kitchen. Use it. If you would rather not, meals can be arranged.",
-        },
-        {
-          title: "A balcony on every floor",
-          body: "Somewhere to stand in the morning with something hot, which is most of what a balcony is for.",
-        },
-      ],
-    },
-
     floors: {
       eyebrow: "The four floors",
       heading: "Four floors, each with its own temperature",
-      body: "Floors 1 and 2 are quiet and familiar — the parts of the house that feel most like an ordinary home. Floors 3 and 4 are where the materials speak louder: colour, natural surfaces and Athangudi tiles laid by hand.",
+      body: "Floors 1 and 2 are quiet and familiar. Floors 3 and 4 are where the materials speak louder — colour, natural surfaces, Athangudi tiles laid by hand.",
       link: "Walk through all four floors",
     },
 
@@ -165,9 +156,8 @@ export const en: Content = {
       eyebrow: "How it is made",
       heading: "Made slowly, by people, from materials that age well",
       body: [
-        "The surfaces in this house were chosen rather than specified. Athangudi tiles, made by hand and cured in the sun, carry small irregularities that a machine would have corrected. Wood, lime, stone and cotton were picked because they get better with use rather than worse.",
-        "Much of the work was done by artisans the family knows and has worked with before. That is why the house does not repeat itself: things were made one at a time, and it shows.",
-        "The house runs without single-use plastics. Guests are asked to keep it that way. Nothing here is fragile, but everything here was made by somebody, and it is treated that way.",
+        "The surfaces here were chosen rather than specified. Athangudi tiles, made by hand and cured in the sun, carry small irregularities a machine would have corrected.",
+        "Much of the work was done by artisans the family has worked with before. That is why the house does not repeat itself: things were made one at a time, and it shows.",
       ],
     },
 
@@ -175,10 +165,9 @@ export const en: Content = {
       eyebrow: "Eating here",
       heading: "Food, if you ask for it",
       body: [
-        "Home-style meals can be arranged on request, cooked by a kitchen partner the family has trusted for a long time. It is not a restaurant and there is no menu on the wall.",
-        "Tell us in advance what you would like and roughly when, and we will arrange it. Or use the kitchen on your floor and cook for yourself. Both are ordinary here.",
+        "Home-style meals, cooked on request by a kitchen the family has trusted for years. No restaurant, no menu on the wall. Or use the kitchen on your floor and cook for yourself — both are ordinary here.",
       ],
-      note: "Meals are arranged by request, in advance.",
+      note: "Arranged by request, in advance.",
     },
 
     values: {
@@ -197,12 +186,12 @@ export const en: Content = {
     eyebrow: "The Experience",
     heading: "The whole house, from the door upwards",
     opening: [
-      "A house is not a set of rooms. It is a sequence: what you see from the street, what the stairwell does with the light, which floor you end up on, and how long it takes before you stop noticing that you are a guest.",
-      "Taamboolam has four guest floors. They were finished in different moods and nobody has tried to even them out. Floors 1 and 2 are quiet and familiar. Floors 3 and 4 carry more colour and more visible material. None of them is the good floor.",
-      "What follows is the house in order. Read it the way you would climb it.",
+      "A house is not a set of rooms. It is a sequence: what you see from the street, what the stairwell does with the light, and how long it takes before you stop noticing that you are a guest.",
+      "Four guest floors, finished in different moods, and nobody has tried to even them out. None of them is the good floor.",
     ],
     progressLabel: "Reading progress",
     floorsIntro: "Four floors. Three rooms on each.",
+    floorMoreLabel: "More about this floor",
 
     food: {
       eyebrow: "Food",
@@ -236,60 +225,44 @@ export const en: Content = {
       lead: "The easiest floor to arrive on.",
       body: [
         "Floor 1 is deliberately unremarkable, and that is its strength. It is the floor that feels most like an ordinary, comfortable home — the kind you have stayed in before and did not have to learn.",
-        "Three rooms open off a shared hall. The hall has somewhere to sit and somewhere to put a cup down. The kitchen is next to it. The balcony faces outward, so you hear the neighbourhood before you see it.",
       ],
-      facts: [
-        "Three rooms",
-        "A queen bed in each room, suitable for two adults",
-        "Hall and kitchen shared only by this floor",
-        "Balcony",
+      more: [
+        "The hall has somewhere to sit and somewhere to put a cup down. The balcony faces outward, so you hear the neighbourhood before you see it.",
       ],
+      distinct: [],
     },
     floor2: {
       label: "Floor 2",
-      lead: "The same arrangement, one floor further from the street.",
+      lead: "The same plan, one floor further from the street.",
       body: [
-        "Floor 2 repeats the plan of Floor 1 and changes its atmosphere. It is a little quieter, being further from the road, and the light arrives later in the day and stays longer.",
-        "Again: three rooms, a hall and kitchen belonging to those rooms alone, and a balcony. Families and small groups often take this floor whole, because it is the easiest one to be a household on.",
+        "Quieter, being further from the road. The light arrives later in the day and stays longer.",
       ],
-      facts: [
-        "Three rooms",
-        "A queen bed in each room, suitable for two adults",
-        "Hall and kitchen shared only by this floor",
-        "Balcony",
+      more: [
+        "Families and small groups often take this floor whole, because it is the easiest one to be a household on.",
       ],
+      distinct: [],
     },
     floor3: {
       label: "Floor 3",
       lead: "Where the materials start speaking.",
       body: [
-        "Something changes on Floor 3. The surfaces get louder — not brighter exactly, but more present. Athangudi tiles run through the floors here, made by hand and cured in the sun, each one carrying the small irregularities of having been made rather than manufactured.",
+        "Something changes on Floor 3. The surfaces get louder — not brighter exactly, but more present. Athangudi tiles run through the floors here, each one carrying the small irregularities of having been made rather than manufactured.",
+      ],
+      more: [
         "The colour is warm and mineral: ochre, leaf green, oxide red, chalk white. It came out of the tiles and then spread to everything else. Guests who like this floor tend to like it immediately.",
-        "The plan does not change. Three rooms, a shared hall and kitchen for this floor only, a balcony. Only the temperature is different.",
       ],
-      facts: [
-        "Three rooms",
-        "A queen bed in each room, suitable for two adults",
-        "Athangudi tiles, laid by hand",
-        "Hall and kitchen shared only by this floor",
-        "Balcony",
-      ],
+      distinct: ["Athangudi tiles, laid by hand"],
     },
     floor4: {
       label: "Floor 4",
       lead: "The top of the house, and the most itself.",
       body: [
-        "Floor 4 is the highest floor guests use, and it is the one that commits hardest. More Athangudi tile, more colour, more natural material left visibly natural. The light up here is the best in the house and the balcony proves it.",
+        "The highest floor guests use, and the one that commits hardest. More tile, more colour, more natural material left visibly natural. The light up here is the best in the house and the balcony proves it.",
+      ],
+      more: [
         "It is also the quietest, being furthest from the door. People who come to work on something — writing, making, thinking — often ask for this floor by name.",
-        "Three rooms, as everywhere. A hall and kitchen shared only by this floor. A balcony.",
       ],
-      facts: [
-        "Three rooms",
-        "A queen bed in each room, suitable for two adults",
-        "Athangudi tiles, laid by hand",
-        "Hall and kitchen shared only by this floor",
-        "Balcony",
-      ],
+      distinct: ["Athangudi tiles, laid by hand"],
     },
   },
 
@@ -336,13 +309,16 @@ export const en: Content = {
         body: "This is a home on a residential street, not a base for a fast itinerary. Guests who enjoy it are the ones who slow down to meet it.",
       },
     ],
+    moreLabel: "More house values",
     practicalHeading: "Practical things",
+    practicalLabel: "The practical details",
     practical: [
       "The fifth floor is private and not normally accessible to guests.",
       "There is a lift, and there are stairs.",
       "Parking is available on the ground floor for small to medium vehicles, scooters and bikes.",
-      "Rooms are arranged by enquiry. There is no instant booking and no pricing on this site.",
     ],
+    enquiryOnly:
+      "Rooms are arranged by enquiry. There is no instant booking and no pricing on this site.",
     pendingBathrooms:
       "Bathroom arrangements are being confirmed with the owner. Ask in your enquiry and you will get a straight answer rather than a guess.",
   },
@@ -351,8 +327,10 @@ export const en: Content = {
     findUs: "Find us",
     heading: "Taamboolam",
     landmark: "Next to Sampradha Hospitals and Sangeetha Mobiles.",
-    mapLink: "Open in Google Maps",
+    mapLink: "Directions",
     mapPending: "The exact pin is still being confirmed.",
+    mapTitle: "Map of the neighbourhood around Taamboolam",
+    address: "The address",
     reachUs: "Reach us",
     whatsapp: "WhatsApp",
     email: "Email",

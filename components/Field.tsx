@@ -11,6 +11,18 @@ import { useCopy } from "./SiteProvider";
 export const controlClass =
   "type-body w-full rounded-sm border bg-paper px-4 py-3.5 text-ink transition-colors duration-200 placeholder:text-ink-soft/55 focus:border-clay";
 
+/**
+ * A <select> keeps its native menu — the platform's own picker is better on
+ * touch than anything rebuilt from divs, and it is keyboard-complete for free.
+ * Only the closed control is restyled: the default arrow is replaced with one
+ * drawn in the house's ink, so it matches the hairlines around it.
+ *
+ * The chevron itself lives in `.select-control` in globals.css. It has to:
+ * a data URI of that shape does not survive Tailwind's arbitrary-value parser,
+ * and silently produces a select with `appearance: none` and no arrow at all.
+ */
+export const selectClass = `${controlClass} select-control pr-11`;
+
 export function fieldBorder(error?: string) {
   return error ? "border-clay" : "border-ink-soft/70";
 }

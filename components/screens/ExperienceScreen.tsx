@@ -1,5 +1,6 @@
 "use client";
 
+import { Arrangement } from "../Arrangement";
 import { ButtonLink } from "../Button";
 import { ExperienceProgress } from "../ExperienceProgress";
 import { FLOOR_CHAPTERS, FloorChapter } from "../FloorChapter";
@@ -20,7 +21,9 @@ export function ExperienceScreen() {
     <>
       <ExperienceProgress />
 
-      {/* ── Opening ──────────────────────────────────────────────────────── */}
+      {/* ── Opening ──────────────────────────────────────────────────────
+          Atmosphere before practicalities: the title and the photograph land
+          first, and the only text above the image is the heading itself. */}
       <section
         className="texture-limewash relative bg-atmos"
         data-atmosphere="house"
@@ -32,11 +35,15 @@ export function ExperienceScreen() {
           </Reveal>
         </div>
 
-        <div className="container-content">
-          <Reveal variant="photo">
-            <Photo id="experienceOpening" sizes="100vw" />
-          </Reveal>
-        </div>
+        <Reveal variant="photo">
+          <Photo
+            id="experienceOpening"
+            ratio="21 / 9"
+            rounded={false}
+            sizes="100vw"
+            className="!min-h-[46svh]"
+          />
+        </Reveal>
 
         <div className="container-content section-rhythm">
           <div className="grid gap-10 md:grid-cols-12 md:gap-10">
@@ -64,6 +71,18 @@ export function ExperienceScreen() {
               </Reveal>
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* ── The arrangement ──────────────────────────────────────────────
+          Stated once, immediately before the chapters, so that none of the
+          four has to repeat it. */}
+      <section
+        className="texture-limewash relative bg-atmos-tint"
+        data-atmosphere="house"
+      >
+        <div className="container-content section-rhythm">
+          <Arrangement compact />
 
           <Reveal className="rule-atmos mt-14 border-t pt-6">
             <p className="type-eyebrow">{t.experience.floorsIntro}</p>
@@ -76,25 +95,48 @@ export function ExperienceScreen() {
         <FloorChapter key={spec.id} spec={spec} />
       ))}
 
-      {/* ── Food ─────────────────────────────────────────────────────────── */}
+      {/* ── Food ─────────────────────────────────────────────────────────
+          A still life rather than a facility. Two photographs at different
+          crops, the note set as a caption against them, and no attempt to
+          present a menu — because there is not one. */}
       <section className="bg-atmos" data-atmosphere="house">
         <div className="container-content section-rhythm">
-          <div className="grid gap-10 md:grid-cols-12 md:gap-10">
-            <div className="md:col-span-4">
-              <Reveal>
-                <p className="type-eyebrow">{t.experience.food.eyebrow}</p>
-                <h2 className="type-h2 mt-5">{t.experience.food.heading}</h2>
-              </Reveal>
-              <Reveal delay={90} className="mt-8">
-                <Photo id="foodDetail" sizes="(min-width: 768px) 30vw, 92vw" />
-              </Reveal>
-            </div>
-            <div className="md:col-span-7 md:col-start-6 md:pt-2">
+          <Reveal className="max-w-[40rem]">
+            <p className="type-eyebrow">{t.experience.food.eyebrow}</p>
+            <h2 className="type-h1 mt-6">{t.experience.food.heading}</h2>
+          </Reveal>
+
+          <div className="mt-12 grid gap-8 md:mt-16 md:grid-cols-12 md:gap-10">
+            <Reveal variant="photo" className="md:col-span-7">
+              <Photo
+                id="foodTable"
+                ratio="3 / 2"
+                sizes="(min-width: 768px) 56vw, 92vw"
+                caption="below"
+                zoomable
+              />
+            </Reveal>
+
+            <Reveal
+              variant="photo"
+              delay={110}
+              className="md:col-span-4 md:col-start-9 md:mt-24"
+            >
+              <Photo
+                id="foodDetail"
+                sizes="(min-width: 768px) 30vw, 92vw"
+                zoomable
+              />
+            </Reveal>
+          </div>
+
+          <div className="mt-12 grid gap-10 md:grid-cols-12 md:gap-10">
+            <div className="md:col-span-6 md:col-start-4">
               {t.experience.food.body.map((paragraph, index) => (
                 <Reveal key={index} delay={index * 70}>
                   <p
                     className={`text-ink-soft ${
-                      index === 0 ? "type-lead" : "type-body mt-6"
+                      index === 0 ? "type-lead" : "type-body mt-5"
                     }`}
                   >
                     {paragraph}
