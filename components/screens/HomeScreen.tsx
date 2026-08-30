@@ -51,11 +51,25 @@ export function HomeScreen() {
                 "linear-gradient(to top, rgb(22 17 12 / 0.95) 0%, rgb(22 17 12 / 0.93) 30%, rgb(22 17 12 / 0.88) 48%, rgb(22 17 12 / 0.72) 62%, rgb(22 17 12 / 0.40) 76%, rgb(22 17 12 / 0) 93%)",
             }}
           />
+          {/* A third, radial scrim, centred on where the text now sits since
+              it moved to the middle of the frame. It is a vignette, not a
+              light — the same dark ink as the two linear scrims above, just
+              pooled rather than banded — so the edges of the photograph stay
+              a little brighter than the centre and the eye has somewhere to
+              rest under the name. */}
+          <div
+            aria-hidden="true"
+            className="absolute inset-0"
+            style={{
+              background:
+                "radial-gradient(ellipse 62% 48% at 50% 86%, rgb(22 17 12 / 0.5), transparent 72%)",
+            }}
+          />
         </div>
 
         <div className="relative container-content pb-24 sm:pb-20 md:pb-28">
           <div
-            className="max-w-[46rem] text-paper"
+            className="mx-auto max-w-[46rem] text-center text-paper"
             /* A last guarantee for the wordmark. The scrim already carries the
                contrast; this only matters if a future photograph puts something
                bright directly behind the name, and it is invisible when the
@@ -79,13 +93,13 @@ export function HomeScreen() {
             </Reveal>
 
             <Reveal delay={180}>
-              <p className="type-lead mt-5 max-w-[38rem] text-paper/92">
+              <p className="type-lead mx-auto mt-5 max-w-[38rem] text-paper/92">
                 {t.home.hero.description}
               </p>
             </Reveal>
 
             <Reveal delay={260}>
-              <div className="mt-9 flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-4">
+              <div className="mt-9 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-center sm:gap-4">
                 <ButtonLink href="/enquire">{t.cta.enquire}</ButtonLink>
                 <ButtonLink href="/experience" variant="outline">
                   {t.cta.explore}

@@ -5,9 +5,6 @@ import { Disclosure } from "./Disclosure";
 import { Reveal } from "./Reveal";
 import { useSite } from "./SiteProvider";
 
-/** The values that decide whether this house suits a reader. Never disclosed. */
-const ALWAYS_VISIBLE = 5;
-
 /**
  * The house values, shared by the home page and the Experience page.
  *
@@ -16,12 +13,13 @@ const ALWAYS_VISIBLE = 5;
  * that they are warned.
  *
  * What is disclosed and what is not is a deliberate line, not a space-saving
- * one. The first five — smoking, children and pets, noise, parties, cooking —
- * are the ones somebody might turn back at, so they stay on the page whatever
- * happens. The rest are the house explaining itself, and they sit behind a
- * summary that says exactly what it holds. The same rule governs the practical
- * block: lift, parking and the private fifth floor can be asked for, but how a
- * room is actually got is never folded away.
+ * one. `t.values.core` — smoking, parties, children and pets — are the ones
+ * somebody might actually turn back at, so they stay on the page whatever
+ * happens. Everything else the house has to say about itself sits behind
+ * named groups instead of one flat "more" dump, so a reader disclosing one
+ * knows what they are about to get, not just that there is more. The same
+ * rule governs the practical block: lift, parking and the private fifth floor
+ * can be asked for, but how a room is actually got is never folded away.
  *
  * The bathroom line only appears once the owner has confirmed what it should
  * say — see lib/config.ts. Until then the layout carries an honest note in its
@@ -43,16 +41,11 @@ export function HouseValues({
   const bathrooms = provisional.bathrooms?.[locale] ?? null;
   const occupancy = provisional.occupancyNote?.[locale] ?? null;
 
-  const core = t.values.house.slice(0, ALWAYS_VISIBLE);
-  const rest = t.values.house.slice(ALWAYS_VISIBLE);
   const embedded = variant === "embedded";
+  const colClass = embedded ? "sm:grid-cols-2 lg:grid-cols-3" : "sm:grid-cols-2";
 
   return (
-    <div
-      className={
-        embedded ? "" : "grid gap-12 md:grid-cols-12 md:gap-10"
-      }
-    >
+    <div className={embedded ? "" : "grid gap-12 md:grid-cols-12 md:gap-10"}>
       {!embedded ? (
         <div className="md:col-span-4">
           <p className="type-eyebrow">{t.values.eyebrow}</p>
@@ -64,15 +57,11 @@ export function HouseValues({
       ) : null}
 
       <div className={embedded ? "" : "md:col-span-7 md:col-start-6"}>
-        <dl
-          className={`grid gap-x-10 gap-y-7 sm:grid-cols-2 ${
-            embedded ? "lg:grid-cols-3" : ""
-          }`}
-        >
-          {core.map((item, index) => (
+        <dl className={`grid gap-x-10 gap-y-7 ${colClass}`}>
+          {t.values.core.map((item, index) => (
             <Reveal
               key={item.title}
-              delay={Math.min(index, 4) * 45}
+              delay={index * 45}
               className="rule-atmos border-t pt-4"
             >
               <dt className="type-label">{item.title}</dt>
@@ -82,14 +71,10 @@ export function HouseValues({
         </dl>
 
         <div className="mt-10">
-          {rest.length > 0 ? (
-            <Disclosure label={t.values.moreLabel}>
-              <dl
-                className={`grid gap-x-10 gap-y-6 sm:grid-cols-2 ${
-                  embedded ? "lg:grid-cols-3" : ""
-                }`}
-              >
-                {rest.map((item) => (
+          {t.values.groups.map((group) => (
+            <Disclosure key={group.label} label={group.label}>
+              <dl className={`grid gap-x-10 gap-y-6 ${colClass}`}>
+                {group.items.map((item) => (
                   <div key={item.title}>
                     <dt className="type-label">{item.title}</dt>
                     <dd className="type-body mt-1.5 text-ink-soft">
@@ -99,7 +84,7 @@ export function HouseValues({
                 ))}
               </dl>
             </Disclosure>
-          ) : null}
+          ))}
 
           {!compact ? (
             <Disclosure label={t.values.practicalLabel}>

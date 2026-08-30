@@ -4,10 +4,14 @@ import type { ComponentProps, ReactNode } from "react";
 /**
  * Two actions and one link, and no third variant. The solid clay button is the
  * strongest thing on any screen and there is never more than one of it in view.
+ *
+ * Pill-shaped (rounded-full) to match the nav's own Enquire control, which was
+ * the one button on the site already built that way. A button had two
+ * different corner treatments depending on where it happened to sit; this is
+ * the one place that decides the shape for both.
  */
-
 const base =
-  "type-label inline-flex items-center justify-center gap-2 rounded-sm px-7 py-3.5 text-center transition-[background-color,border-color,color,transform] duration-200 active:translate-y-px disabled:cursor-not-allowed disabled:opacity-60 disabled:active:translate-y-0";
+  "type-label inline-flex items-center justify-center gap-2 rounded-full px-7 py-3.5 text-center transition-[background-color,border-color,color,transform] duration-200 active:translate-y-px disabled:cursor-not-allowed disabled:opacity-60 disabled:active:translate-y-0";
 
 const variants = {
   solid: "bg-clay text-paper hover:bg-clay-deep",

@@ -271,45 +271,56 @@ export const en: Content = {
     heading: "How the house is lived in",
     intro:
       "None of this is unusual. It is written down so that nobody has to guess, and so that the people who would enjoy staying here can recognise themselves in it.",
-    house: [
+    core: [
       {
         title: "No smoking",
         body: "Anywhere inside the house.",
-      },
-      {
-        title: "Pets and children are welcome",
-        body: "Both. Tell us who is coming so we can suggest the right floor.",
-      },
-      {
-        title: "Keep the noise down",
-        body: "Other people are living here at the same time, on other floors. Ordinary conversation is fine; carrying voices at midnight are not.",
       },
       {
         title: "No parties",
         body: "Small gatherings can be arranged in advance. Parties cannot, and this is not negotiable.",
       },
       {
-        title: "Cooking is allowed",
-        body: "Every floor has a kitchen and it is meant to be used.",
-      },
-      {
-        title: "Outside visitors need prior approval",
-        body: "Ask before somebody who is not staying comes up. It is usually fine. It is never fine unannounced.",
-      },
-      {
-        title: "No single-use plastics",
-        body: "The house runs without them. Please help it keep doing that.",
-      },
-      {
-        title: "Treat the house as made, not bought",
-        body: "The tiles, the wood, the objects and the surfaces were made by people, mostly by hand. Live with them normally, but notice them.",
-      },
-      {
-        title: "A slower way of staying",
-        body: "This is a home on a residential street, not a base for a fast itinerary. Guests who enjoy it are the ones who slow down to meet it.",
+        title: "Pets and children are welcome",
+        body: "Both. Tell us who is coming so we can suggest the right floor.",
       },
     ],
-    moreLabel: "More house values",
+    groups: [
+      {
+        label: "More house values",
+        items: [
+          {
+            title: "Keep the noise down",
+            body: "Other people are living here at the same time, on other floors. Ordinary conversation is fine; carrying voices at midnight are not.",
+          },
+          {
+            title: "Outside visitors need prior approval",
+            body: "Ask before somebody who is not staying comes up. It is usually fine. It is never fine unannounced.",
+          },
+          {
+            title: "No single-use plastics",
+            body: "The house runs without them. Please help it keep doing that.",
+          },
+        ],
+      },
+      {
+        label: "The house's character",
+        items: [
+          {
+            title: "Cooking is allowed",
+            body: "Every floor has a kitchen and it is meant to be used.",
+          },
+          {
+            title: "Treat the house as made, not bought",
+            body: "The tiles, the wood, the objects and the surfaces were made by people, mostly by hand. Live with them normally, but notice them.",
+          },
+          {
+            title: "A slower way of staying",
+            body: "This is a home on a residential street, not a base for a fast itinerary. Guests who enjoy it are the ones who slow down to meet it.",
+          },
+        ],
+      },
+    ],
     practicalHeading: "Practical things",
     practicalLabel: "The practical details",
     practical: [

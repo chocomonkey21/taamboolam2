@@ -129,12 +129,17 @@ export type Content = {
     heading: string;
     intro: string;
     /**
-     * Order matters. The first five are the ones that decide whether this
-     * house suits a reader at all, and they are never disclosed away — they
-     * stay on the page. The rest sit behind `moreLabel`.
+     * The ones that decide whether this house suits a reader at all — never
+     * disclosed away, whatever else changes.
      */
-    house: ValueItem[];
-    moreLabel: string;
+    core: ValueItem[];
+    /**
+     * The rest, sorted into named groups rather than one flat "more" dump.
+     * Each becomes its own disclosure, in order. A group is free to hold one
+     * item or several; this is the shape any future long list on the site
+     * should reuse rather than inventing another flat array.
+     */
+    groups: { label: string; items: ValueItem[] }[];
     practicalHeading: string;
     practicalLabel: string;
     practical: string[];
