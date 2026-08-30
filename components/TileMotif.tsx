@@ -1,11 +1,10 @@
 /**
- * Geometric motif — a four-petal centre inside a square, with quarter-arcs cut
- * into each corner. Drawn from an Athangudi tile, which was the agreed VISUAL
- * reference for this site. The tiles are not a feature of the homestay, so
- * this is ornament only: never write copy about tiles, craft or artisans.
+ * The tile motif — a four-petal centre in a square, with quarter-arcs cut into
+ * the corners. Drawn from Athangudi tile traditions, which are a real material
+ * in this house (Floors 3 and 4), so the ornament and the building agree.
  *
- * Used as a quiet signature — a hairline section divider, and a watermark on
- * photo placeholders. Never as a full-page pattern; that reads as wallpaper.
+ * It is drawn slightly off-true on purpose. Handmade tiles are not identical
+ * and a perfectly regular field would say the opposite of what the house says.
  */
 export function TileGlyph({ className = "" }: { className?: string }) {
   return (
@@ -13,39 +12,69 @@ export function TileGlyph({ className = "" }: { className?: string }) {
       viewBox="0 0 100 100"
       fill="none"
       stroke="currentColor"
-      strokeWidth={1.25}
+      strokeWidth={1.4}
+      strokeLinejoin="round"
       className={className}
       aria-hidden="true"
       focusable="false"
     >
-      <rect x="6" y="6" width="88" height="88" />
-      <path d="M6 38a32 32 0 0 0 32-32M62 6a32 32 0 0 0 32 32M94 62a32 32 0 0 0-32 32M38 94A32 32 0 0 0 6 62" />
-      <path d="M50 22c8 12 16 20 28 28-12 8-20 16-28 28-8-12-16-20-28-28 12-8 20-16 28-28Z" />
-      <circle cx="50" cy="50" r="7" />
+      <rect x="6" y="5.5" width="88" height="89" />
+      <path d="M6 37.5a31.5 31.5 0 0 0 31.5-32M62.5 5.5A32 32 0 0 0 94 38M94 62a32 32 0 0 0-31.5 32.5M37.5 94.5A31 31 0 0 0 6 62.5" />
+      <path d="M50.5 21.5c7.8 12.2 15.8 20 28 28-12.2 8-20.2 15.8-28 28-8-12.2-16-20-28-28 12-8 20-15.8 28-28Z" />
+      <circle cx="50" cy="49.5" r="7.2" />
     </svg>
   );
 }
 
 /**
- * A hairline strip of the repeated tile line-motif, used only between major
- * sections. The motif is a CSS mask so its colour comes from a token rather
- * than being baked into the artwork. See `.tile-rule` in globals.css.
+ * A hairline rule carrying a slice of the motif. Used between major sections.
+ * The artwork is a CSS mask, so its colour always comes from a token.
  */
-export function TileDivider({
-  tone = "primary",
+export function TileRule({
   className = "",
+  tone = "rule",
 }: {
-  tone?: "primary" | "secondary";
   className?: string;
+  /** "rule" follows the current atmosphere; "accent" is deliberately louder. */
+  tone?: "rule" | "accent";
 }) {
   return (
-    <div className={`container-content ${className}`} role="presentation">
-      <div
-        className={`tile-rule ${
-          tone === "primary" ? "bg-accent-primary" : "bg-accent-secondary"
-        }`}
-        aria-hidden="true"
-      />
-    </div>
+    <div
+      className={`tile-rule ${className}`}
+      style={{
+        backgroundColor:
+          tone === "accent" ? "var(--atmos-accent)" : "var(--atmos-rule)",
+        opacity: tone === "accent" ? 0.55 : 0.85,
+      }}
+      aria-hidden="true"
+    />
+  );
+}
+
+/**
+ * A soft-edged field of the pattern, for the corner of a section. Never behind
+ * body text, and never at full strength — it is a watermark, not wallpaper.
+ */
+export function TileField({
+  className = "",
+  opacity = 0.09,
+}: {
+  className?: string;
+  opacity?: number;
+}) {
+  return (
+    <div
+      aria-hidden="true"
+      className={`tile-field pointer-events-none absolute ${className}`}
+      style={{
+        opacity,
+        color: "var(--atmos-accent)",
+        backgroundBlendMode: "multiply",
+        maskImage:
+          "radial-gradient(ellipse at center, rgb(0 0 0 / 1), transparent 72%)",
+        WebkitMaskImage:
+          "radial-gradient(ellipse at center, rgb(0 0 0 / 1), transparent 72%)",
+      }}
+    />
   );
 }

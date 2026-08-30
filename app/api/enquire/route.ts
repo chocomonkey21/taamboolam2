@@ -1,19 +1,16 @@
 import { NextResponse } from "next/server";
-import { Resend } from "resend";
+import { content, isLocale } from "@/lib/content";
 import {
   emptyEnquiry,
   formatDate,
   validateEnquiry,
   type EnquiryFields,
 } from "@/lib/enquiry";
+import { isDryRun, sendMail } from "@/lib/mailer";
 import { site } from "@/lib/site";
 import { tokens } from "@/lib/tokens";
 
 export const runtime = "nodejs";
-
-const TO = process.env.ENQUIRY_TO_EMAIL ?? site.contact.email;
-const FROM =
-  process.env.ENQUIRY_FROM_EMAIL ?? `Taamboolam <enquiries@taamboolam.com>`;
 
 function escapeHtml(value: string): string {
   return value
@@ -23,11 +20,11 @@ function escapeHtml(value: string): string {
     .replace(/"/g, "&quot;");
 }
 
-/** Shared shell so both emails look like they came from the same house. */
+/** One shell, so both emails read as coming from the same house. */
 function wrap(body: string): string {
-  return `<div style="background:${tokens.background};padding:32px 16px;font-family:Helvetica,Arial,sans-serif;color:${tokens.foreground};line-height:1.6">
-  <div style="max-width:560px;margin:0 auto;background:${tokens.background}">
-    <p style="margin:0 0 28px;font-size:13px;letter-spacing:0.18em;text-transform:uppercase;color:${tokens.foregroundMuted}">Taamboolam</p>
+  return `<div style="background:${tokens.paper};padding:32px 16px;font-family:Helvetica,Arial,sans-serif;color:${tokens.ink};line-height:1.6">
+  <div style="max-width:560px;margin:0 auto">
+    <p style="margin:0 0 28px;font-size:12px;letter-spacing:0.22em;text-transform:uppercase;color:${tokens.inkSoft}">Taamboolam</p>
     ${body}
   </div>
 </div>`;
@@ -35,118 +32,121 @@ function wrap(body: string): string {
 
 function row(label: string, value: string): string {
   return `<tr>
-    <td style="padding:10px 16px 10px 0;vertical-align:top;color:${tokens.foregroundMuted};font-size:14px;white-space:nowrap">${escapeHtml(label)}</td>
-    <td style="padding:10px 0;vertical-align:top;font-size:15px">${escapeHtml(value)}</td>
+    <td style="padding:9px 16px 9px 0;vertical-align:top;color:${tokens.inkSoft};font-size:14px;white-space:nowrap">${escapeHtml(label)}</td>
+    <td style="padding:9px 0;vertical-align:top;font-size:15px">${escapeHtml(value)}</td>
   </tr>`;
 }
 
 export async function POST(request: Request) {
   let payload: Partial<EnquiryFields>;
   try {
-    payload = await request.json();
+    payload = (await request.json()) as Partial<EnquiryFields>;
   } catch {
     return NextResponse.json({ error: "Malformed request." }, { status: 400 });
   }
 
   const values: EnquiryFields = { ...emptyEnquiry, ...payload };
 
-  // Honeypot: a bot filled a field no person can see. Accept and drop it, so
-  // the bot does not learn anything from the response.
+  // A bot filled in a field no person can see. Accept and drop it silently, so
+  // the bot learns nothing from the response.
   if (values.website.trim()) {
-    return NextResponse.json({ ok: true });
+    return NextResponse.json({ ok: true, delivered: true });
   }
 
+  // The same validator the browser ran. Never trust that it did.
   const errors = validateEnquiry(values);
   if (Object.keys(errors).length > 0) {
     return NextResponse.json({ errors }, { status: 422 });
   }
 
+  const guestLocale = isLocale(values.locale) ? values.locale : "en";
+  const guestCopy = content[guestLocale];
+  // The owner's copy is always in English, whichever language the guest used.
+  const owner = content.en;
+
   const name = values.name.trim();
   const email = values.email.trim();
-  const message = values.message.trim();
+
+  const visitLabel = {
+    stay: owner.form.visitStay,
+    gathering: owner.form.visitGathering,
+    other: owner.form.visitOther,
+  }[values.visitType];
+
+  const floorLabel =
+    values.floorPreference === "any"
+      ? owner.form.floorAny
+      : owner.floors[values.floorPreference].label;
 
   const details = `<table style="border-collapse:collapse;width:100%;margin:0 0 24px">
     ${row("Name", name)}
     ${row("Email", email)}
-    ${row("Phone", values.phone.trim() || "Not given")}
+    ${row("Phone", values.phone.trim())}
     ${row("Arriving", formatDate(values.arrival))}
     ${row("Leaving", formatDate(values.departure))}
-    ${row("Guests", values.guests)}
+    ${row("Adults", values.adults)}
+    ${row("Children", values.children)}
+    ${row("Visit type", visitLabel)}
+    ${row("Floor preference", floorLabel)}
+    ${row("WhatsApp", values.whatsappConsent ? "Yes, may be contacted" : "Not consented")}
+    ${row("Wrote in", guestCopy.localeName)}
   </table>`;
 
-  const toRadha = wrap(
-    `<h1 style="margin:0 0 24px;font-size:24px;font-weight:500">New enquiry from ${escapeHtml(name)}</h1>
+  const freeText =
+    values.visitType === "gathering"
+      ? { label: "About the gathering", body: values.gatheringDetails.trim() }
+      : { label: "Message", body: values.message.trim() };
+
+  const toOwner = wrap(
+    `<h1 style="margin:0 0 6px;font-size:23px;font-weight:500">Enquiry from ${escapeHtml(name)}</h1>
+     <p style="margin:0 0 24px;font-size:14px;color:${tokens.inkSoft}">${escapeHtml(visitLabel)}</p>
      ${details}
-     <p style="margin:0 0 8px;font-size:13px;letter-spacing:0.18em;text-transform:uppercase;color:${tokens.foregroundMuted}">Message</p>
-     <p style="margin:0;white-space:pre-wrap;font-size:15px">${escapeHtml(message) || "<span style='color:${tokens.foregroundMuted}'>No message.</span>"}</p>
-     <p style="margin:32px 0 0"><a href="mailto:${escapeHtml(email)}" style="color:${tokens.accentPrimary}">Reply to ${escapeHtml(name)}</a></p>`,
+     <p style="margin:0 0 8px;font-size:12px;letter-spacing:0.22em;text-transform:uppercase;color:${tokens.inkSoft}">${escapeHtml(freeText.label)}</p>
+     <p style="margin:0;white-space:pre-wrap;font-size:15px">${escapeHtml(freeText.body) || "—"}</p>
+     <p style="margin:32px 0 0"><a href="mailto:${escapeHtml(email)}" style="color:${tokens.clay}">Reply to ${escapeHtml(name)}</a></p>`,
   );
 
-  const toGuest = wrap(
-    `<h1 style="margin:0 0 24px;font-size:24px;font-weight:500">Thank you, ${escapeHtml(name.split(" ")[0])}.</h1>
-     <p style="margin:0 0 20px;font-size:16px">Your message reached us. ${site.host} reads every enquiry herself and usually writes back within a day.</p>
-     <p style="margin:0 0 28px;font-size:16px">Here is what you sent, so you have a copy.</p>
-     ${details}
-     ${message ? `<p style="margin:0 0 8px;font-size:13px;letter-spacing:0.18em;text-transform:uppercase;color:${tokens.foregroundMuted}">Your message</p><p style="margin:0 0 28px;white-space:pre-wrap;font-size:15px">${escapeHtml(message)}</p>` : ""}
-     <p style="margin:0;font-size:16px">If you would rather talk, call or send a message on WhatsApp: ${escapeHtml(site.contact.phone)}.</p>`,
-  );
+  const result = await sendMail({
+    subject: `Enquiry from ${name} — ${values.adults} adult${values.adults === "1" ? "" : "s"}, ${values.children} ${values.children === "1" ? "child" : "children"}`,
+    html: toOwner,
+    replyTo: email,
+  });
 
-  const apiKey = process.env.RESEND_API_KEY;
+  if (result.status === "unconfigured") {
+    // Honest: nothing was sent, and the UI says so and offers a direct address.
+    return NextResponse.json({ error: "unconfigured" }, { status: 503 });
+  }
 
-  if (!apiKey) {
-    // No key configured. In development that is expected, so log the enquiry
-    // and let the flow be testable. In production it is a real failure.
-    if (process.env.NODE_ENV === "production") {
-      console.error("RESEND_API_KEY is not set. Enquiry was not delivered.");
-      return NextResponse.json(
-        { error: "Email is not configured." },
-        { status: 500 },
-      );
-    }
-    console.info("[enquiry — not sent, no RESEND_API_KEY]", {
-      name,
-      email,
-      phone: values.phone,
-      arrival: values.arrival,
-      departure: values.departure,
-      guests: values.guests,
-      message,
+  if (result.status === "failed") {
+    return NextResponse.json({ error: "failed" }, { status: 502 });
+  }
+
+  if (result.status === "dry-run") {
+    console.info("[enquiry: dry run]", {
+      ...values,
+      website: undefined,
     });
     return NextResponse.json({ ok: true, delivered: false });
   }
 
-  try {
-    const resend = new Resend(apiKey);
+  // The guest's copy is a courtesy in their own language. If it fails, the
+  // enquiry still reached the owner, so it does not fail the request.
+  const guestConfirmation = wrap(
+    `<h1 style="margin:0 0 20px;font-size:23px;font-weight:500">${escapeHtml(guestCopy.form.successHeading)}</h1>
+     <p style="margin:0 0 24px;font-size:16px">${escapeHtml(guestCopy.form.successBody)}</p>
+     ${details}
+     <p style="margin:0;font-size:15px">${escapeHtml(site.contact.phone)} · ${escapeHtml(site.contact.email)}</p>`,
+  );
 
-    const sent = await resend.emails.send({
-      from: FROM,
-      to: TO,
-      replyTo: email,
-      subject: `Enquiry from ${name} — ${values.guests} guest${values.guests === "1" ? "" : "s"}`,
-      html: toRadha,
-    });
+  const copySent = await sendMail({
+    to: email,
+    subject: `${guestCopy.form.successHeading} — Taamboolam`,
+    html: guestConfirmation,
+  });
 
-    if (sent.error) {
-      console.error("Resend failed to deliver the enquiry.", sent.error);
-      return NextResponse.json({ error: "Could not send." }, { status: 502 });
-    }
-
-    // The guest's copy is a courtesy. If it fails, the enquiry still landed,
-    // so do not fail the request over it.
-    const confirmation = await resend.emails.send({
-      from: FROM,
-      to: email,
-      subject: "We have your message — Taamboolam",
-      html: toGuest,
-    });
-
-    if (confirmation.error) {
-      console.error("Confirmation email failed.", confirmation.error);
-    }
-
-    return NextResponse.json({ ok: true, delivered: true });
-  } catch (error) {
-    console.error("Unexpected error while sending the enquiry.", error);
-    return NextResponse.json({ error: "Could not send." }, { status: 502 });
+  if (copySent.status === "failed") {
+    console.error("The guest's confirmation copy did not send.");
   }
+
+  return NextResponse.json({ ok: true, delivered: !isDryRun() });
 }

@@ -1,85 +1,136 @@
-# Content checklist — for Radha
+# For the owner — what the site needs from you
 
-The site is written in the agreed tone of voice: short sentences, plain words,
-nothing flowery. Everything below is either waiting on you or needs a yes/no
-before we go live.
+Everything below is either waiting on you, or is a placeholder that must be
+replaced before the site goes live. Nothing on this list requires a developer:
+each item names the one file it lives in.
 
-## 1. Claims the site makes that we need you to confirm
+---
 
-We wrote the pages as if these are true, because vague copy reads worse than
-specific copy. If any of them is wrong, tell us and we will change the line.
+## 1. Things that are still placeholders
 
-**The house**
+These are **wrong on purpose** — they are stand-ins, and they are obvious so
+they cannot be shipped by accident.
 
-- [ ] Guest rooms have a bed, a fan, storage and a window that opens
-- [ ] There is hot water, and wifi that works
-- [ ] There is a shared sitting area and a table where guests eat
-- [ ] There is a balcony with plants that guests may use
-- [ ] Rooms are cleaned daily, and linen is changed between guests
-- [ ] How many rooms are there? The site says "a few rooms" and never gives a
-      number. Do you want a number, or keep it vague?
-- [ ] Is there air conditioning? We currently only mention a fan.
+| What | Currently | Where it lives |
+|---|---|---|
+| Phone / WhatsApp number | `+91 98765 43210` | `lib/site.ts` → `contact.phone`, `contact.whatsapp` |
+| Google Maps link | A plain address search, not your pin | `lib/site.ts` → `location.mapLink` |
 
-**Breakfast and the day**
+The site says so out loud: under the map link in the footer it prints "The exact
+pin is still being confirmed." That line disappears on its own once you set
+`mapLinkIsPlaceholder: false` in `lib/site.ts`.
 
-- [ ] Breakfast is cooked every morning and included in the room
-- [ ] Everyone eats at the same table
-- [ ] It is usually South Indian, and there is coffee
-- [ ] Guests get a key and can come and go as they like
-- [ ] There is no reception, but someone is reachable by phone
-- [ ] You can keep food aside for guests who arrive late
-- [ ] Do you also serve lunch or dinner? The site currently says breakfast only.
+**Already correct and confirmed** — no action needed:
 
-**You**
+- Taamboolam / ತಂಬೋಲಂ
+- 50-1, 46th Cross, Sarakki Main Road, 8th Block, Jayanagar, Bengaluru 560070
+- Next to Sampradha Hospitals and Sangeetha Mobiles
+- stay@taamboolam.com
+- https://www.instagram.com/taamboolam/
 
-- [ ] The Experience page says guests are staying in your house, that you
-      answer enquiries, and that you are usually around at breakfast. Is that
-      accurate, and are you comfortable with it being said that plainly?
-- [ ] Would you like a photo of yourself on that section, or a photo of the
-      house instead?
+---
 
-## 2. The neighbourhood — please sense-check
+## 2. Bathrooms — deliberately not answered yet
 
-We wrote these from general knowledge of Jayanagar, not from the doorstep.
+The site currently says **nothing** about bathrooms, because nobody has
+confirmed the arrangement. It does not say "ensuite", it does not say "shared",
+and it does not imply either.
 
-- [ ] Sarakki Lake is "close by" — walkable, or an auto ride?
-- [ ] Which is actually the nearest metro station, and how far?
-- [ ] Kempegowda airport "about two hours" by cab
-- [ ] Bengaluru City station at Majestic "about forty-five minutes"
-- [ ] Lalbagh "about twenty minutes"
-- [ ] Are there bakeries, small restaurants and coffee places within a walk?
-      Naming two or three real ones would make the page much stronger.
+In its place, the house-values section prints one honest line:
 
-## 3. Details to replace
+> "Bathroom arrangements are being confirmed with the owner. Ask in your
+> enquiry and you will get a straight answer rather than a guess."
 
-These all live in one file, `lib/site.ts`. Changing them there changes them
-everywhere on the site.
+**To publish the real answer**, open `lib/config.ts` and replace the `null`:
 
-- [ ] Phone number (currently a placeholder: `+91 98765 43210`)
-- [ ] WhatsApp number (digits only, with country code)
-- [ ] Email address (currently `stay@taamboolam.com`)
-- [ ] The final domain (currently `taamboolam.com`) — this affects the sitemap
-      and the social share card
+```ts
+export const provisional: Provisional = {
+  bathrooms: {
+    en: "Every room has its own bathroom.",   // ← your words
+    kn: "ಪ್ರತಿ ಕೊಠಡಿಗೂ ತನ್ನದೇ ಸ್ನಾನಗೃಹವಿದೆ.",  // ← the same, in Kannada
+  },
+  occupancyNote: null,
+};
+```
 
-The postal address is already in and correct:
-50-1, 46th Cross, Sarakki Main Road, 8th Block, Jayanagar, Bengaluru 560070.
+The moment both languages are filled in, the holding line disappears and the
+real fact takes its place in the list. Layout is already built for it, so
+nothing moves.
 
-## 4. Photographs
+`occupancyNote` works the same way, and is there only if you want to add
+something beyond "a queen bed in each room, suitable for two adults" — which is
+already on the site and already confirmed.
 
-**Everything on the site right now is temporary stock.** It is there so the
-layout can be judged with real photographs in it. None of it shows this house,
-and none of it can ship.
+---
 
-`public/images/README.md` lists all eleven slots, the exact filenames, and what
-each shot should be. Drop a file in with the matching name and it replaces the
-stock immediately. Any name that is missing falls back to a placeholder
-describing the shot, so nothing breaks while you swap them in one at a time.
+## 3. Photographs
+
+**Every photograph on the site today is temporary stock from Pexels.** It was
+chosen to match the *mood and composition* of a South Indian home — a
+tile-roofed exterior, a courtyard, Athangudi tiles, a verandah, a banana-leaf
+meal — so the layout can be judged with believable pictures in it. **None of it
+shows this house, and none of it can go live.**
+
+`public/images/README.md` lists all twenty-four slots, the exact filename each
+one needs, and what the shot should be. Drop a file in with the matching name
+and it replaces the stock immediately. Any name that is missing falls back to a
+designed placeholder describing the shot, so nothing breaks while you swap them
+in one at a time.
+
+Provenance for every current image is in `public/images/CREDITS.json`.
+
+> **One catch:** Next.js caches resized images by filename. After replacing
+> photographs, delete the `.next` folder before the next build, or the old
+> picture will keep appearing. A fresh deploy does this for you.
+
+---
+
+## 4. Kannada
+
+The Kannada on the site is a **written first draft that has not been reviewed by
+a native speaker.** It is real content, not machine translation at page load —
+the site never calls a translation service — but it needs a read-through.
+
+It is all in one file: `lib/content/kn.ts`. The keys are identical to the
+English file (`lib/content/en.ts`) and appear in the same order, so a reviewer
+can work straight down it with the English open beside it. Changing a line there
+changes it everywhere, including buttons, form labels, validation messages and
+error screens.
+
+---
 
 ## 5. Email
 
-The enquiry form needs a Resend account before it can deliver mail:
+The enquiry form has no mail account behind it yet. Until it does, it **refuses
+to pretend**: submitting shows "The enquiry form cannot send mail right now.
+Please write to us directly and we will answer." It never shows a thank-you for
+a message that went nowhere.
 
-- [ ] Resend account created, and the domain verified in it
-- [ ] `RESEND_API_KEY` added to the Vercel project
-- [ ] `ENQUIRY_TO_EMAIL` set to the inbox you actually read
-- [ ] One test enquiry sent and received, start to finish
+To turn it on:
+
+- [ ] Create a Resend account and verify the sending domain
+- [ ] Set `RESEND_API_KEY` in the hosting project
+- [ ] Set `ENQUIRY_TO_EMAIL` to the inbox you actually read
+- [ ] Set `ENQUIRY_FROM_EMAIL` to an address on the verified domain
+- [ ] Send one real enquiry through the live form and confirm it arrives
+
+Once it is on, each enquiry arrives with the subject line
+`Enquiry from <name> — 2 adults, 1 child`, with **reply-to set to the guest**, so
+hitting reply writes straight back to them. The guest gets a copy in whichever
+language they used.
+
+---
+
+## 6. Things the site deliberately does not do
+
+These are decisions, not omissions. If you want any of them changed, it is a
+conversation, not a bug:
+
+- No prices, anywhere
+- No availability calendar
+- No instant booking — every enquiry is read by you
+- No analytics, no tracking, no cookie banner (the only cookie stores the
+  reader's choice of language)
+- No video, no autoplay
+- Events and gatherings are mentioned quietly, as a direct-enquiry
+  possibility — never presented as a product

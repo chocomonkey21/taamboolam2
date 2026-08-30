@@ -1,6 +1,7 @@
 import fs from "node:fs/promises";
 import path from "node:path";
 import { ImageResponse } from "next/og";
+import { content } from "@/lib/content";
 import { site } from "@/lib/site";
 import { tokens } from "@/lib/tokens";
 
@@ -29,8 +30,8 @@ export default async function OpengraphImage() {
           display: "flex",
           flexDirection: "column",
           justifyContent: "space-between",
-          background: tokens.background,
-          color: tokens.foreground,
+          background: tokens.paper,
+          color: tokens.ink,
           padding: "80px",
           fontFamily: "Fraunces",
         }}
@@ -40,7 +41,7 @@ export default async function OpengraphImage() {
             fontSize: 24,
             letterSpacing: 10,
             textTransform: "uppercase",
-            color: tokens.foregroundMuted,
+            color: tokens.inkSoft,
           }}
         >
           {site.name}
@@ -48,7 +49,7 @@ export default async function OpengraphImage() {
 
         <div style={{ display: "flex", flexDirection: "column" }}>
           <div style={{ fontSize: 66, lineHeight: 1.15, maxWidth: 900 }}>
-            {site.tagline}
+            {content.en.home.intro.heading}
           </div>
           <div
             style={{
@@ -58,9 +59,9 @@ export default async function OpengraphImage() {
               gap: 20,
             }}
           >
-            <div style={{ width: 110, height: 3, background: tokens.accentPrimary }} />
-            <div style={{ fontSize: 25, color: tokens.foregroundMuted }}>
-              {`${site.location.area} · ${site.location.region}`}
+            <div style={{ width: 110, height: 3, background: tokens.clay }} />
+            <div style={{ fontSize: 25, color: tokens.inkSoft }}>
+              {content.en.home.hero.location}
             </div>
           </div>
         </div>

@@ -1,16 +1,18 @@
 import Link from "next/link";
 import type { ComponentProps, ReactNode } from "react";
 
+/**
+ * Two actions and one link, and no third variant. The solid clay button is the
+ * strongest thing on any screen and there is never more than one of it in view.
+ */
+
 const base =
-  "type-label inline-flex items-center justify-center rounded-sm px-8 py-4 transition-colors duration-200";
+  "type-label inline-flex items-center justify-center gap-2 rounded-sm px-7 py-3.5 text-center transition-[background-color,border-color,color,transform] duration-200 active:translate-y-px disabled:cursor-not-allowed disabled:opacity-60 disabled:active:translate-y-0";
 
 const variants = {
-  /** Solid terracotta. One per screen — see the rule of restraint. */
-  solid:
-    "bg-accent-primary text-background hover:bg-accent-primary-dark disabled:opacity-60",
-  /** Hairline outline, for the secondary action next to a solid one. */
+  solid: "bg-clay text-paper hover:bg-clay-deep",
   outline:
-    "border border-border text-foreground hover:border-foreground-muted hover:bg-surface",
+    "border border-current/35 hover:border-current/70 hover:bg-current/[0.06]",
 } as const;
 
 type Variant = keyof typeof variants;
@@ -20,14 +22,19 @@ export function ButtonLink({
   children,
   variant = "solid",
   className = "",
+  ...rest
 }: {
   href: string;
   children: ReactNode;
   variant?: Variant;
   className?: string;
-}) {
+} & Omit<ComponentProps<typeof Link>, "href" | "className" | "children">) {
   return (
-    <Link href={href} className={`${base} ${variants[variant]} ${className}`}>
+    <Link
+      href={href}
+      className={`${base} ${variants[variant]} ${className}`}
+      {...rest}
+    >
       {children}
     </Link>
   );
@@ -46,7 +53,7 @@ export function Button({
   );
 }
 
-/** Quiet inline link with a terracotta underline. */
+/** A quiet inline link with a clay underline that fills in on hover. */
 export function TextLink({
   href,
   children,
@@ -59,7 +66,7 @@ export function TextLink({
   return (
     <Link
       href={href}
-      className={`type-label text-accent-primary underline decoration-accent-primary/40 decoration-1 underline-offset-[6px] transition-colors duration-200 hover:decoration-accent-primary ${className}`}
+      className={`type-label text-clay underline decoration-clay/35 decoration-1 underline-offset-[7px] transition-colors duration-200 hover:decoration-clay ${className}`}
     >
       {children}
     </Link>

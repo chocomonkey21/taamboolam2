@@ -1,68 +1,146 @@
 [
   {
     "file": "hero.jpg",
-    "desc": "House exterior at dusk",
-    "source": "Unsplash",
-    "url": "https://unsplash.com/photos/1600585154340-be6161a56a0c"
+    "desc": "A traditional house with a deep verandah, seen through trees",
+    "source": "Pexels",
+    "url": "https://www.pexels.com/photo/4117971/"
   },
   {
-    "file": "living-room.jpg",
-    "desc": "Living room with plants",
-    "source": "Unsplash",
-    "url": "https://unsplash.com/photos/1502672260266-1c1ef2d93688"
+    "file": "intro.jpg",
+    "desc": "An open brick courtyard at the centre of a house, seen from above",
+    "source": "Pexels",
+    "url": "https://www.pexels.com/photo/38361341/"
   },
   {
-    "file": "room.jpg",
-    "desc": "Bedroom",
-    "source": "Unsplash",
-    "url": "https://unsplash.com/photos/1540518614846-7eded433c457"
+    "file": "staying-morning.jpg",
+    "desc": "Morning light falling across a bed through a window",
+    "source": "Pexels",
+    "url": "https://www.pexels.com/photo/13009039/"
   },
   {
-    "file": "balcony.jpg",
-    "desc": "Curtains, plants and a small table",
-    "source": "Unsplash",
-    "url": "https://unsplash.com/photos/1519710164239-da123dc03ef4"
+    "file": "staying-shared.jpg",
+    "desc": "A shaded verandah lined with potted plants and chairs",
+    "source": "Pexels",
+    "url": "https://www.pexels.com/photo/16926307/"
   },
   {
-    "file": "corner.jpg",
-    "desc": "Warm wooden interior",
-    "source": "Unsplash",
-    "url": "https://unsplash.com/photos/1618221195710-dd6b41faaea6"
+    "file": "staying-balcony.jpg",
+    "desc": "Potted plants against a warm yellow wall",
+    "source": "Pexels",
+    "url": "https://www.pexels.com/photo/7245621/"
   },
   {
-    "file": "street.jpg",
-    "desc": "Tree canopy",
-    "source": "Unsplash",
-    "url": "https://unsplash.com/photos/1518495973542-4542c06a5843"
+    "file": "floor-1-a.jpg",
+    "desc": "A calm, uncluttered room with daylight from a single window",
+    "source": "Pexels",
+    "url": "https://www.pexels.com/photo/36195703/"
   },
   {
-    "file": "breakfast.jpg",
-    "desc": "Breakfast laid out on a table",
-    "source": "Unsplash",
-    "url": "https://unsplash.com/photos/1493770348161-369560ae357d"
+    "file": "floor-1-b.jpg",
+    "desc": "A warm sitting room with terracotta walls and a low sofa",
+    "source": "Pexels",
+    "url": "https://www.pexels.com/photo/34946066/"
   },
   {
-    "file": "experience-house.jpg",
-    "desc": "Wooden interior with plants",
-    "source": "Unsplash",
-    "url": "https://unsplash.com/photos/1591825729269-caeb344f6df2"
+    "file": "floor-2-a.jpg",
+    "desc": "A simple bedroom with a wooden headboard and a bedside lamp",
+    "source": "Pexels",
+    "url": "https://www.pexels.com/photo/545012/"
   },
   {
-    "file": "experience-street.jpg",
-    "desc": "Tree canopy, wide crop",
-    "source": "Unsplash",
-    "url": "https://unsplash.com/photos/1518495973542-4542c06a5843"
+    "file": "floor-2-b.jpg",
+    "desc": "A domestic kitchen with painted cabinets and a window",
+    "source": "Pexels",
+    "url": "https://www.pexels.com/photo/31925627/"
   },
   {
-    "file": "experience-breakfast.jpg",
-    "desc": "Shared dishes on a table, from above",
-    "source": "Unsplash",
-    "url": "https://unsplash.com/photos/1498654896293-37aacf113fd9"
+    "file": "floor-3-a.jpg",
+    "desc": "Handmade patterned floor tiles in ochre, blue and white",
+    "source": "Pexels",
+    "url": "https://www.pexels.com/photo/32021732/"
   },
   {
-    "file": "experience-host.jpg",
-    "desc": "Sitting area with plants",
-    "source": "Unsplash",
-    "url": "https://unsplash.com/photos/1567767292278-a4f21aa2d36e"
+    "file": "floor-3-b.jpg",
+    "desc": "A dim room with a patterned tiled floor catching the light",
+    "source": "Pexels",
+    "url": "https://www.pexels.com/photo/12238322/"
+  },
+  {
+    "file": "floor-4-a.jpg",
+    "desc": "A geometric tiled floor in oxide red, black and white",
+    "source": "Pexels",
+    "url": "https://www.pexels.com/photo/15703818/"
+  },
+  {
+    "file": "floor-4-b.jpg",
+    "desc": "A doorway framed in blue and white pattern, with steps leading up",
+    "source": "Pexels",
+    "url": "https://www.pexels.com/photo/8332102/"
+  },
+  {
+    "file": "stair.jpg",
+    "desc": "A wooden staircase rising between floors",
+    "source": "Pexels",
+    "url": "https://www.pexels.com/photo/36927763/"
+  },
+  {
+    "file": "craft-tiles.jpg",
+    "desc": "A close detail of a handmade tile border",
+    "source": "Pexels",
+    "url": "https://www.pexels.com/photo/36593308/"
+  },
+  {
+    "file": "craft-hands.jpg",
+    "desc": "Hands shaping wet clay on a potter's wheel",
+    "source": "Pexels",
+    "url": "https://www.pexels.com/photo/20362430/"
+  },
+  {
+    "file": "craft-textile.jpg",
+    "desc": "A weaver working at a hand loom",
+    "source": "Pexels",
+    "url": "https://www.pexels.com/photo/31508152/"
+  },
+  {
+    "file": "food-table.jpg",
+    "desc": "A South Indian meal served on a banana leaf",
+    "source": "Pexels",
+    "url": "https://www.pexels.com/photo/5410418/"
+  },
+  {
+    "file": "food-detail.jpg",
+    "desc": "A dosa served on a banana leaf",
+    "source": "Pexels",
+    "url": "https://www.pexels.com/photo/32229637/"
+  },
+  {
+    "file": "values-corner.jpg",
+    "desc": "Green plants growing against a window grille",
+    "source": "Pexels",
+    "url": "https://www.pexels.com/photo/33800826/"
+  },
+  {
+    "file": "invitation.jpg",
+    "desc": "A canopy of trees seen from below",
+    "source": "Pexels",
+    "url": "https://www.pexels.com/photo/29374606/"
+  },
+  {
+    "file": "experience-opening.jpg",
+    "desc": "The tiled courtyard of a traditional house",
+    "source": "Pexels",
+    "url": "https://www.pexels.com/photo/36394963/"
+  },
+  {
+    "file": "experience-gathering.jpg",
+    "desc": "A long communal wooden table under a high roof",
+    "source": "Pexels",
+    "url": "https://www.pexels.com/photo/15945660/"
+  },
+  {
+    "file": "experience-close.jpg",
+    "desc": "A tile-roofed house half hidden among trees",
+    "source": "Pexels",
+    "url": "https://www.pexels.com/photo/32520271/"
   }
 ]

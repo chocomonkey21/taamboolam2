@@ -1,65 +1,111 @@
 import type { Metadata } from "next";
-import { Fraunces, Inter } from "next/font/google";
-import { Nav } from "@/components/Nav";
+import { cookies } from "next/headers";
+import {
+  Figtree,
+  Fraunces,
+  Noto_Sans_Kannada,
+  Noto_Serif_Kannada,
+} from "next/font/google";
 import { Footer } from "@/components/Footer";
+import { LightboxProvider } from "@/components/Lightbox";
+import { MobileEnquire, Nav } from "@/components/Nav";
+import { Opening } from "@/components/Opening";
+import { PageShell } from "@/components/PageShell";
+import { SiteProvider } from "@/components/SiteProvider";
+import { SkipLink } from "@/components/SkipLink";
+import {
+  content,
+  DEFAULT_LOCALE,
+  HTML_LANG,
+  isLocale,
+  LOCALE_COOKIE,
+} from "@/lib/content";
+import { readPhotoManifest } from "@/lib/photo-manifest";
 import { site } from "@/lib/site";
 import "./globals.css";
 
+/* Headlines: a refined editorial serif, with its optical sizes and a little
+   softening on the terminals so it reads as made rather than issued. */
 const fraunces = Fraunces({
   subsets: ["latin"],
-  // Variable font: wght comes by default. opsz lets large headlines pick up
-  // their display cut, SOFT rounds the terminals slightly -- the handmade feel.
   axes: ["opsz", "SOFT"],
   display: "swap",
   variable: "--font-fraunces",
 });
 
-const inter = Inter({
+/* Body and forms: warm, humanist, and very legible at small sizes. */
+const figtree = Figtree({
   subsets: ["latin"],
   weight: ["400", "500"],
   display: "swap",
-  variable: "--font-inter",
+  variable: "--font-figtree",
+});
+
+/* Kannada has its own faces. Neither Latin family covers the script, so the
+   site loads real Kannada type rather than leaving it to a system fallback. */
+const kannadaSerif = Noto_Serif_Kannada({
+  subsets: ["kannada"],
+  weight: ["400", "500"],
+  display: "swap",
+  variable: "--font-kannada-serif",
+});
+
+const kannadaSans = Noto_Sans_Kannada({
+  subsets: ["kannada"],
+  weight: ["400", "500"],
+  display: "swap",
+  variable: "--font-kannada-sans",
 });
 
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
   title: {
-    default: `${site.name} — A homestay in Jayanagar, Bengaluru`,
+    default: content.en.meta.homeTitle,
     template: `%s · ${site.name}`,
   },
-  description: site.description,
+  description: content.en.meta.homeDescription,
   openGraph: {
     type: "website",
     siteName: site.name,
-    title: `${site.name} — A homestay in Jayanagar, Bengaluru`,
-    description: site.description,
+    title: content.en.meta.homeTitle,
+    description: content.en.meta.homeDescription,
     locale: "en_IN",
+    alternateLocale: "kn_IN",
   },
   twitter: {
     card: "summary_large_image",
-    title: `${site.name} — A homestay in Jayanagar, Bengaluru`,
-    description: site.description,
+    title: content.en.meta.homeTitle,
+    description: content.en.meta.homeDescription,
   },
   robots: { index: true, follow: true },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
+  // Seeded on the server so a returning Kannada reader gets Kannada in the
+  // first byte of HTML, rather than a flash of English after hydration.
+  const stored = (await cookies()).get(LOCALE_COOKIE)?.value;
+  const locale = isLocale(stored) ? stored : DEFAULT_LOCALE;
+
   return (
-    <html lang="en" className={`${fraunces.variable} ${inter.variable}`}>
+    <html
+      lang={HTML_LANG[locale]}
+      className={`${fraunces.variable} ${figtree.variable} ${kannadaSerif.variable} ${kannadaSans.variable}`}
+    >
       <body className="flex min-h-screen flex-col">
-        <a
-          href="#main"
-          className="type-label sr-only rounded-sm bg-accent-primary px-4 py-3 text-background focus:not-sr-only focus:absolute focus:top-3 focus:left-3 focus:z-100"
-        >
-          Skip to content
-        </a>
-        <Nav />
-        <main id="main" className="flex-1">
-          {children}
-        </main>
-        <Footer />
+        <SiteProvider initialLocale={locale} photoManifest={readPhotoManifest()}>
+          <LightboxProvider>
+            <SkipLink />
+            <Opening />
+            <Nav />
+            <main id="main" className="flex-1">
+              <PageShell>{children}</PageShell>
+            </main>
+            <Footer />
+            <MobileEnquire />
+          </LightboxProvider>
+        </SiteProvider>
       </body>
     </html>
   );

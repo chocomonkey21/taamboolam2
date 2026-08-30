@@ -1,37 +1,105 @@
 @import "tailwindcss";
 
 /* ==========================================================================
-   Taamboolam — design tokens
-   Source of truth: taamboolam-design-system.md
-   Never use raw hex in components. Always reference these tokens.
+   Taamboolam — design system
+
+   Heritage-led, contemporary. The palette is drawn from the materials the
+   house is actually made of: limewash, clay, stone, wood, leaf. Nothing here
+   is a brand colour invented in the abstract.
+
+   Components never use raw hex. Always reference a token.
    ========================================================================== */
 
 @theme {
-  /* Color ------------------------------------------------------------- */
-  --color-background: #faf6ef; /* warm ivory — page background */
-  --color-surface: #f1eadc; /* deeper warm neutral — cards, alt sections */
-  --color-foreground: #2b2622; /* warm charcoal — body text */
-  --color-foreground-muted: #6b6255; /* captions, secondary text */
-  --color-accent-primary: #a64b2a; /* terracotta — CTAs, links, key highlights */
-  --color-accent-primary-dark: #8a3d21; /* hover only, derived from accent */
-  --color-accent-secondary: #37503f; /* bottle green — used sparingly */
-  --color-border: #ddd2be; /* hairline dividers, form borders */
+  /* Surfaces ---------------------------------------------------------- */
+  --color-paper: #f7f2e8; /* warm white — the page */
+  --color-lime: #ece2cf; /* limewash — alternate sections */
+  --color-stone: #ddd2bd; /* stone — hairlines, quiet fills */
+  --color-stone-deep: #c2b49b; /* stone in shadow */
 
-  /* Type -------------------------------------------------------------- */
-  --font-heading: var(--font-fraunces), ui-serif, Georgia, serif;
-  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  /* Ink ---------------------------------------------------------------- */
+  --color-ink: #2a241d; /* body text, warm near-black */
+  --color-ink-soft: #5f574a; /* captions, secondary text (7.0:1 on paper) */
 
-  /* Spacing: Tailwind's 4px step is kept, and the design system's 8px
-     rhythm is expressed by using even steps only — 2/4/6/8/12/16/24/32
-     map to 8/16/24/32/48/64/96/128px. */
+  /* Materials --------------------------------------------------------- */
+  --color-clay: #a8492a; /* terracotta — the primary action colour */
+  --color-clay-deep: #883418; /* clay pressed */
+  --color-leaf: #3f5940; /* bottle green, used sparingly */
+  --color-wood: #6d4b2f; /* warm brown */
+  --color-ochre: #b8802c; /* Athangudi yellow */
 
-  /* Radius — soft, small. Handmade, not clinical. ---------------------- */
-  --radius-sm: 4px;
-  --radius-md: 6px;
+  /* Type --------------------------------------------------------------- */
+  --font-heading:
+    var(--font-fraunces), var(--font-kannada-serif), ui-serif, Georgia, serif;
+  --font-sans:
+    var(--font-figtree), var(--font-kannada-sans), ui-sans-serif, system-ui,
+    sans-serif;
+
+  /* Radius — soft and small. A house, not a device. -------------------- */
+  --radius-sm: 3px;
+  --radius-md: 5px;
 
   /* Layout ------------------------------------------------------------- */
-  --container-content: 1200px;
-  --container-measure: 680px;
+  /* One extra breakpoint below Tailwind's `sm`, for the narrowest phones,
+     where the header has to give something up. */
+  --breakpoint-xs: 26rem;
+  --container-content: 1240px;
+  --container-measure: 640px;
+
+  /* Motion ------------------------------------------------------------- */
+  --ease-material: cubic-bezier(0.22, 0.61, 0.24, 1);
+  --ease-soft: cubic-bezier(0.32, 0.72, 0, 1);
+}
+
+/* --------------------------------------------------------------------------
+   Atmosphere — the ambient tone of a stretch of page.
+
+   `data-atmosphere` shifts the ground the content sits on. Floors 1 and 2 stay
+   close to the house's default warm white. Floors 3 and 4 pick up the tiles:
+   perceptible, but never a colour wash.
+   -------------------------------------------------------------------------- */
+
+:root,
+[data-atmosphere="house"] {
+  --atmos-bg: var(--color-paper);
+  --atmos-tint: var(--color-lime);
+  --atmos-rule: var(--color-stone);
+  --atmos-accent: var(--color-clay);
+  --atmos-accent-ink: #883418;
+}
+
+[data-atmosphere="floor-1"] {
+  --atmos-bg: #f8f4ec;
+  --atmos-tint: #ece4d5;
+  --atmos-rule: #d9cfbb;
+  --atmos-accent: var(--color-wood);
+  --atmos-accent-ink: #5d3f26;
+}
+
+[data-atmosphere="floor-2"] {
+  --atmos-bg: #f4f1e8;
+  --atmos-tint: #e6e2d2;
+  --atmos-rule: #d2cbb6;
+  --atmos-accent: var(--color-leaf);
+  --atmos-accent-ink: #34492f;
+}
+
+/* Floors 3 and 4 are where the material starts speaking. The shift is
+   deliberately more perceptible here than anywhere else on the site. */
+[data-atmosphere="floor-3"] {
+  --atmos-bg: #f6efdf;
+  --atmos-tint: #ecdfc2;
+  --atmos-rule: #d8c49a;
+  --atmos-accent: var(--color-ochre);
+  --atmos-accent-ink: #6f4d12;
+}
+
+[data-atmosphere="floor-4"] {
+  --atmos-bg: #f4ebe2;
+  --atmos-tint: #e8d8c8;
+  --atmos-rule: #d6bda6;
+  --atmos-accent: var(--color-clay);
+  --atmos-accent-ink: #7c2f14;
 }
 
 /* ==========================================================================
@@ -41,21 +109,28 @@
 @layer base {
   html {
     -webkit-text-size-adjust: 100%;
+    scroll-behavior: smooth;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
   }
 
   body {
-    background-color: var(--color-background);
-    color: var(--color-foreground);
+    background-color: var(--color-paper);
+    color: var(--color-ink);
     font-family: var(--font-sans);
     font-size: 16px;
-    line-height: 1.6;
+    line-height: 1.65;
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
   }
 
   @media (min-width: 768px) {
     body {
-      font-size: 18px; /* deliberately larger base for easier reading */
+      font-size: 17px;
     }
   }
 
@@ -64,10 +139,10 @@
   h3,
   h4 {
     font-family: var(--font-heading);
-    font-weight: 500;
+    font-weight: 400;
     font-optical-sizing: auto;
-    font-variation-settings: "SOFT" 30;
-    color: var(--color-foreground);
+    font-variation-settings: "SOFT" 40;
+    color: var(--color-ink);
     text-wrap: balance;
   }
 
@@ -76,175 +151,424 @@
   }
 
   ::selection {
-    background-color: var(--color-accent-primary);
-    color: var(--color-background);
+    background-color: var(--color-clay);
+    color: var(--color-paper);
   }
 
-  /* Visible focus states everywhere — accessibility requirement */
   :focus-visible {
-    outline: 2px solid var(--color-accent-primary);
+    outline: 2px solid var(--color-clay);
     outline-offset: 3px;
     border-radius: 2px;
   }
-}
 
-/* ==========================================================================
-   Type scale — from the design system table
-   ========================================================================== */
-
-@layer components {
-  .type-display {
-    font-family: var(--font-heading);
-    font-weight: 500;
-    font-optical-sizing: auto;
-    font-variation-settings: "SOFT" 30;
-    font-size: 36px;
-    line-height: 1.1;
-    letter-spacing: -0.015em;
-  }
-
-  .type-h1 {
-    font-family: var(--font-heading);
-    font-weight: 500;
-    font-optical-sizing: auto;
-    font-variation-settings: "SOFT" 30;
-    font-size: 30px;
-    line-height: 1.15;
-    letter-spacing: -0.012em;
-  }
-
-  .type-h2 {
-    font-family: var(--font-heading);
-    font-weight: 500;
-    font-optical-sizing: auto;
-    font-variation-settings: "SOFT" 30;
-    font-size: 24px;
-    line-height: 1.2;
-    letter-spacing: -0.01em;
-  }
-
-  .type-h3 {
-    font-family: var(--font-heading);
-    font-weight: 500;
-    font-optical-sizing: auto;
-    font-variation-settings: "SOFT" 30;
-    font-size: 20px;
-    line-height: 1.3;
-  }
-
-  .type-body {
-    font-family: var(--font-sans);
-    font-weight: 400;
-    font-size: 16px;
-    line-height: 1.6;
-  }
-
-  .type-caption {
-    font-family: var(--font-sans);
-    font-weight: 400;
-    font-size: 14px;
-    line-height: 1.5;
-  }
-
-  .type-label {
-    font-family: var(--font-sans);
-    font-weight: 500;
-    font-size: 15px;
-    line-height: 1;
-  }
-
-  /* Small-caps eyebrow used above section headings */
-  .type-eyebrow {
-    font-family: var(--font-sans);
-    font-weight: 500;
-    font-size: 12px;
-    line-height: 1;
-    letter-spacing: 0.16em;
-    text-transform: uppercase;
-    color: var(--color-foreground-muted);
+  /* Kannada sets slightly larger to match Latin's optical size, and needs a
+     touch more leading for its vowel signs. */
+  :lang(kn) body,
+  html[lang="kn-IN"] body {
+    font-size: 17px;
+    line-height: 1.8;
   }
 
   @media (min-width: 768px) {
-    .type-display {
-      font-size: 64px;
-    }
-    .type-h1 {
-      font-size: 44px;
-    }
-    .type-h2 {
-      font-size: 32px;
-    }
-    .type-h3 {
-      font-size: 22px;
-    }
-    .type-body {
+    html[lang="kn-IN"] body {
       font-size: 18px;
     }
   }
 }
 
 /* ==========================================================================
-   Utilities
+   Type scale
    ========================================================================== */
 
-@layer utilities {
-  /* 1200px container with the gutter the layout rhythm expects */
-  .container-content {
-    width: 100%;
-    max-width: var(--container-content);
-    margin-inline: auto;
-    padding-inline: 24px;
+@layer components {
+  .type-display,
+  .type-h1,
+  .type-h2,
+  .type-h3 {
+    font-family: var(--font-heading);
+    font-weight: 400;
+    font-optical-sizing: auto;
+    font-variation-settings: "SOFT" 40;
+  }
+
+  .type-display {
+    font-size: clamp(2.5rem, 9vw, 5.75rem);
+    line-height: 1.02;
+    letter-spacing: -0.022em;
+  }
+
+  .type-h1 {
+    font-size: clamp(2rem, 5.2vw, 3.5rem);
+    line-height: 1.08;
+    letter-spacing: -0.018em;
+  }
+
+  .type-h2 {
+    font-size: clamp(1.6rem, 3.4vw, 2.375rem);
+    line-height: 1.14;
+    letter-spacing: -0.012em;
+  }
+
+  .type-h3 {
+    font-size: clamp(1.2rem, 2vw, 1.4rem);
+    line-height: 1.28;
+    letter-spacing: -0.005em;
+  }
+
+  .type-lead {
+    font-family: var(--font-sans);
+    font-size: clamp(1.0625rem, 1.9vw, 1.3125rem);
+    line-height: 1.55;
+    font-weight: 400;
+  }
+
+  .type-body {
+    font-family: var(--font-sans);
+    font-size: 1rem;
+    line-height: 1.7;
   }
 
   @media (min-width: 768px) {
-    .container-content {
-      padding-inline: 40px;
+    .type-body {
+      font-size: 1.0625rem;
     }
   }
 
-  /* ~680px measure for long-form story text */
-  .measure {
-    max-width: var(--container-measure);
+  .type-caption {
+    font-family: var(--font-sans);
+    font-size: 0.8125rem;
+    line-height: 1.5;
+    color: var(--color-ink-soft);
   }
 
-  /* Section vertical rhythm — 64px mobile, 96px+ desktop */
-  .section-rhythm {
-    padding-block: 64px;
+  .type-label {
+    font-family: var(--font-sans);
+    font-weight: 500;
+    font-size: 0.9375rem;
+    line-height: 1.2;
   }
 
-  @media (min-width: 768px) {
-    .section-rhythm {
-      padding-block: 96px;
-    }
+  .type-eyebrow {
+    font-family: var(--font-sans);
+    font-weight: 500;
+    font-size: 0.6875rem;
+    line-height: 1;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--color-ink-soft);
   }
 
-  .section-rhythm-lg {
-    padding-block: 80px;
+  /* Kannada has no uppercase, and letterspacing damages its conjuncts. */
+  html[lang="kn-IN"] .type-eyebrow {
+    text-transform: none;
+    letter-spacing: 0.04em;
+    font-size: 0.8125rem;
   }
 
-  @media (min-width: 768px) {
-    .section-rhythm-lg {
-      padding-block: 128px;
-    }
+  html[lang="kn-IN"] .type-display,
+  html[lang="kn-IN"] .type-h1,
+  html[lang="kn-IN"] .type-h2 {
+    letter-spacing: 0;
+    line-height: 1.3;
   }
 }
 
 /* ==========================================================================
-   Tile rule — the repeated line-motif divider. Ornament, not content.
-   The artwork is a mask, so the colour is always a token, never baked in.
+   Layout utilities
+   ========================================================================== */
+
+@layer utilities {
+  .container-content {
+    width: 100%;
+    max-width: var(--container-content);
+    margin-inline: auto;
+    padding-inline: 22px;
+  }
+
+  @media (min-width: 768px) {
+    .container-content {
+      padding-inline: 44px;
+    }
+  }
+
+  .measure {
+    max-width: var(--container-measure);
+  }
+
+  .section-rhythm {
+    padding-block: clamp(4.5rem, 9vw, 8.5rem);
+  }
+
+  .section-rhythm-sm {
+    padding-block: clamp(3rem, 6vw, 5.5rem);
+  }
+
+  /* Hairlines and grounds that follow the surrounding atmosphere, so a
+     section's rules shift with it instead of being pinned to one grey. */
+  .rule-atmos {
+    border-color: var(--atmos-rule);
+  }
+
+  .bg-atmos {
+    background-color: var(--atmos-bg);
+  }
+
+  .bg-atmos-tint {
+    background-color: var(--atmos-tint);
+  }
+
+  /* --atmos-accent is a FILL: tile fields, rules, glyphs. It is not always
+     dark enough to set type in. --atmos-accent-ink is the same hue pushed
+     down until it clears 4.5:1 on that atmosphere's own ground, and it is the
+     only one of the two that may be used for text. */
+  .text-atmos-accent {
+    color: var(--atmos-accent-ink);
+  }
+
+  /* Full-bleed inside a container. */
+  .bleed {
+    width: 100vw;
+    margin-inline: calc(50% - 50vw);
+  }
+}
+
+/* ==========================================================================
+   Material textures
+
+   A limewash grain and a paper tooth, both very quiet. They exist so large
+   flat areas do not read as flat digital colour. Rendered as gradients rather
+   than image files, so they cost nothing to load and never block paint.
    ========================================================================== */
 
 @layer components {
+  .texture-limewash {
+    position: relative;
+    isolation: isolate;
+  }
+
+  .texture-limewash::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    opacity: 0.55;
+    background-image:
+      radial-gradient(
+        ellipse 80% 60% at 20% 0%,
+        rgb(255 255 255 / 0.55),
+        transparent 70%
+      ),
+      radial-gradient(
+        ellipse 70% 50% at 85% 100%,
+        rgb(168 73 42 / 0.05),
+        transparent 65%
+      );
+  }
+
+  /* A fine grain, so warm neutrals do not band on large fills. */
+  .texture-grain::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    opacity: 0.35;
+    mix-blend-mode: multiply;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)' opacity='0.16'/%3E%3C/svg%3E");
+  }
+}
+
+/* ==========================================================================
+   Tile field — the Athangudi-inspired pattern.
+
+   Deliberately imperfect: the three tiles in the repeat are subtly different
+   sizes and the motif is off-centre in one of them, so a large field never
+   locks into a machine grid. Ornament only, never behind body text.
+   ========================================================================== */
+
+@layer components {
+  .tile-field {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180' viewBox='0 0 180 180'%3E%3Cg fill='none' stroke='%23000' stroke-width='1.6' stroke-linejoin='round'%3E%3Crect x='4' y='5' width='82' height='80'/%3E%3Cpath d='M45 18c7 11 14 18 25 25-11 7-18 14-25 25-7-11-14-18-25-25 11-7 18-14 25-25Z'/%3E%3Ccircle cx='45' cy='44' r='6.5'/%3E%3Crect x='94' y='4' width='82' height='83'/%3E%3Cpath d='M135 20c6.5 12 13.5 19 24 26-10.5 6.5-17.5 13.5-24 25-7.5-11.5-14.5-18.5-25-25 10.5-7 17.5-14 25-26Z'/%3E%3Cpath d='M94 4 118 28M176 4 152 28M94 87l24-24M176 87l-24-24'/%3E%3Crect x='5' y='94' width='81' height='82'/%3E%3Cpath d='M5 118a24 24 0 0 0 24-24M86 94a24 24 0 0 0 24 0M86 152a24 24 0 0 0-24 24M5 152a24 24 0 0 1 24 24'/%3E%3Ccircle cx='45' cy='135' r='17'/%3E%3Crect x='95' y='95' width='80' height='81'/%3E%3Cpath d='M136 108c6 11 13 18 23 24-10 6-17 13-23 24-6-11-13-18-23-24 10-6 17-13 23-24Z'/%3E%3C/g%3E%3C/svg%3E");
+    background-size: 180px 180px;
+  }
+
+  /* A hairline rule carrying a slice of the same motif. */
   .tile-rule {
-    height: 10px;
+    height: 12px;
     width: 100%;
-    opacity: 0.6;
-    --tile-rule-art: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='10' viewBox='0 0 28 10'%3E%3Cg fill='none' stroke='%23000' stroke-width='1.1'%3E%3Cpath d='M0 5h5M23 5h5M14 1 18 5 14 9 10 5Z'/%3E%3C/g%3E%3C/svg%3E");
-    -webkit-mask-image: var(--tile-rule-art);
-    mask-image: var(--tile-rule-art);
+    --art: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='34' height='12' viewBox='0 0 34 12'%3E%3Cg fill='none' stroke='%23000' stroke-width='1.15'%3E%3Cpath d='M0 6h6M28 6h6M17 1.5 21.5 6 17 10.5 12.5 6Z'/%3E%3C/g%3E%3C/svg%3E");
+    -webkit-mask-image: var(--art);
+    mask-image: var(--art);
     -webkit-mask-repeat: repeat-x;
     mask-repeat: repeat-x;
     -webkit-mask-position: center;
     mask-position: center;
+  }
+}
+
+/* ==========================================================================
+   Motion
+
+   Everything is opt-in and short. No scroll hijacking, no parallax beyond a
+   few pixels, no autoplay. Every rule below collapses to nothing under
+   prefers-reduced-motion — the content and its final position never depend on
+   an animation having run.
+   ========================================================================== */
+
+@layer components {
+  /* Gentle reveal, driven by IntersectionObserver setting data-shown. */
+  .reveal {
+    opacity: 0;
+    transform: translate3d(0, 18px, 0);
+    transition:
+      opacity 780ms var(--ease-material),
+      transform 780ms var(--ease-material);
+    transition-delay: var(--reveal-delay, 0ms);
+  }
+
+  .reveal[data-shown="true"] {
+    opacity: 1;
+    transform: none;
+  }
+
+  /* Photographs come up from a slightly larger crop and settle — a focus
+     shift rather than a slide. */
+  .reveal-photo img,
+  .reveal-photo [data-placeholder] {
+    transform: scale(1.06);
+    opacity: 0;
+    transition:
+      transform 1200ms var(--ease-soft),
+      opacity 900ms var(--ease-material);
+    transition-delay: var(--reveal-delay, 0ms);
+  }
+
+  .reveal-photo[data-shown="true"] img,
+  .reveal-photo[data-shown="true"] [data-placeholder] {
+    transform: scale(1);
+    opacity: 1;
+  }
+
+  /* The opening: the wordmark alone, then the page. Non-blocking — the page
+     underneath is already interactive and the veil never traps focus. */
+  .opening-veil {
+    position: fixed;
+    inset: 0;
+    z-index: 90;
+    display: grid;
+    place-items: center;
+    background-color: var(--color-paper);
+    animation: veil-lift 1250ms var(--ease-soft) forwards;
+  }
+
+  .opening-veil > * {
+    animation: veil-mark 1150ms var(--ease-material) forwards;
+  }
+
+  @keyframes veil-lift {
+    0%,
+    52% {
+      opacity: 1;
+      visibility: visible;
+    }
+    100% {
+      opacity: 0;
+      visibility: hidden;
+    }
+  }
+
+  @keyframes veil-mark {
+    0% {
+      opacity: 0;
+      transform: translate3d(0, 8px, 0);
+      letter-spacing: 0.5em;
+    }
+    38% {
+      opacity: 1;
+      transform: none;
+      letter-spacing: 0.26em;
+    }
+    100% {
+      opacity: 0;
+      transform: none;
+      letter-spacing: 0.24em;
+    }
+  }
+
+  /* Page transition: short, immediate, never delays interaction. */
+  .page-enter {
+    animation: page-enter 420ms var(--ease-material) both;
+  }
+
+  @keyframes page-enter {
+    from {
+      opacity: 0;
+      transform: translate3d(0, 10px, 0);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  /* The floating oval header. */
+  .nav-shell {
+    background-color: transparent;
+    border-color: transparent;
+    box-shadow: none;
+    transition:
+      background-color 420ms var(--ease-material),
+      border-color 420ms var(--ease-material),
+      box-shadow 420ms var(--ease-material),
+      backdrop-filter 420ms var(--ease-material);
+  }
+
+  .nav-shell[data-scrolled="true"] {
+    background-color: color-mix(in srgb, var(--color-paper) 88%, transparent);
+    border-color: var(--color-stone);
+    box-shadow: 0 10px 34px -22px rgb(42 36 29 / 0.5);
+    backdrop-filter: saturate(1.1) blur(14px);
+  }
+
+  /* Over the hero the header sits on a dark photograph, so it inverts. */
+  .nav-shell[data-over-hero="true"] {
+    color: var(--color-paper);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal,
+  .reveal-photo img,
+  .reveal-photo [data-placeholder] {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+
+  .opening-veil,
+  .opening-veil > * {
+    animation: none !important;
+  }
+
+  .opening-veil {
+    display: none;
+  }
+
+  .page-enter {
+    animation: none !important;
+  }
+
+  .nav-shell {
+    transition: none;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
   }
 }

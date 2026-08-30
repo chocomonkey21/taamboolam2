@@ -1,11 +1,11 @@
 import type { MetadataRoute } from "next";
-import { nav, site } from "@/lib/site";
+import { NAV_ITEMS, site } from "@/lib/site";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  return nav.map((item) => ({
-    url: `${site.url}${item.href === "/" ? "" : item.href}`,
-    lastModified: new Date(),
-    changeFrequency: "yearly",
+  const now = new Date();
+  return NAV_ITEMS.map((item) => ({
+    url: new URL(item.href, site.url).toString(),
+    lastModified: now,
     priority: item.href === "/" ? 1 : 0.8,
   }));
 }
