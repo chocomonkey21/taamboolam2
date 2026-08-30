@@ -458,7 +458,7 @@ export function EnquiryForm() {
           href={`https://wa.me/${site.contact.whatsapp}`}
           target="_blank"
           rel="noreferrer noopener"
-          className="type-label inline-block py-1.5 text-ink-soft underline decoration-transparent decoration-1 underline-offset-4 transition-colors duration-200 hover:text-ink hover:decoration-current"
+          className="type-label inline-flex min-h-11 items-center text-ink-soft underline decoration-transparent decoration-1 underline-offset-4 transition-colors duration-200 hover:text-ink hover:decoration-current"
         >
           {t.form.orWhatsapp}
         </a>

@@ -7,26 +7,35 @@ import { Disclosure } from "./Disclosure";
 import { Photo } from "./Photo";
 import { Reveal } from "./Reveal";
 import { useSite } from "./SiteProvider";
-import { TileField, TileRule } from "./TileMotif";
+import { TileCourse } from "./TileMotif";
+
+/**
+ * One of the four layouts. They are named for what the floor is, not numbered,
+ * because the difference between them is meant to be a difference in feeling
+ * rather than a variation counter:
+ *
+ *  settle   — Floor 1. Two pictures side by side at rest. The calmest
+ *             arrangement on the page, for the floor that is meant to be the
+ *             easiest to arrive on.
+ *  landing  — Floor 2. The wide shot first, then the room, offset upward into
+ *             it. A floor you come up to.
+ *  surface  — Floor 3. The material takes the full width of the page before
+ *             anything is said about it.
+ *  summit   — Floor 4. The room first and large, the view last and edge to
+ *             edge. The top of the house, so the page opens out at the end.
+ *
+ * All four carry equal weight: the same number of photographs, the same type
+ * sizes, the same space, the same disclosure, the same link into the form. No
+ * floor is presented as the good one and none is given an invented theme name
+ * — `label` is "Floor 3" and nothing else.
+ */
+type FloorLayout = "settle" | "landing" | "surface" | "summit";
 
 export type FloorChapterSpec = {
   id: FloorId;
   atmosphere: string;
   photos: [PhotoId, PhotoId];
-  /**
-   * "quiet" is a held, text-led column beside a calm pair of photographs.
-   * "material" opens on a full-bleed photograph and lets the pictures lead.
-   *
-   * This is the structural half of the difference between the floors. Floors 1
-   * and 2 are the familiar ones and are laid out the way an ordinary room
-   * reads; floors 3 and 4 are where the surfaces start speaking, so the
-   * photographs get the width and the text gets out of their way.
-   */
-  layout: "quiet" | "material";
-  /** Mirrors the quiet layout, so the two calm chapters do not march. */
-  mirrored: boolean;
-  /** Floors 3 and 4 carry the tile field; 1 and 2 stay plain. */
-  patterned: boolean;
+  layout: FloorLayout;
 };
 
 export const FLOOR_CHAPTERS: FloorChapterSpec[] = [
@@ -34,121 +43,118 @@ export const FLOOR_CHAPTERS: FloorChapterSpec[] = [
     id: "floor1",
     atmosphere: "floor-1",
     photos: ["floor1a", "floor1b"],
-    layout: "quiet",
-    mirrored: false,
-    patterned: false,
+    layout: "settle",
   },
   {
     id: "floor2",
     atmosphere: "floor-2",
     photos: ["floor2a", "floor2b"],
-    layout: "quiet",
-    mirrored: true,
-    patterned: false,
+    layout: "landing",
   },
   {
     id: "floor3",
     atmosphere: "floor-3",
     photos: ["floor3a", "floor3b"],
-    layout: "material",
-    mirrored: false,
-    patterned: true,
+    layout: "surface",
   },
   {
     id: "floor4",
     atmosphere: "floor-4",
     photos: ["floor4a", "floor4b"],
-    layout: "material",
-    mirrored: true,
-    patterned: true,
+    layout: "summit",
   },
 ];
 
 /**
  * One floor of the house.
  *
- * All four chapters carry equal weight — the same type sizes, the same amount
- * of photography, the same space. What changes is the atmosphere token, the
- * tile field on the two floors that actually have the tiles, and the shape of
- * the layout itself.
- *
  * The arrangement of a floor is NOT repeated here. It is stated once, for all
  * four, on the page above. Only what a floor has that the others do not is
  * named again.
+ *
+ * The ornament is not decoration distributed evenly down the page: the tile
+ * course at each chapter boundary takes its strength from that floor's own
+ * `--atmos-pattern`, so it is barely a shadow on Floors 1 and 2, which have no
+ * Athangudi tiles, and clearly laid on Floors 3 and 4, which do. The pattern
+ * appears where the material actually is.
  */
-export function FloorChapter({ spec }: { spec: FloorChapterSpec }) {
+export function FloorChapter({
+  spec,
+  index,
+}: {
+  spec: FloorChapterSpec;
+  index: number;
+}) {
   const { t } = useSite();
   const copy = t.floors[spec.id];
   const [portrait, landscape] = spec.photos;
 
+  /* The numeral is the chapter's anchor, hung in the margin at the scale of a
+     drawing rather than set as a label above the heading. */
   const heading = (
-    <Reveal>
-      {/* The floor number is the anchor of the chapter. All four are set
-          identically — no floor is presented as the good one, and no floor is
-          given an invented theme name. */}
-      <h2 className="type-h1 text-atmos-ink" id={`${spec.id}-heading`}>
+    <div className="datum">
+      <span aria-hidden="true" className="type-numeral datum-note !mt-0">
+        {String(index + 1).padStart(2, "0")}
+      </span>
+      <Reveal
+        as="h2"
+        variant="wipe"
+        id={`${spec.id}-heading`}
+        className="type-h1 text-atmos-ink"
+      >
         {copy.label}
-      </h2>
-      <p className="type-lead mt-4 text-atmos-accent">{copy.lead}</p>
-    </Reveal>
+      </Reveal>
+      <p className="type-lead mt-3 text-atmos-accent">{copy.lead}</p>
+    </div>
   );
 
   const prose = (
     <>
-      {copy.body.map((paragraph, index) => (
-        <Reveal key={index} delay={70 + index * 60}>
-          <p className="type-body mt-6 text-ink-soft">{paragraph}</p>
-        </Reveal>
+      {copy.body.map((paragraph, i) => (
+        <p key={i} className={`type-body text-ink-soft ${i ? "mt-5" : ""}`}>
+          {paragraph}
+        </p>
       ))}
 
       {copy.distinct.length > 0 ? (
-        <Reveal delay={180}>
-          <ul className="rule-atmos mt-8 grid gap-2 border-t pt-5">
-            {copy.distinct.map((item) => (
-              <li
-                key={item}
-                className="type-body flex gap-3 text-atmos-accent"
-              >
-                <span
-                  aria-hidden="true"
-                  className="mt-[0.7em] h-[5px] w-[5px] shrink-0 rotate-45 bg-current opacity-60"
-                />
-                <span>{item}</span>
-              </li>
-            ))}
-          </ul>
-        </Reveal>
+        <ul className="rule-atmos mt-7 grid gap-2 border-t pt-4">
+          {copy.distinct.map((item) => (
+            <li key={item} className="type-body flex gap-3 text-atmos-accent">
+              <span
+                aria-hidden="true"
+                className="mt-[0.7em] h-[5px] w-[5px] shrink-0 rotate-45 bg-current opacity-60"
+              />
+              <span>{item}</span>
+            </li>
+          ))}
+        </ul>
       ) : null}
 
       {copy.more.length > 0 ? (
-        <Reveal delay={220}>
-          <Disclosure
-            label={t.experience.floorMoreLabel}
-            className={copy.distinct.length > 0 ? "mt-8" : "mt-9"}
-          >
-            {copy.more.map((paragraph, index) => (
-              <p
-                key={index}
-                className={`type-body text-ink-soft ${index ? "mt-4" : ""}`}
-              >
-                {paragraph}
-              </p>
-            ))}
-          </Disclosure>
-        </Reveal>
+        <Disclosure
+          label={t.experience.floorMoreLabel}
+          className={copy.distinct.length > 0 ? "mt-7" : "mt-8"}
+        >
+          {copy.more.map((paragraph, i) => (
+            <p
+              key={i}
+              className={`type-body text-ink-soft ${i ? "mt-4" : ""}`}
+            >
+              {paragraph}
+            </p>
+          ))}
+        </Disclosure>
       ) : null}
 
       {/* The one moment a reader is most likely to want this floor: they have
           just finished reading about it. The floor travels with the link, so
           the form arrives with it already chosen rather than asking them to
           remember which one they liked. */}
-      <Reveal delay={260}>
-        <p className="mt-9">
-          <TextLink href={`/enquire?floor=${spec.id}`}>
-            {t.cta.askAboutFloor}
-          </TextLink>
-        </p>
-      </Reveal>
+      <p className="mt-8">
+        <TextLink href={`/enquire?floor=${spec.id}`}>
+          {t.cta.askAboutFloor}
+        </TextLink>
+      </p>
     </>
   );
 
@@ -159,115 +165,162 @@ export function FloorChapter({ spec }: { spec: FloorChapterSpec }) {
       aria-labelledby={`${spec.id}-heading`}
       className="texture-limewash relative scroll-mt-24 overflow-hidden bg-atmos"
     >
-      {spec.patterned ? (
-        <TileField
-          className={`top-10 h-[420px] w-[420px] ${spec.mirrored ? "-left-28" : "-right-28"}`}
-          opacity={0.13}
-        />
-      ) : null}
+      {/* The course laid at the threshold of the chapter. Its strength is the
+          floor's own --atmos-pattern, so this single element is nearly a
+          shadow on Floors 1 and 2 and clearly laid on Floors 3 and 4 — which
+          is the whole ornament system, and the reason the corner tile fields
+          that used to sit in these two chapters are gone. Rendered, those were
+          hard-edged squares of repeated pattern: wallpaper, not a floor. */}
+      <TileCourse />
 
-      {spec.layout === "quiet" ? (
-        /* ── Quiet: a held column beside two photographs ────────────────
-           Sticky on desktop, so the floor stays named while its pictures
-           scroll past — which is how you actually read a floor, and it closes
-           the dead space a short text column leaves beside a tall one.
-           self-start is what lets it stick inside a stretch-aligned grid. */
+      {/* ── settle ─────────────────────────────────────────────────────
+          Two photographs at rest, side by side and at different heights, with
+          the words underneath. Nothing overlaps and nothing bleeds: the floor
+          that is meant to feel like a house you have stayed in before gets the
+          layout that asks the least of the reader. */}
+      {spec.layout === "settle" ? (
         <div className="container-content section-rhythm relative">
-          <div className="grid gap-10 md:grid-cols-12 md:gap-10">
-            <div
-              className={`md:sticky md:top-28 md:col-span-5 md:self-start ${
-                spec.mirrored ? "md:order-2 md:col-start-8" : ""
-              }`}
-            >
-              {heading}
-              {prose}
-            </div>
+          {heading}
 
-            <div
-              className={`md:col-span-6 ${spec.mirrored ? "md:order-1 md:col-start-1" : "md:col-start-7"}`}
+          <div className="mt-10 grid gap-6 md:mt-12 md:grid-cols-12 md:gap-8">
+            <Reveal variant="photo" className="md:col-span-5">
+              <Photo
+                id={portrait}
+                sizes="(min-width: 768px) 40vw, 92vw"
+                zoomable
+              />
+            </Reveal>
+            <Reveal
+              variant="photo"
+              delay={100}
+              className="md:col-span-6 md:col-start-7 md:mt-20"
             >
-              <Reveal variant="photo">
-                <Photo
-                  id={portrait}
-                  sizes="(min-width: 768px) 46vw, 92vw"
-                  caption="below"
-                  zoomable
-                />
-              </Reveal>
-              <Reveal variant="photo" delay={110} className="mt-6 md:mt-8">
-                <Photo
-                  id={landscape}
-                  sizes="(min-width: 768px) 46vw, 92vw"
-                  caption="below"
-                  zoomable
-                />
-              </Reveal>
-            </div>
-          </div>
-        </div>
-      ) : (
-        /* ── Material: the photograph opens the chapter, full width ────── */
-        <div className="relative">
-          <div className="container-content pt-[clamp(4.5rem,9vw,8.5rem)]">
-            <Reveal className="max-w-[38rem]">
-              <h2 className="type-h1 text-atmos-ink" id={`${spec.id}-heading`}>
-                {copy.label}
-              </h2>
-              <p className="type-lead mt-4 text-atmos-accent">{copy.lead}</p>
+              <Photo
+                id={landscape}
+                sizes="(min-width: 768px) 46vw, 92vw"
+                caption="below"
+                zoomable
+              />
             </Reveal>
           </div>
 
-          {/* Edge to edge. On these two floors the surface is the subject, so
-              it is given the whole width rather than a column.
+          <div className="datum mt-12 md:mt-14">
+            <div className="max-w-[38rem]">{prose}</div>
+          </div>
+        </div>
+      ) : null}
 
-              The min-height is a floor for narrow screens only, where 21:9
-              alone would letterbox this down to a strip. It is dropped from md
-              up, where the ratio already gives the image plenty of height —
-              unlike a hero, this is inline content, and a viewport-relative
-              minimum here opens a void in the middle of the chapter on tall
-              screens. */}
-          <Reveal variant="photo" className="mt-10 md:mt-14">
+      {/* ── landing ────────────────────────────────────────────────────
+          The wide shot arrives first and runs to both edges of the container,
+          then the room is set into its lower edge, overlapping upward, with
+          the words beside it. A floor you come up to. */}
+      {spec.layout === "landing" ? (
+        <div className="container-content section-rhythm relative">
+          {heading}
+
+          <Reveal variant="photo" className="mt-10 md:mt-12">
+            <Photo
+              id={landscape}
+              ratio="21 / 9"
+              sizes="(min-width: 768px) 92vw, 92vw"
+              caption="below"
+              zoomable
+            />
+          </Reveal>
+
+          <div className="grid gap-8 md:grid-cols-12 md:gap-8">
+            <Reveal
+              variant="photo"
+              delay={90}
+              className="w-[70%] md:col-span-4 md:-mt-24 md:w-full"
+            >
+              <Photo
+                id={portrait}
+                ratio="4 / 3"
+                sizes="(min-width: 768px) 30vw, 70vw"
+                className="ring-8 ring-[var(--atmos-bg)]"
+                zoomable
+              />
+            </Reveal>
+
+            <div className="md:col-span-7 md:col-start-6 md:pt-6">{prose}</div>
+          </div>
+        </div>
+      ) : null}
+
+      {/* ── surface ────────────────────────────────────────────────────
+          On this floor the surface is the subject, so it is given the whole
+          width before a word is said about it, and the second photograph is
+          set against the text rather than beside it. */}
+      {spec.layout === "surface" ? (
+        <div className="relative">
+          <div className="container-content pt-[clamp(3.75rem,7vw,6.5rem)]">
+            {heading}
+          </div>
+
+          <Reveal variant="photo" className="mt-10 md:mt-12">
             <Photo
               id={portrait}
               ratio="21 / 9"
               rounded={false}
               sizes="100vw"
-              className="!min-h-[20rem] md:!min-h-0"
+              className="!min-h-[18rem] md:!min-h-0"
+              caption="below"
             />
           </Reveal>
 
-          <div className="container-content pb-[clamp(4.5rem,9vw,8.5rem)]">
-            <div className="mt-12 grid gap-10 md:mt-16 md:grid-cols-12 md:gap-10">
-              {/* Text offset into the second half, with the detail photograph
-                  set against it — the mirror image of the quiet chapters. */}
-              <div
-                className={`md:col-span-5 ${spec.mirrored ? "md:order-2 md:col-start-8" : ""}`}
+          <div className="container-content pb-[clamp(3.75rem,7vw,6.5rem)]">
+            <div className="mt-12 grid gap-8 md:mt-14 md:grid-cols-12 md:gap-8">
+              <div className="md:col-span-5">{prose}</div>
+              <Reveal
+                variant="photo"
+                className="md:col-span-6 md:col-start-7 md:mt-10"
               >
-                <Reveal variant="photo">
-                  <Photo
-                    id={landscape}
-                    sizes="(min-width: 768px) 42vw, 92vw"
-                    caption="below"
-                    zoomable
-                  />
-                </Reveal>
-              </div>
-
-              <div
-                className={`md:col-span-6 ${spec.mirrored ? "md:order-1 md:col-start-1" : "md:col-start-7"}`}
-              >
-                {/* The heading already ran above the photograph, so this
-                    column opens straight into the prose. */}
-                <div className="-mt-6">{prose}</div>
-              </div>
+                <Photo
+                  id={landscape}
+                  sizes="(min-width: 768px) 46vw, 92vw"
+                  zoomable
+                />
+              </Reveal>
             </div>
           </div>
         </div>
-      )}
+      ) : null}
 
-      <div className="container-content">
-        <TileRule tone={spec.patterned ? "accent" : "rule"} />
-      </div>
+      {/* ── summit ─────────────────────────────────────────────────────
+          The room first and large, the words in the margin beside it, and the
+          last photograph edge to edge with nothing after it. The top of the
+          house, so the page opens out rather than closing down. */}
+      {spec.layout === "summit" ? (
+        <div className="relative">
+          <div className="container-content pt-[clamp(3.75rem,7vw,6.5rem)]">
+            {heading}
+
+            <div className="mt-10 grid gap-8 md:mt-12 md:grid-cols-12 md:gap-8">
+              <Reveal variant="photo" className="md:col-span-7">
+                <Photo
+                  id={portrait}
+                  ratio="4 / 3"
+                  sizes="(min-width: 768px) 56vw, 92vw"
+                  caption="below"
+                  zoomable
+                />
+              </Reveal>
+              <div className="md:col-span-4 md:col-start-9">{prose}</div>
+            </div>
+          </div>
+
+          <Reveal variant="photo" className="mt-12 md:mt-16">
+            <Photo
+              id={landscape}
+              ratio="21 / 9"
+              rounded={false}
+              sizes="100vw"
+              className="!min-h-[16rem] md:!min-h-0"
+            />
+          </Reveal>
+        </div>
+      ) : null}
     </section>
   );
 }

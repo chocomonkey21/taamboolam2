@@ -160,6 +160,8 @@ export type Content = {
     landmark: string;
     mapLink: string;
     mapPending: string;
+    /** Says out loud that the footer map is a drawing, not a survey. */
+    mapSchematic: string;
     /** Accessible title on the map frame. */
     mapTitle: string;
     /** Heading over the address block. */

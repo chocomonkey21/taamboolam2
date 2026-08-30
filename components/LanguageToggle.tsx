@@ -21,7 +21,13 @@ export function LanguageToggle({
 }) {
   const { locale, setLocale, t } = useSite();
 
-  const size = tone === "footer" ? "px-3.5 py-2 text-[14px]" : "px-3 py-1.5 text-[13px]";
+  /* min-h-11 rather than padding alone: the toggle is the one control on the
+     site a reader may hit before they have read anything, and at py-1.5 it was
+     a 30px target. The label does not move; only the hit area grows. */
+  const size =
+    tone === "footer"
+      ? "min-h-11 px-4 text-[14px]"
+      : "min-h-11 px-3.5 text-[13px]";
 
   return (
     <div
@@ -38,7 +44,7 @@ export function LanguageToggle({
             lang={code}
             onClick={() => setLocale(code)}
             aria-pressed={active}
-            className={`type-label rounded-full leading-none transition-colors duration-200 ${size} ${
+            className={`type-label inline-flex items-center justify-center rounded-full leading-none transition-colors duration-200 ${size} ${
               active
                 ? "bg-current/[0.14] font-medium"
                 : "opacity-65 hover:opacity-100"

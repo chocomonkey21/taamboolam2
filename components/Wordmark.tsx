@@ -92,7 +92,13 @@ export function Wordmark({
     <Link
       href="/"
       aria-label={`${site.name} — ${site.nameKn}`}
-      className={`inline-block transition-opacity duration-200 hover:opacity-70 ${className}`}
+      /* min-h-11 at nav size: the plate around this carries the padding,
+         so the link itself was a 26px-tall tap target sitting inside a
+         comfortable-looking object. The letterforms do not move; the hit area
+         grows to meet the plate. */
+      className={`inline-flex items-center transition-opacity duration-200 hover:opacity-70 ${
+        size === "sm" ? "min-h-11" : ""
+      } ${className}`}
     >
       {inner}
     </Link>

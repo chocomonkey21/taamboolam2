@@ -70,7 +70,7 @@ export function Photo({
       }}
     >
       <TileGlyph className="w-10 opacity-30 sm:w-14" />
-      <p className="type-caption measure text-ink-soft">{copy.alt}</p>
+      <p className="type-caption measure">{copy.alt}</p>
     </div>
   );
 

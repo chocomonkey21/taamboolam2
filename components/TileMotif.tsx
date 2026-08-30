@@ -1,10 +1,22 @@
 /**
- * The tile motif — a four-petal centre in a square, with quarter-arcs cut into
- * the corners. Drawn from Athangudi tile traditions, which are a real material
- * in this house (Floors 3 and 4), so the ornament and the building agree.
+ * The Athangudi system.
  *
- * It is drawn slightly off-true on purpose. Handmade tiles are not identical
- * and a perfectly regular field would say the opposite of what the house says.
+ * Athangudi tiles are poured by hand onto a glass plate, one at a time, and
+ * laid in courses. They are a real material in this house — Floors 3 and 4 —
+ * so the ornament and the building agree, and the ornament behaves the way the
+ * material does: it is laid at a threshold, underfoot, and no two are quite
+ * identical.
+ *
+ * What is deliberately NOT here any more: the dashed diamond rule the site
+ * used between sections. It was a divider from a stationery set — a shape with
+ * no relationship to this house at all — and it appeared five times a page.
+ */
+
+/**
+ * The single tile. A four-petal centre in a square with quarter-arcs cut into
+ * the corners, drawn slightly off-true on purpose: handmade tiles are not
+ * identical and a perfectly regular figure would say the opposite of what the
+ * house says.
  */
 export function TileGlyph({ className = "" }: { className?: string }) {
   return (
@@ -27,54 +39,87 @@ export function TileGlyph({ className = "" }: { className?: string }) {
 }
 
 /**
- * A hairline rule carrying a slice of the motif. Used between major sections.
- * The artwork is a CSS mask, so its colour always comes from a token.
+ * A laid course of tiles.
+ *
+ * This is the site's one section boundary. Four different tiles in the repeat,
+ * so a long run never locks into a machine grid, and its strength comes from
+ * the surrounding atmosphere's `--atmos-pattern` rather than from a prop — on
+ * Floors 1 and 2, which have no Athangudi tiles, it is almost invisible; on
+ * Floors 3 and 4, which do, it is clearly laid. The pattern is not decoration
+ * distributed evenly over the page; it is a material that appears where the
+ * material actually is.
  */
-export function TileRule({
+export function TileCourse({
   className = "",
-  tone = "rule",
+  /** "thin" is for a boundary inside a section rather than between two. */
+  size = "full",
+  /** Fades out at both ends, so it reads as a floor continuing past the frame. */
+  fade = true,
 }: {
   className?: string;
-  /** "rule" follows the current atmosphere; "accent" is deliberately louder. */
-  tone?: "rule" | "accent";
+  size?: "full" | "thin";
+  fade?: boolean;
 }) {
   return (
     <div
-      className={`tile-rule ${className}`}
-      style={{
-        backgroundColor:
-          tone === "accent" ? "var(--atmos-accent)" : "var(--atmos-rule)",
-        opacity: tone === "accent" ? 0.55 : 0.85,
-      }}
       aria-hidden="true"
+      className={`tile-course ${size === "thin" ? "tile-course-thin" : ""} ${
+        fade ? "tile-course-fade" : ""
+      } ${className}`}
     />
   );
 }
 
 /**
- * A soft-edged field of the pattern, for the corner of a section. Never behind
- * body text, and never at full strength — it is a watermark, not wallpaper.
+ * The material strip.
+ *
+ * Five bands of what the house is actually made of, in the order you meet them
+ * climbing it: limewash and stone downstairs, wood through the middle, then
+ * the ochre and indigo that arrive with the tiles on Floors 3 and 4. It is the
+ * page's opening statement of the palette and the site's one animated moment —
+ * the bands lay themselves in once, left to right, in half a second.
+ *
+ * Every band carries a label that is only ever read aloud or seen at width;
+ * the strip is decoration, so it is hidden from assistive technology, and the
+ * names exist for the owner reading the source, not for a visitor.
  */
-export function TileField({
+const MATERIALS = [
+  { name: "limewash", color: "var(--color-lime)" },
+  { name: "stone", color: "var(--color-stone-deep)" },
+  { name: "wood", color: "var(--color-wood)" },
+  { name: "ochre", color: "var(--color-ochre)" },
+  { name: "indigo", color: "var(--color-indigo)" },
+] as const;
+
+export function MaterialStrip({
   className = "",
-  opacity = 0.09,
+  height = "0.5rem",
+  /** Widths are deliberately unequal — a laid course, not a chart. */
+  weights = [5, 3, 4, 6, 2],
 }: {
   className?: string;
-  opacity?: number;
+  height?: string;
+  weights?: number[];
 }) {
   return (
     <div
       aria-hidden="true"
-      className={`tile-field pointer-events-none absolute ${className}`}
-      style={{
-        opacity,
-        color: "var(--atmos-accent)",
-        backgroundBlendMode: "multiply",
-        maskImage:
-          "radial-gradient(ellipse at center, rgb(0 0 0 / 1), transparent 72%)",
-        WebkitMaskImage:
-          "radial-gradient(ellipse at center, rgb(0 0 0 / 1), transparent 72%)",
-      }}
-    />
+      className={`flex w-full overflow-hidden ${className}`}
+      style={{ height }}
+    >
+      {MATERIALS.map((material, index) => (
+        <span
+          key={material.name}
+          className="swatch block h-full"
+          style={
+            {
+              flex: `${weights[index] ?? 1} 1 0%`,
+              backgroundColor: material.color,
+              "--swatch-index": index,
+            } as React.CSSProperties
+          }
+        />
+      ))}
+    </div>
   );
 }

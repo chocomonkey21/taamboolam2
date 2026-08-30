@@ -3,9 +3,14 @@
 /* ==========================================================================
    Taamboolam — design system
 
-   Heritage-led, contemporary. The palette is drawn from the materials the
-   house is actually made of: limewash, clay, stone, wood, leaf. Nothing here
-   is a brand colour invented in the abstract.
+   The house is a stack. Five levels, four of them for guests, climbed by
+   stairs and a lift, and the materials change as you climb. Everything below
+   is built on that one fact: a vertical datum, a course of tiles laid at each
+   boundary, and a palette that warms as the page rises.
+
+   The palette is drawn from the materials the house is actually made of:
+   limewash, clay, stone, wood, leaf, indigo. Nothing here is a brand colour
+   invented in the abstract.
 
    Components never use raw hex. Always reference a token.
    ========================================================================== */
@@ -20,6 +25,10 @@
   /* Ink ---------------------------------------------------------------- */
   --color-ink: #2a241d; /* body text, warm near-black */
   --color-ink-soft: #5f574a; /* captions, secondary text (7.0:1 on paper) */
+  /* The one dark ground on the site. Not black — a wet-slate warm brown, so a
+     full-bleed dark band still belongs to the same house. */
+  --color-slate: #221b14;
+  --color-slate-soft: #2e251c;
 
   /* Materials --------------------------------------------------------- */
   --color-clay: #a8492a; /* terracotta — the primary action colour */
@@ -27,6 +36,7 @@
   --color-leaf: #3f5940; /* bottle green, used sparingly */
   --color-wood: #6d4b2f; /* warm brown */
   --color-ochre: #b8802c; /* Athangudi yellow */
+  --color-indigo: #3c5570; /* the blue in an Athangudi tile */
 
   /* Type --------------------------------------------------------------- */
   --font-heading:
@@ -40,11 +50,12 @@
   --radius-md: 5px;
 
   /* Layout ------------------------------------------------------------- */
-  /* One extra breakpoint below Tailwind's `sm`, for the narrowest phones,
-     where the header has to give something up. */
   --breakpoint-xs: 26rem;
   --container-content: 1240px;
   --container-measure: 640px;
+  /* The margin the plumb line and its annotations live in, to the left of the
+     reading column. Below md there is no margin and notes sit inline. */
+  --margin-note: 8.5rem;
 
   /* Motion ------------------------------------------------------------- */
   --ease-material: cubic-bezier(0.22, 0.61, 0.24, 1);
@@ -57,6 +68,10 @@
    `data-atmosphere` shifts the ground the content sits on. Floors 1 and 2 stay
    close to the house's default warm white. Floors 3 and 4 pick up the tiles:
    perceptible, but never a colour wash.
+
+   --atmos-pattern is how strongly the tile course prints on that ground. It is
+   the structural half of "the material starts speaking on Floor 3": the same
+   band of ornament is nearly invisible downstairs and clearly laid upstairs.
    -------------------------------------------------------------------------- */
 
 :root,
@@ -67,6 +82,7 @@
   --atmos-accent: var(--color-clay);
   --atmos-accent-ink: #883418;
   --atmos-ink: var(--color-ink);
+  --atmos-pattern: 0.1;
 }
 
 [data-atmosphere="floor-1"] {
@@ -76,6 +92,7 @@
   --atmos-accent: var(--color-wood);
   --atmos-accent-ink: #5d3f26;
   --atmos-ink: #2b2318;
+  --atmos-pattern: 0.05;
 }
 
 [data-atmosphere="floor-2"] {
@@ -85,6 +102,7 @@
   --atmos-accent: var(--color-leaf);
   --atmos-accent-ink: #34492f;
   --atmos-ink: #262a20;
+  --atmos-pattern: 0.07;
 }
 
 /* Floors 3 and 4 are where the material starts speaking. The shift is
@@ -96,6 +114,7 @@
   --atmos-accent: var(--color-ochre);
   --atmos-accent-ink: #6f4d12;
   --atmos-ink: #2e2616;
+  --atmos-pattern: 0.2;
 }
 
 [data-atmosphere="floor-4"] {
@@ -105,6 +124,19 @@
   --atmos-accent: var(--color-clay);
   --atmos-accent-ink: #7c2f14;
   --atmos-ink: #2f2018;
+  --atmos-pattern: 0.26;
+}
+
+/* The one dark stretch. Used once per page at most. Tokens invert so every
+   utility that follows an atmosphere keeps working inside it. */
+[data-atmosphere="night"] {
+  --atmos-bg: var(--color-slate);
+  --atmos-tint: var(--color-slate-soft);
+  --atmos-rule: #4a3c2e;
+  --atmos-accent: var(--color-ochre);
+  --atmos-accent-ink: #e2b769;
+  --atmos-ink: var(--color-paper);
+  --atmos-pattern: 0.16;
 }
 
 /* ==========================================================================
@@ -166,6 +198,11 @@
     border-radius: 2px;
   }
 
+  /* Inside a dark band the clay ring nearly disappears against slate. */
+  [data-atmosphere="night"] :focus-visible {
+    outline-color: var(--color-ochre);
+  }
+
   /* Kannada sets slightly larger to match Latin's optical size, and needs a
      touch more leading for its vowel signs. */
   :lang(kn) body,
@@ -200,20 +237,18 @@
      only ever nudges it. At display scale the face is meant to go further than
      the automatic value takes it: opsz pushed toward its display cut gives
      finer hairlines and tighter joins, which is the difference between a large
-     text face and a face actually drawn for this size. Set explicitly here
-     rather than site-wide, because the same treatment at body size would make
-     small text spindly. */
+     text face and a face actually drawn for this size. */
   .type-display {
-    font-size: clamp(2.5rem, 9vw, 5.75rem);
-    line-height: 1.02;
-    letter-spacing: -0.022em;
-    font-variation-settings: "SOFT" 40, "opsz" 130;
+    font-size: clamp(2.75rem, 10.5vw, 7rem);
+    line-height: 0.98;
+    letter-spacing: -0.028em;
+    font-variation-settings: "SOFT" 40, "opsz" 144;
   }
 
   .type-h1 {
-    font-size: clamp(2rem, 5.2vw, 3.5rem);
-    line-height: 1.08;
-    letter-spacing: -0.018em;
+    font-size: clamp(2.05rem, 5.4vw, 3.75rem);
+    line-height: 1.06;
+    letter-spacing: -0.02em;
   }
 
   .type-h2 {
@@ -254,6 +289,15 @@
     color: var(--color-ink-soft);
   }
 
+  /* Both of these are pinned to a warm dark grey that is correct on paper and
+     invisible on slate. Inside the one dark band on the site they take the
+     paper hue instead, mixed back toward the ground until they read as
+     secondary rather than as body — the same relationship, inverted. */
+  [data-atmosphere="night"] .type-caption,
+  [data-atmosphere="night"] .type-annotation {
+    color: color-mix(in srgb, var(--color-paper) 68%, var(--color-slate));
+  }
+
   .type-label {
     font-family: var(--font-sans);
     font-weight: 500;
@@ -261,21 +305,45 @@
     line-height: 1.2;
   }
 
-  .type-eyebrow {
+  /* ------------------------------------------------------------------------
+     The annotation.
+
+     This replaces the eyebrow the site used to stack above every heading. An
+     eyebrow is a label announcing that a section is about to begin; seven of
+     them down one page is a table of contents pretending to be design. An
+     annotation is a note written in the margin beside the thing it refers to —
+     it sits to the LEFT of the reading column on desktop, hangs off the plumb
+     line, and reads as somebody's hand rather than as a UI component.
+
+     It never carries the section's meaning. If every annotation were deleted
+     the page would lose grace notes, not facts.
+     ---------------------------------------------------------------------- */
+  .type-annotation {
     font-family: var(--font-sans);
-    font-weight: 500;
-    font-size: 0.6875rem;
-    line-height: 1;
-    letter-spacing: 0.22em;
-    text-transform: uppercase;
+    font-weight: 400;
+    font-size: 0.8125rem;
+    line-height: 1.45;
+    letter-spacing: 0.01em;
     color: var(--color-ink-soft);
   }
 
-  /* Kannada has no uppercase, and letterspacing damages its conjuncts. */
-  html[lang="kn-IN"] .type-eyebrow {
-    text-transform: none;
-    letter-spacing: 0.04em;
-    font-size: 0.8125rem;
+  html[lang="kn-IN"] .type-annotation {
+    font-size: 0.875rem;
+    line-height: 1.7;
+  }
+
+  /* The numeral that anchors a floor. Set in the display face, large enough to
+     be architecture rather than a list bullet. */
+  .type-numeral {
+    font-family: var(--font-heading);
+    font-weight: 400;
+    font-optical-sizing: auto;
+    font-variation-settings: "SOFT" 40, "opsz" 144;
+    font-size: clamp(2.5rem, 6vw, 5rem);
+    line-height: 0.82;
+    letter-spacing: -0.03em;
+    font-variant-numeric: lining-nums tabular-nums;
+    color: var(--atmos-accent-ink);
   }
 
   html[lang="kn-IN"] .type-display,
@@ -305,23 +373,34 @@
   }
 
   .measure {
-    /* Two caps, not one. The pixel value keeps a body paragraph off the
-       full width of a wide column; the ch value keeps the SAME class from
-       running 98 characters when it is put on caption-sized type, which a
-       fixed pixel measure cannot know about. */
+    /* Two caps, not one. The pixel value keeps a body paragraph off the full
+       width of a wide column; the ch value keeps the SAME class from running
+       98 characters when it is put on caption-sized type. */
     max-width: min(var(--container-measure), 72ch);
   }
 
+  /* ------------------------------------------------------------------------
+     Section rhythm.
+
+     Three steps, not one. The old single value gave every boundary on the site
+     the same weight, so a chapter change and a paragraph break were both
+     8.5rem and the page had no pacing at all. `-tight` closes a section up
+     against the one it belongs to; `-wide` is kept for the two or three
+     genuine chapter changes on a page.
+     ---------------------------------------------------------------------- */
   .section-rhythm {
-    padding-block: clamp(4.5rem, 9vw, 8.5rem);
+    padding-block: clamp(3.75rem, 7vw, 6.5rem);
   }
 
-  .section-rhythm-sm {
-    padding-block: clamp(3rem, 6vw, 5.5rem);
+  .section-rhythm-tight {
+    padding-block: clamp(2.25rem, 4vw, 3.5rem);
   }
 
-  /* Hairlines and grounds that follow the surrounding atmosphere, so a
-     section's rules shift with it instead of being pinned to one grey. */
+  .section-rhythm-wide {
+    padding-block: clamp(5rem, 10vw, 9.5rem);
+  }
+
+  /* Hairlines and grounds that follow the surrounding atmosphere. */
   .rule-atmos {
     border-color: var(--atmos-rule);
   }
@@ -334,20 +413,33 @@
     background-color: var(--atmos-tint);
   }
 
-  /* --atmos-accent is a FILL: tile fields, rules, glyphs. It is not always
-     dark enough to set type in. --atmos-accent-ink is the same hue pushed
-     down until it clears 4.5:1 on that atmosphere's own ground, and it is the
-     only one of the two that may be used for text. */
+  /* A section whose GROUND is the tint rather than the paper. It repoints
+     --atmos-bg as well as painting itself, so anything inside that needs to
+     match the ground it is standing on — the ring around an overlapping
+     photograph, most of all — gets the right colour instead of punching a
+     paper-white halo into a limewash section. */
+  .ground-tint {
+    --atmos-bg: var(--atmos-tint);
+    background-color: var(--atmos-tint);
+  }
+
+  /* --atmos-accent is a FILL: tile courses, rules, glyphs. It is not always
+     dark enough to set type in. --atmos-accent-ink is the same hue pushed down
+     until it clears 4.5:1 on that atmosphere's own ground, and it is the only
+     one of the two that may be used for text. */
   .text-atmos-accent {
     color: var(--atmos-accent-ink);
   }
 
-  /* Headings carry a trace of the floor they sit on. It is a 3-4% shift off
-     the house's own ink — nowhere near a colour, and it never drops below
-     about 12:1 on that floor's ground. Body copy deliberately does NOT take
-     it: tinting a whole page of text is how a warm palette turns muddy. */
+  /* Headings carry a trace of the floor they sit on. Body copy deliberately
+     does NOT: tinting a whole page of text is how a warm palette turns
+     muddy. */
   .text-atmos-ink {
     color: var(--atmos-ink);
+  }
+
+  .text-atmos-soft {
+    color: color-mix(in srgb, var(--atmos-ink) 74%, var(--atmos-bg));
   }
 
   /* Full-bleed inside a container. */
@@ -355,17 +447,110 @@
     width: 100vw;
     margin-inline: calc(50% - 50vw);
   }
+
+  /* ------------------------------------------------------------------------
+     The datum.
+
+     A plumb line down the left margin of the reading column, ticked at every
+     annotation. It is the site's one structural conceit: the house is a stack,
+     so the page is drawn against a level. It exists only where there is a
+     margin to put it in — below md the line is dropped and the annotations
+     fall inline above their headings, because a 22px gutter is not a margin,
+     it is an edge.
+     ---------------------------------------------------------------------- */
+  .datum {
+    position: relative;
+  }
+
+  @media (min-width: 768px) {
+    .datum {
+      padding-left: var(--margin-note);
+    }
+
+    .datum::before {
+      content: "";
+      position: absolute;
+      inset-block: 0;
+      left: calc(var(--margin-note) - 2.25rem);
+      width: 1px;
+      background: linear-gradient(
+        to bottom,
+        transparent,
+        var(--atmos-rule) 6%,
+        var(--atmos-rule) 94%,
+        transparent
+      );
+    }
+  }
+
+  /* An annotation hung on the datum: the note sits in the margin, and a short
+     tick reaches from the line across to it. */
+  .datum-note {
+    display: block;
+    margin-bottom: 1.1rem;
+  }
+
+  @media (min-width: 768px) {
+    .datum-note {
+      position: absolute;
+      left: 0;
+      width: calc(var(--margin-note) - 3.25rem);
+      margin-bottom: 0;
+      text-align: right;
+      /* Optically aligned to the cap-height of the heading beside it, not to
+         its line box — a note set to the em box sits visibly high. */
+      margin-top: 0.5em;
+    }
+
+    .datum-note::after {
+      content: "";
+      position: absolute;
+      top: 0.62em;
+      right: -1.5rem;
+      width: 1rem;
+      height: 1px;
+      background-color: var(--atmos-rule);
+    }
+  }
+
+  /* A caption anchored to the edge of the frame it belongs to rather than
+     stacked under it: set along an edge, reading upward. Desktop only —
+     rotated type on a phone is a puzzle, not a caption. */
+  .edge-note {
+    display: none;
+  }
+
+  @media (min-width: 1024px) {
+    .edge-note {
+      display: block;
+      position: absolute;
+      writing-mode: vertical-rl;
+      transform: rotate(180deg);
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      font-size: 0.6875rem;
+      white-space: nowrap;
+    }
+
+    html[lang="kn-IN"] .edge-note {
+      text-transform: none;
+      letter-spacing: 0.02em;
+      font-size: 0.8125rem;
+    }
+  }
 }
 
 /* ==========================================================================
-   Material textures
+   Material surfaces
 
-   A limewash grain and a paper tooth, both very quiet. They exist so large
-   flat areas do not read as flat digital colour. Rendered as gradients rather
-   than image files, so they cost nothing to load and never block paint.
+   Three grounds, not one flat fill: a limewash that is unevenly laid, a
+   plaster tooth, and a paper grain. All rendered from gradients and one inline
+   turbulence, so they cost nothing to load and never block paint.
    ========================================================================== */
 
 @layer components {
+  /* Limewash: brushed, so the light pools unevenly across a large fill the way
+     it does on a wall painted by somebody rather than sprayed. */
   .texture-limewash {
     position: relative;
     isolation: isolate;
@@ -377,17 +562,27 @@
     inset: 0;
     z-index: -1;
     pointer-events: none;
-    opacity: 0.55;
+    opacity: 0.7;
     background-image:
       radial-gradient(
-        ellipse 80% 60% at 20% 0%,
-        rgb(255 255 255 / 0.55),
-        transparent 70%
+        ellipse 74% 52% at 14% -4%,
+        rgb(255 255 255 / 0.6),
+        transparent 68%
       ),
       radial-gradient(
-        ellipse 70% 50% at 85% 100%,
-        rgb(168 73 42 / 0.05),
-        transparent 65%
+        ellipse 62% 44% at 88% 104%,
+        rgb(168 73 42 / 0.055),
+        transparent 62%
+      ),
+      repeating-linear-gradient(
+        104deg,
+        rgb(255 255 255 / 0.05) 0 3px,
+        transparent 3px 17px
+      ),
+      repeating-linear-gradient(
+        97deg,
+        rgb(94 78 58 / 0.022) 0 2px,
+        transparent 2px 29px
       );
   }
 
@@ -402,93 +597,144 @@
     mix-blend-mode: multiply;
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)' opacity='0.16'/%3E%3C/svg%3E");
   }
+
+  /* Plaster tooth — coarser and directional, for the footer and the dark band,
+     where a large uninterrupted field would read as flat digital colour. */
+  .texture-plaster {
+    position: relative;
+    isolation: isolate;
+  }
+
+  .texture-plaster::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    opacity: 0.55;
+    mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='260' height='260'%3E%3Cfilter id='p'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.035 0.09' numOctaves='4' seed='7'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='260' height='260' filter='url(%23p)' opacity='0.5'/%3E%3C/svg%3E");
+  }
 }
 
 /* ==========================================================================
-   Tile field — the Athangudi-inspired pattern.
+   The Athangudi system.
 
-   Deliberately imperfect: the three tiles in the repeat are subtly different
-   sizes and the motif is off-centre in one of them, so a large field never
-   locks into a machine grid. Ornament only, never behind body text.
+   Athangudi tiles are poured by hand onto a glass plate, one at a time. They
+   are never identical, they are laid in courses, and the pattern belongs to
+   the FLOOR — it is underfoot, not on the wall.
+
+   So the ornament here behaves the same way: laid as a course at a boundary
+   between two stretches of page, never as wallpaper behind reading matter, and
+   its strength set by --atmos-pattern, which is close to nothing on the floors
+   that have no tiles and highest on the two that do.
    ========================================================================== */
 
 @layer components {
-  .tile-field {
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180' viewBox='0 0 180 180'%3E%3Cg fill='none' stroke='%23000' stroke-width='1.6' stroke-linejoin='round'%3E%3Crect x='4' y='5' width='82' height='80'/%3E%3Cpath d='M45 18c7 11 14 18 25 25-11 7-18 14-25 25-7-11-14-18-25-25 11-7 18-14 25-25Z'/%3E%3Ccircle cx='45' cy='44' r='6.5'/%3E%3Crect x='94' y='4' width='82' height='83'/%3E%3Cpath d='M135 20c6.5 12 13.5 19 24 26-10.5 6.5-17.5 13.5-24 25-7.5-11.5-14.5-18.5-25-25 10.5-7 17.5-14 25-26Z'/%3E%3Cpath d='M94 4 118 28M176 4 152 28M94 87l24-24M176 87l-24-24'/%3E%3Crect x='5' y='94' width='81' height='82'/%3E%3Cpath d='M5 118a24 24 0 0 0 24-24M86 94a24 24 0 0 0 24 0M86 152a24 24 0 0 0-24 24M5 152a24 24 0 0 1 24 24'/%3E%3Ccircle cx='45' cy='135' r='17'/%3E%3Crect x='95' y='95' width='80' height='81'/%3E%3Cpath d='M136 108c6 11 13 18 23 24-10 6-17 13-23 24-6-11-13-18-23-24 10-6 17-13 23-24Z'/%3E%3C/g%3E%3C/svg%3E");
-    background-size: 180px 180px;
-  }
-
-  /* A hairline rule carrying a slice of the same motif. */
-  .tile-rule {
-    height: 12px;
+  /* One laid course. Four tiles in the repeat, each drawn differently and one
+     of them a little off-centre, so a long run never locks into a machine grid
+     the way a single repeated cell does. */
+  .tile-course {
+    --course-art: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='224' height='56' viewBox='0 0 224 56'%3E%3Cg fill='none' stroke='%23000' stroke-width='1.5' stroke-linejoin='round'%3E%3Crect x='1.5' y='2' width='53' height='52'/%3E%3Cpath d='M28 12c4.4 7.2 9 11.8 16.2 16.2C37 32.6 32.4 37.2 28 44.4 23.6 37.2 19 32.6 11.8 28.2 19 23.8 23.6 19.2 28 12Z'/%3E%3Ccircle cx='28' cy='28.2' r='4.4'/%3E%3Crect x='56.5' y='1.5' width='54' height='53'/%3E%3Cpath d='M56.5 16.5A15 15 0 0 0 71 1.5M110.5 16.5A15 15 0 0 1 96 1.5M56.5 39.5A15 15 0 0 1 71 54.5M110.5 39.5A15 15 0 0 0 96 54.5'/%3E%3Ccircle cx='83.5' cy='28' r='10.5'/%3E%3Crect x='112.5' y='2.5' width='53' height='51'/%3E%3Cpath d='M139.4 10.5c4.2 7.6 8.8 12.2 16 16.6-7.2 4.6-11.8 9.2-16 16.8-4.6-7.6-9.2-12.2-16.4-16.8 7.2-4.4 11.8-9 16.4-16.6Z'/%3E%3Cpath d='M112.5 2.5 126 16M165.5 2.5 152 16M112.5 53.5 126 40M165.5 53.5 152 40'/%3E%3Crect x='167.5' y='1.5' width='54' height='53'/%3E%3Ccircle cx='194' cy='28' r='13.5'/%3E%3Cpath d='M194 1.5v13M194 41.5v13M167.5 28h13M207.5 28h14'/%3E%3C/g%3E%3C/svg%3E");
+    height: 56px;
     width: 100%;
-    --art: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='34' height='12' viewBox='0 0 34 12'%3E%3Cg fill='none' stroke='%23000' stroke-width='1.15'%3E%3Cpath d='M0 6h6M28 6h6M17 1.5 21.5 6 17 10.5 12.5 6Z'/%3E%3C/g%3E%3C/svg%3E");
-    -webkit-mask-image: var(--art);
-    mask-image: var(--art);
+    -webkit-mask-image: var(--course-art);
+    mask-image: var(--course-art);
     -webkit-mask-repeat: repeat-x;
     mask-repeat: repeat-x;
     -webkit-mask-position: center;
     mask-position: center;
+    -webkit-mask-size: 224px 56px;
+    mask-size: 224px 56px;
+    background-color: var(--atmos-accent);
+    opacity: var(--atmos-pattern);
+    pointer-events: none;
   }
+
+  /* Half height, for a boundary inside a section rather than between two. */
+  .tile-course-thin {
+    height: 28px;
+    -webkit-mask-size: 112px 28px;
+    mask-size: 112px 28px;
+  }
+
+  /* A course that fades out at both ends, so it reads as a fragment of a floor
+     continuing past the frame rather than as a ruled border with two ends. */
+  .tile-course-fade {
+    -webkit-mask-composite: source-in;
+    mask-composite: intersect;
+    -webkit-mask-image: var(--course-art),
+      linear-gradient(to right, transparent, #000 14%, #000 86%, transparent);
+    mask-image: var(--course-art),
+      linear-gradient(to right, transparent, #000 14%, #000 86%, transparent);
+    -webkit-mask-repeat: repeat-x, no-repeat;
+    mask-repeat: repeat-x, no-repeat;
+    -webkit-mask-size: 224px 56px, 100% 100%;
+    mask-size: 224px 56px, 100% 100%;
+  }
+
 }
 
 /* ==========================================================================
    Motion
 
-   Everything is opt-in and short. No scroll hijacking, no parallax beyond a
-   few pixels, no autoplay. Every rule below collapses to nothing under
-   prefers-reduced-motion — the content and its final position never depend on
-   an animation having run.
+   One authored moment per page, and nothing a reader has to wait for. The
+   previous system put the same fade on every block on the site, which meant a
+   fast scroll left whole blank viewports behind it and slow reading turned
+   into a queue of identical entrances.
+
+   The rule now: TEXT IS NEVER HIDDEN. Body copy, headings, lists and links
+   render at full opacity in the first paint. Only photographs animate — they
+   settle out of a slightly larger crop, which is a focus pull rather than an
+   entrance — and only a page's two or three genuine chapter openings take the
+   heading wipe.
    ========================================================================== */
 
 @layer components {
-  /* Gentle reveal, driven by IntersectionObserver setting data-shown.
-
-     Kept short on purpose: at normal reading/scroll speed a fade this brief
-     is felt rather than watched, and text is never left half-legible while a
-     reader is already trying to read it. Photographs can afford to linger —
-     nobody reads a photograph at 0.4 opacity as a defect — but body copy and
-     headings cannot, so they resolve well before a scrolling reader reaches
-     them (see the earlier trigger point in Reveal.tsx). */
-  /* The hidden resting states below only apply where scripting is actually
-     available to undo them. Hiding content in CSS and depending on JS to
-     reveal it means any single failure leaves a blank page; `scripting:
-     enabled` makes the browser answer that question itself, with no
-     attribute to set and nothing for React to find missing at hydration.
-     Where the feature is unsupported the query simply does not match, and
-     the page renders fully visible — the correct way for this to fail. */
+  /* EVERY rule below is gated on [data-anim="true"], which only a client effect
+     ever sets, and only on an element that is off screen at that moment. The
+     resting state carries no mask and no opacity, so the server's HTML, every
+     pre-hydration paint, a browser with scripting off and anything the reader
+     is already looking at are all simply visible. See Reveal.tsx. */
   @media (scripting: enabled) {
-  .reveal {
-    opacity: 0;
-    transform: translate3d(0, 10px, 0);
-    transition:
-      opacity 320ms var(--ease-material),
-      transform 320ms var(--ease-material);
-    transition-delay: var(--reveal-delay, 0ms);
-  }
+    /* Photographs come up from a slightly larger crop and settle. */
+    .reveal-photo[data-anim="true"] img,
+    .reveal-photo[data-anim="true"] [data-placeholder] {
+      transform: scale(1.05);
+      opacity: 0;
+      transition:
+        transform 820ms var(--ease-soft),
+        opacity 480ms var(--ease-material);
+      transition-delay: var(--reveal-delay, 0ms);
+    }
 
-  .reveal[data-shown="true"] {
-    opacity: 1;
-    transform: none;
-  }
+    .reveal-photo[data-anim="true"][data-shown="true"] img,
+    .reveal-photo[data-anim="true"][data-shown="true"] [data-placeholder] {
+      transform: scale(1);
+      opacity: 1;
+    }
 
-  /* Photographs come up from a slightly larger crop and settle — a focus
-     shift rather than a slide. */
-  .reveal-photo img,
-  .reveal-photo [data-placeholder] {
-    transform: scale(1.06);
-    opacity: 0;
-    transition:
-      transform 900ms var(--ease-soft),
-      opacity 550ms var(--ease-material);
-    transition-delay: var(--reveal-delay, 0ms);
-  }
+    /* The heading wipe. The type is drawn, not faded: a mask opens from the
+       leading edge, so the words arrive the way ink arrives on paper rather
+       than by turning up their brightness. Chapter openings only. */
+    .wipe[data-anim="true"] {
+      -webkit-mask-image: linear-gradient(
+        to right,
+        #000 0 var(--wipe, 0%),
+        transparent var(--wipe, 0%)
+      );
+      mask-image: linear-gradient(
+        to right,
+        #000 0 var(--wipe, 0%),
+        transparent var(--wipe, 0%)
+      );
+      transition: --wipe 760ms var(--ease-soft);
+      transition-delay: var(--reveal-delay, 0ms);
+    }
 
-  .reveal-photo[data-shown="true"] img,
-  .reveal-photo[data-shown="true"] [data-placeholder] {
-    transform: scale(1);
-    opacity: 1;
-  }
+    .wipe[data-anim="true"][data-shown="true"] {
+      --wipe: 135%;
+    }
   }
 
   /* The opening: the wordmark alone, then the page. Non-blocking — the page
@@ -500,16 +746,16 @@
     display: grid;
     place-items: center;
     background-color: var(--color-paper);
-    animation: veil-lift 1250ms var(--ease-soft) forwards;
+    animation: veil-lift 1050ms var(--ease-soft) forwards;
   }
 
   .opening-veil > * {
-    animation: veil-mark 1150ms var(--ease-material) forwards;
+    animation: veil-mark 980ms var(--ease-material) forwards;
   }
 
   @keyframes veil-lift {
     0%,
-    52% {
+    48% {
       opacity: 1;
       visibility: visible;
     }
@@ -539,42 +785,85 @@
 
   /* Page transition: short, immediate, never delays interaction. */
   .page-enter {
-    animation: page-enter 420ms var(--ease-material) both;
+    animation: page-enter 360ms var(--ease-material) both;
   }
 
   @keyframes page-enter {
     from {
       opacity: 0;
-      transform: translate3d(0, 10px, 0);
     }
     to {
       opacity: 1;
-      transform: none;
     }
   }
 
-  /* The floating oval header. */
-  .nav-shell {
+  /* ------------------------------------------------------------------------
+     The signature moment: the material strip.
+
+     Five bands of the house's own materials — limewash, stone, wood, ochre,
+     indigo — laid across the foot of the hero. They draw themselves in once,
+     left to right, in the order you meet them climbing the house. It is the
+     only animation on the site that is there to be watched, it runs for well
+     under a second, and it plays exactly once.
+     ---------------------------------------------------------------------- */
+  .swatch {
+    transform-origin: left center;
+    animation: swatch-lay 520ms var(--ease-soft) both;
+    animation-delay: calc(var(--swatch-index, 0) * 85ms + 240ms);
+  }
+
+  @keyframes swatch-lay {
+    from {
+      transform: scaleX(0);
+    }
+    to {
+      transform: scaleX(1);
+    }
+  }
+
+  /* ------------------------------------------------------------------------
+     The header. Two objects on a wall, not one bar across the middle.
+
+     It retracts while the reader is going down the page and returns the
+     instant they go up (see Nav.tsx for why). The transform is a translate on
+     a fixed element and nothing else, so it stays on the compositor, and it is
+     just long enough to be seen leaving rather than to be waited for.
+     ---------------------------------------------------------------------- */
+  .nav-header {
+    transition: transform 300ms var(--ease-material);
+  }
+
+  .nav-header[data-retracted="true"] {
+    transform: translate3d(0, calc(-100% - 0.75rem), 0);
+  }
+
+  .nav-plate {
     background-color: transparent;
     border-color: transparent;
     box-shadow: none;
     transition:
-      background-color 420ms var(--ease-material),
-      border-color 420ms var(--ease-material),
-      box-shadow 420ms var(--ease-material),
-      backdrop-filter 420ms var(--ease-material);
+      background-color 380ms var(--ease-material),
+      border-color 380ms var(--ease-material),
+      box-shadow 380ms var(--ease-material),
+      backdrop-filter 380ms var(--ease-material);
   }
 
-  .nav-shell[data-scrolled="true"] {
-    background-color: color-mix(in srgb, var(--color-paper) 88%, transparent);
+  .nav-plate[data-scrolled="true"] {
+    background-color: color-mix(in srgb, var(--color-paper) 90%, transparent);
     border-color: var(--color-stone);
-    box-shadow: 0 10px 34px -22px rgb(42 36 29 / 0.5);
+    box-shadow: 0 12px 30px -24px rgb(42 36 29 / 0.55);
     backdrop-filter: saturate(1.1) blur(14px);
   }
 
-  /* Over the hero the header sits on a dark photograph, so it inverts. */
-  .nav-shell[data-over-hero="true"] {
+  /* Over the hero the plates sit on a dark photograph. Rather than going fully
+     transparent — which left the type floating on whatever the photograph
+     happened to be doing — they take a dark ground of their own, so contrast
+     is guaranteed by the design and not by the owner's future picture. */
+  .nav-plate[data-over-hero="true"] {
     color: var(--color-paper);
+    background-color: rgb(20 15 11 / 0.44);
+    border-color: rgb(247 242 232 / 0.24);
+    backdrop-filter: saturate(1.05) blur(8px);
   }
 
   /* ------------------------------------------------------------------------
@@ -614,33 +903,34 @@
   }
 
   /* ------------------------------------------------------------------------
-     The floor ledger — the house read as a stack rather than a row of cards.
-     Each stratum carries its own atmosphere token, so the colour genuinely
-     warms as the reader climbs.
+     The floor ledger — the house read as a section drawing.
+
+     Every stratum carries a bearing line in its own accent down the leading
+     edge: the colour of that level, read as a cut through the building rather
+     than as a decorative border.
      ---------------------------------------------------------------------- */
 
-  /* Only the hover tint lives on the row. The staggered reveal is applied to
-     the link inside it instead — putting both on one element meant a bare
-     `transition` shorthand here silently reset the delay that .reveal reads
-     from --reveal-delay, and flattened the four-row stagger to zero. */
   .ledger-row {
-    transition: background-color 300ms var(--ease-material);
+    transition:
+      background-color 300ms var(--ease-material),
+      box-shadow 300ms var(--ease-material);
+    box-shadow: inset 2px 0 0 0
+      color-mix(in srgb, var(--atmos-accent) 45%, transparent);
   }
 
   @media (hover: hover) {
     .ledger-row:hover {
       background-color: var(--atmos-tint);
+      box-shadow: inset 5px 0 0 0 var(--atmos-accent);
     }
   }
 
   /* A keyboard reader used to get exactly what a mouse hover gets — the same
      quiet tint and nothing else — which is not a focus indicator, it is a
-     coincidence. The row keeps the tint, and the link inside it draws a real
-     marker: a thick accent rule down the leading edge, in that floor's own
-     accent colour, plus the standard focus ring on the link itself. */
+     coincidence. */
   .ledger-row:focus-within {
     background-color: var(--atmos-tint);
-    box-shadow: inset 3px 0 0 0 var(--atmos-accent);
+    box-shadow: inset 5px 0 0 0 var(--atmos-accent);
   }
 
   /* ------------------------------------------------------------------------
@@ -653,8 +943,8 @@
     transition-timing-function: var(--ease-material);
   }
 
-  /* Scale, not a nudge. The whole button scales including its label, which
-     is what makes it read as being pressed rather than shifted. */
+  /* Scale, not a nudge. The whole button scales including its label, which is
+     what makes it read as being pressed rather than shifted. */
   .btn:active:not(:disabled) {
     transform: scale(0.97);
   }
@@ -676,15 +966,9 @@
       transform: none;
     }
   }
+
   /* ------------------------------------------------------------------------
      The photograph viewer.
-
-     It used to appear instantly — a full-screen dark ground snapping in,
-     the one genuinely jarring moment on a site where nothing else arrives
-     from nothing. The backdrop fades; the photograph comes up from 0.96,
-     never from zero, because nothing in the world appears from no size at
-     all. Exit is faster than entry: opening is the reader deciding, closing
-     is the interface getting out of the way.
      ---------------------------------------------------------------------- */
 
   @media (scripting: enabled) {
@@ -726,6 +1010,7 @@
       transition: none;
     }
   }
+
   /* ------------------------------------------------------------------------
      Select — native menu, house chevron.
      ---------------------------------------------------------------------- */
@@ -746,59 +1031,92 @@
     text-shadow: 0 0 0 var(--color-ink);
   }
 
-  /* The floor number, set in the display face at ledger scale. */
-  .ledger-index {
-    font-family: var(--font-heading);
-    font-weight: 400;
-    font-optical-sizing: auto;
-    font-variation-settings: "SOFT" 40;
-    font-size: clamp(2.25rem, 5vw, 3.75rem);
-    line-height: 0.9;
-    letter-spacing: -0.02em;
-    color: var(--atmos-accent-ink);
-    font-variant-numeric: lining-nums tabular-nums;
-  }
-}
-
-@layer components {
   /* The loading mark. A slow breath, not a spinner — a spinner says "the
      machine is working", and this site is trying to say "somebody lives
-     here". Held well above a strobe rate and stopped entirely under
-     reduced motion, where it simply sits still and visible. */
+     here". Held well above a strobe rate. */
   .loading-mark {
     animation: loading-breathe 2600ms var(--ease-soft) infinite;
   }
 
   @keyframes loading-breathe {
-    0%, 100% { opacity: 0.28; transform: scale(0.97); }
-    50%      { opacity: 0.6;  transform: scale(1); }
+    0%,
+    100% {
+      opacity: 0.28;
+      transform: scale(0.97);
+    }
+    50% {
+      opacity: 0.6;
+      transform: scale(1);
+    }
   }
 }
+
+/* The wipe interpolates a custom property, which only animates once the
+   property has been registered with a type. Declared outside every layer,
+   because @property is not a style rule and cascade layers do not carry it.
+   Where the registration is unsupported the property never leaves its initial
+   value, so the guard below shows the heading outright rather than masking it
+   away to nothing. */
+@property --wipe {
+  syntax: "<percentage>";
+  inherits: false;
+  initial-value: 0%;
+}
+
+@supports not (background: linear-gradient(in oklab, red, blue)) {
+  .wipe[data-anim="true"] {
+    -webkit-mask-image: none !important;
+    mask-image: none !important;
+  }
+}
+
+/* ==========================================================================
+   Reduced motion — one place, everything off.
+   ========================================================================== */
 
 @media (prefers-reduced-motion: reduce) {
   .loading-mark {
     animation: none;
     opacity: 0.5;
   }
-}
-@media (prefers-reduced-motion: reduce) {
+
   .disclosure-tick,
-  .ledger-row {
+  .ledger-row,
+  .nav-plate {
     transition: none;
+  }
+
+  /* Retraction is disabled at source under reduced motion; this is the belt to
+     that braces, so the header can never be left off-screen. */
+  .nav-header,
+  .nav-header[data-retracted="true"] {
+    transform: none !important;
+    transition: none !important;
   }
 
   .disclosure[open] .disclosure-panel {
     animation: none;
   }
-}
 
-@media (prefers-reduced-motion: reduce) {
-  .reveal,
   .reveal-photo img,
-  .reveal-photo [data-placeholder] {
+  .reveal-photo [data-placeholder],
+  .reveal-photo[data-anim="true"] img,
+  .reveal-photo[data-anim="true"] [data-placeholder] {
     opacity: 1 !important;
     transform: none !important;
     transition: none !important;
+  }
+
+  .wipe,
+  .wipe[data-anim="true"] {
+    -webkit-mask-image: none !important;
+    mask-image: none !important;
+    transition: none !important;
+  }
+
+  .swatch {
+    animation: none !important;
+    transform: none !important;
   }
 
   .opening-veil,
@@ -812,10 +1130,6 @@
 
   .page-enter {
     animation: none !important;
-  }
-
-  .nav-shell {
-    transition: none;
   }
 
   *,
