@@ -85,7 +85,7 @@ export function Field({
       </div>
 
       {error ? (
-        <p id={`${id}-error`} className="type-caption mt-2 text-clay">
+        <p id={`${id}-error`} className="type-caption mt-2 text-clay-deep">
           {error}
         </p>
       ) : null}

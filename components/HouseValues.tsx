@@ -114,9 +114,11 @@ export function HouseValues({
 
         {/* How a room is got stays on the page. It is the one practical fact
             that changes what a reader does next. */}
-        <p className="rule-atmos type-body mt-8 border-t pt-5 text-ink-soft">
-          {t.values.enquiryOnly}
-        </p>
+        <div className="rule-atmos mt-8 border-t pt-5">
+          <p className="type-body measure text-ink-soft">
+            {t.values.enquiryOnly}
+          </p>
+        </div>
       </div>
     </div>
   );

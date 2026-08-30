@@ -159,7 +159,7 @@ export function MobileEnquire() {
           </span>
           <Link
             href="/enquire"
-            className="btn btn-solid type-label ml-auto rounded-full bg-clay px-5 py-2.5 text-paper active:bg-clay-deep"
+            className="btn btn-solid type-label ml-auto inline-flex min-h-11 items-center rounded-full bg-clay px-5 text-paper active:bg-clay-deep"
           >
             {t.nav.mobileEnquire}
           </Link>

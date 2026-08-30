@@ -184,13 +184,13 @@ export function EnquiryForm() {
         className="focus:outline-none"
       >
         {hasErrors ? (
-          <p className="type-body rounded-sm border border-clay bg-clay/[0.06] px-4 py-3 text-clay">
+          <p className="type-body rounded-sm border border-clay bg-clay/[0.06] px-4 py-3 text-clay-deep">
             {t.form.errorCheckFields}
           </p>
         ) : null}
         {status.kind === "failed" ? (
           <div className="rounded-sm border border-clay bg-clay/[0.06] px-4 py-3">
-            <p className="type-label text-clay">{t.form.errorHeading}</p>
+            <p className="type-label text-clay-deep">{t.form.errorHeading}</p>
             <p className="type-body mt-1 text-ink">
               {status.reason === "unconfigured"
                 ? t.form.errorConfigured

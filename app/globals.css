@@ -305,7 +305,11 @@
   }
 
   .measure {
-    max-width: var(--container-measure);
+    /* Two caps, not one. The pixel value keeps a body paragraph off the
+       full width of a wide column; the ch value keeps the SAME class from
+       running 98 characters when it is put on caption-sized type, which a
+       fixed pixel measure cannot know about. */
+    max-width: min(var(--container-measure), 72ch);
   }
 
   .section-rhythm {
