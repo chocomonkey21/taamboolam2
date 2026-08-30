@@ -446,13 +446,15 @@
      nobody reads a photograph at 0.4 opacity as a defect — but body copy and
      headings cannot, so they resolve well before a scrolling reader reaches
      them (see the earlier trigger point in Reveal.tsx). */
-  /* Every hidden resting state below is gated on [data-motion="on"], which
-     only the inline script in the layout can set. Without it — JavaScript
-     off, a script error, a crawler, a browser that never runs effects — the
-     page renders fully visible and simply does not animate. The alternative,
-     hiding content in CSS and depending on JS to reveal it, means any single
-     failure leaves a blank page. */
-  [data-motion="on"] .reveal {
+  /* The hidden resting states below only apply where scripting is actually
+     available to undo them. Hiding content in CSS and depending on JS to
+     reveal it means any single failure leaves a blank page; `scripting:
+     enabled` makes the browser answer that question itself, with no
+     attribute to set and nothing for React to find missing at hydration.
+     Where the feature is unsupported the query simply does not match, and
+     the page renders fully visible — the correct way for this to fail. */
+  @media (scripting: enabled) {
+  .reveal {
     opacity: 0;
     transform: translate3d(0, 10px, 0);
     transition:
@@ -461,15 +463,15 @@
     transition-delay: var(--reveal-delay, 0ms);
   }
 
-  [data-motion="on"] .reveal[data-shown="true"] {
+  .reveal[data-shown="true"] {
     opacity: 1;
     transform: none;
   }
 
   /* Photographs come up from a slightly larger crop and settle — a focus
      shift rather than a slide. */
-  [data-motion="on"] .reveal-photo img,
-  [data-motion="on"] .reveal-photo [data-placeholder] {
+  .reveal-photo img,
+  .reveal-photo [data-placeholder] {
     transform: scale(1.06);
     opacity: 0;
     transition:
@@ -478,10 +480,11 @@
     transition-delay: var(--reveal-delay, 0ms);
   }
 
-  [data-motion="on"] .reveal-photo[data-shown="true"] img,
-  [data-motion="on"] .reveal-photo[data-shown="true"] [data-placeholder] {
+  .reveal-photo[data-shown="true"] img,
+  .reveal-photo[data-shown="true"] [data-placeholder] {
     transform: scale(1);
     opacity: 1;
+  }
   }
 
   /* The opening: the wordmark alone, then the page. Non-blocking — the page

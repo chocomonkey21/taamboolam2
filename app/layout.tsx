@@ -98,21 +98,6 @@ export default async function RootLayout({
       lang={HTML_LANG[locale]}
       className={`${fraunces.variable} ${figtree.variable} ${kannadaSerif.variable} ${kannadaSans.variable}`}
     >
-      <head>
-        {/* Runs before first paint and is the only thing that arms the
-            scroll reveals. Everything they hide is visible until this sets
-            the flag, so the page degrades to "no animation" rather than to
-            "no content" if scripting is unavailable or errors. It also opts
-            out for readers who have asked for reduced motion, which keeps
-            that decision ahead of the first frame rather than after it. */}
-        <script
-          dangerouslySetInnerHTML={{
-            __html:
-              "try{if(!matchMedia('(prefers-reduced-motion: reduce)').matches)" +
-              "document.documentElement.setAttribute('data-motion','on')}catch(e){}",
-          }}
-        />
-      </head>
       <body className="flex min-h-screen flex-col">
         <StructuredData locale={locale} />
         <SiteProvider initialLocale={locale} photoManifest={readPhotoManifest()}>
