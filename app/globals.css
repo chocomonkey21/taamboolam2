@@ -442,6 +442,30 @@
     color: color-mix(in srgb, var(--atmos-ink) 74%, var(--atmos-bg));
   }
 
+  /* ------------------------------------------------------------------------
+     A comfortable hit area that costs nothing visually.
+
+     Measured at 768px, the header's two navigation links were 21px tall — a
+     hair over WCAG's 24px floor and half of the 44px that a thumb on an iPad
+     actually wants. The obvious fix, padding them out, drags their underline
+     ten pixels away from the word it belongs to, because that underline is a
+     border on the same box. So the box is left exactly as drawn and an
+     invisible 44px band is centred on it instead.
+     ---------------------------------------------------------------------- */
+  .tap-target {
+    position: relative;
+  }
+
+  .tap-target::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 50%;
+    height: 44px;
+    transform: translateY(-50%);
+  }
+
   /* Full-bleed inside a container. */
   .bleed {
     width: 100vw;

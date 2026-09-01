@@ -208,6 +208,8 @@ export type Content = {
     errorHeading: string;
     errorBody: string;
     errorConfigured: string;
+    /** Shown when the enquiry endpoint's rate limit has been reached. */
+    errorTooMany: string;
     errorCheckFields: string;
     devNote: string;
     errors: {

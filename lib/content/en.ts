@@ -399,6 +399,8 @@ export const en: Content = {
       "Something went wrong on our side. Please try again, or write to us directly.",
     errorConfigured:
       "The enquiry form cannot send mail right now. Please write to us directly and we will answer.",
+    errorTooMany:
+      "That is several enquiries in a short time. Please wait a few minutes, or write to us directly at stay@taamboolam.com.",
     errorCheckFields: "Please check the fields marked below.",
     devNote:
       "Development mode: no mail service is configured, so this enquiry was logged to the server terminal instead of being sent.",

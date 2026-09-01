@@ -52,7 +52,13 @@ export function SiteProvider({
   const setLocale = useCallback((next: Locale) => {
     setLocaleState(next);
     try {
-      document.cookie = `${LOCALE_COOKIE}=${next};path=/;max-age=${ONE_YEAR};samesite=lax`;
+      /* Secure only when the page itself is on HTTPS: setting it on plain
+         http://localhost would make the cookie unsettable in development, and
+         the flag means nothing there anyway. The value is a language choice
+         rather than a credential, but there is no reason to let it travel in
+         clear once the site is served over TLS. */
+      const secure = window.location.protocol === "https:" ? ";secure" : "";
+      document.cookie = `${LOCALE_COOKIE}=${next};path=/;max-age=${ONE_YEAR};samesite=lax${secure}`;
     } catch {
       // Cookies blocked. The choice still applies for this visit.
     }

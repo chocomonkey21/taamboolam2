@@ -28,7 +28,12 @@ export function ExperienceScreen() {
         className="texture-limewash relative bg-atmos"
         data-atmosphere="house"
       >
-        <div className="container-content pt-32 pb-12 sm:pt-40 md:pt-48 md:pb-16">
+        {/* The top padding used to run to 12rem on desktop, which on a 1280x800
+            laptop left the first screen holding a heading and almost nothing
+            else. Trimmed so the top edge of the courtyard is in view before a
+            reader scrolls: this page's promise is atmosphere first, and a
+            screen of type alone is not atmosphere. */}
+        <div className="container-content pt-28 pb-10 sm:pt-32 md:pt-36 md:pb-14">
           <Datum note={t.experience.eyebrow} className="max-w-[52rem]">
             <Reveal as="h1" variant="wipe" className="type-display">
               {t.experience.heading}

@@ -21,7 +21,7 @@ type Status =
   | { kind: "idle" }
   | { kind: "sending" }
   | { kind: "sent"; delivered: boolean }
-  | { kind: "failed"; reason: "network" | "server" | "unconfigured" };
+  | { kind: "failed"; reason: "network" | "server" | "unconfigured" | "throttled" };
 
 /**
  * The enquiry form.
@@ -129,9 +129,17 @@ export function EnquiryForm() {
         return;
       }
 
+      /* 429 is not a fault, it is a request to wait, and it reads very
+         differently to the guest. 503 means no mail service is configured
+         at all. Everything else is genuinely our side failing. */
       setStatus({
         kind: "failed",
-        reason: response.status === 503 ? "unconfigured" : "server",
+        reason:
+          response.status === 429
+            ? "throttled"
+            : response.status === 503
+              ? "unconfigured"
+              : "server",
       });
     } catch {
       setStatus({ kind: "failed", reason: "network" });
@@ -190,9 +198,11 @@ export function EnquiryForm() {
           <div className="rounded-sm border border-clay bg-clay/[0.06] px-4 py-3">
             <p className="type-label text-clay-deep">{t.form.errorHeading}</p>
             <p className="type-body mt-1 text-ink">
-              {status.reason === "unconfigured"
-                ? t.form.errorConfigured
-                : t.form.errorBody}
+              {status.reason === "throttled"
+                ? t.form.errorTooMany
+                : status.reason === "unconfigured"
+                  ? t.form.errorConfigured
+                  : t.form.errorBody}
             </p>
           </div>
         ) : null}

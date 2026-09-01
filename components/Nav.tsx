@@ -115,7 +115,12 @@ export function Nav() {
             {...plateState}
             className={`${plate} pointer-events-auto flex items-center gap-1 py-1 pr-2 pl-2 sm:gap-3 sm:py-2 sm:pr-2 sm:pl-5`}
           >
-            <ul className="hidden items-center gap-5 md:flex">
+            {/* gap-4 until lg: at exactly 768 the old gap-5 pushed the plate
+                past the space it had and "The Experience" wrapped onto a
+                second line, turning a small object on the wall into a tall
+                lozenge. Measured, not guessed — the link reported 75x49 at
+                768 and 104x21 at 1024. */}
+            <ul className="hidden items-center gap-4 md:flex lg:gap-5">
               {NAV_ITEMS.filter((item) => item.key !== "enquire").map((item) => {
                 const active =
                   item.href === "/"
@@ -126,7 +131,7 @@ export function Nav() {
                     <Link
                       href={item.href}
                       aria-current={active ? "page" : undefined}
-                      className={`type-label border-b pb-0.5 transition-colors duration-200 ${
+                      className={`type-label tap-target border-b pb-0.5 whitespace-nowrap transition-colors duration-200 ${
                         active
                           ? "border-current/60"
                           : "border-transparent opacity-75 hover:opacity-100"
@@ -164,7 +169,7 @@ export function Nav() {
             <Link
               href="/enquire"
               aria-current={pathname.startsWith("/enquire") ? "page" : undefined}
-              className="btn btn-solid type-label hidden rounded-full bg-clay px-5 py-2.5 text-paper hover:bg-clay-deep md:inline-flex"
+              className="btn btn-solid type-label hidden min-h-11 items-center rounded-full bg-clay px-5 text-paper hover:bg-clay-deep md:inline-flex"
             >
               {t.nav.enquire}
             </Link>
