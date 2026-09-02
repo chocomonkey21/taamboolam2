@@ -48,6 +48,15 @@ export function EnquiryForm() {
    * is left at the bottom of the form with no idea what went wrong.
    */
   const [rejectedAt, setRejectedAt] = useState(0);
+  /**
+   * Whether the reader has actually changed the kind of visit.
+   *
+   * The swap animation is keyed off this rather than run on mount, so the
+   * field does not fade in on first paint — content that is simply on the
+   * page should be on the page, and an entrance there would be motion
+   * announcing itself.
+   */
+  const [visitChanged, setVisitChanged] = useState(false);
 
   useEffect(() => {
     if (rejectedAt > 0) summaryRef.current?.focus();
@@ -217,7 +226,10 @@ export function EnquiryForm() {
         name={field("visit")}
         legend={t.form.visitType}
         value={values.visitType}
-        onChange={(next) => set("visitType", next)}
+        onChange={(next) => {
+          setVisitChanged(true);
+          set("visitType", next);
+        }}
         options={[
           { value: "stay", label: t.form.visitStay },
           { value: "gathering", label: t.form.visitGathering },
@@ -386,6 +398,12 @@ export function EnquiryForm() {
       </Field>
 
       {/* Only asked when it is relevant, and required only then. */}
+      {/* Keyed on the branch so React remounts the field rather than
+          mutating it, which is what lets the new question settle in. */}
+      <div
+        key={isGathering ? "gathering" : "message"}
+        className={visitChanged ? "field-swap" : undefined}
+      >
       {isGathering ? (
         <Field
           id={field("gathering")}
@@ -423,6 +441,7 @@ export function EnquiryForm() {
           )}
         </Field>
       )}
+      </div>
 
       <label className="type-body flex cursor-pointer items-start gap-3">
         <input

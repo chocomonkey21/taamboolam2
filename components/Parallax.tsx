@@ -62,6 +62,9 @@ export function Parallax({
     const observer = new IntersectionObserver(
       (entries) => {
         active = entries[0]?.isIntersecting ?? false;
+        /* Promoting a layer costs memory, so the promise is only made while
+           the browser is about to be asked to keep it. */
+        moving.style.willChange = active ? "transform" : "";
         if (active) update();
       },
       { rootMargin: "10% 0px" },
@@ -76,6 +79,7 @@ export function Parallax({
       window.removeEventListener("scroll", onScroll);
       window.removeEventListener("resize", onScroll);
       moving.style.transform = "";
+      moving.style.willChange = "";
     };
   }, [strength]);
 
@@ -86,7 +90,6 @@ export function Parallax({
       <div
         ref={inner}
         style={{ scale: `${1 + strength * 2}` }}
-        className="will-change-transform"
       >
         {children}
       </div>
