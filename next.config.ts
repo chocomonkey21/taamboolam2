@@ -88,11 +88,40 @@ const securityHeaders = [
     key: "Strict-Transport-Security",
     value: "max-age=63072000; includeSubDomains",
   },
+  /* This site opens no popups and uses no cross-origin window handles, so
+     isolating the browsing context costs nothing and removes a class of
+     cross-window attack. */
+  { key: "Cross-Origin-Opener-Policy", value: "same-origin" },
+];
+
+/**
+ * Caching for the photographs.
+ *
+ * Measured before this: /images/hero.jpg answered `Cache-Control: public,
+ * max-age=0`, so a browser revalidated every photograph on every view. On a
+ * site whose whole design is twenty-four large images that is a bandwidth
+ * bill, a slow repeat visit, and a small amplifier for anyone pointing
+ * traffic at the origin.
+ *
+ * Deliberately NOT `immutable`. The owner replaces photographs by dropping a
+ * file in with the same name, so a year-long immutable cache would strand
+ * every visitor on the stock photography. An hour in the browser with a week
+ * of stale-while-revalidate keeps repeat views instant while letting a
+ * replacement propagate the same day.
+ */
+const photographCaching = [
+  {
+    key: "Cache-Control",
+    value: "public, max-age=3600, stale-while-revalidate=604800",
+  },
 ];
 
 const nextConfig: NextConfig = {
   async headers() {
-    return [{ source: "/:path*", headers: securityHeaders }];
+    return [
+      { source: "/:path*", headers: securityHeaders },
+      { source: "/images/:path*", headers: photographCaching },
+    ];
   },
   images: {
     // This site is photography-first. Serve modern formats by default.

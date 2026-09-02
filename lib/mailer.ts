@@ -1,5 +1,7 @@
 import { Resend } from "resend";
+import { withTimeout } from "./request-guard";
 import { site } from "./site";
+
 
 /**
  * The mail boundary.
@@ -25,7 +27,9 @@ export type MailResult =
   | { status: "sent" }
   | { status: "dry-run" }
   | { status: "unconfigured" }
-  | { status: "failed" };
+  | { status: "failed" }
+  /** The provider accepted the connection and did not answer in time. */
+  | { status: "timeout" };
 
 export type MailMessage = {
   subject: string;
@@ -48,7 +52,18 @@ export function isDryRun(): boolean {
   return process.env.ENQUIRY_DRY_RUN === "true";
 }
 
-export async function sendMail(message: MailMessage): Promise<MailResult> {
+export async function sendMail(
+  message: MailMessage,
+  /**
+   * How long to wait for the provider before giving up.
+   *
+   * There was no deadline at all before this. A provider that accepts a
+   * connection and then hangs would hold a serverless invocation open until
+   * the platform's own timeout — which is both a bill and a way to exhaust
+   * the concurrency the rest of the site needs in order to stay up.
+   */
+  timeoutMs = 10_000,
+): Promise<MailResult> {
   const apiKey = process.env.RESEND_API_KEY;
 
   if (!apiKey) {
@@ -66,14 +81,23 @@ export async function sendMail(message: MailMessage): Promise<MailResult> {
 
   try {
     const resend = new Resend(apiKey);
-    const sent = await resend.emails.send({
-      from: FROM,
-      to: message.to ?? TO,
-      replyTo: message.replyTo,
-      subject: message.subject,
-      html: message.html,
-    });
+    const outcome = await withTimeout(
+      resend.emails.send({
+        from: FROM,
+        to: message.to ?? TO,
+        replyTo: message.replyTo,
+        subject: message.subject,
+        html: message.html,
+      }),
+      timeoutMs,
+    );
 
+    if (outcome.timedOut) {
+      console.error("The mail provider did not answer within the deadline.");
+      return { status: "timeout" };
+    }
+
+    const sent = outcome.value;
     if (sent.error) {
       console.error("The mail provider rejected the message.", sent.error);
       return { status: "failed" };

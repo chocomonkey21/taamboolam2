@@ -134,9 +134,16 @@ export function validateEnquiry(values: EnquiryFields): EnquiryErrors {
     errors.departure = "departureOrder";
   }
 
+  /* Digits only. Number() would otherwise accept "0x10" as 16 and "1e1"
+     as 10 — both inside the range below, so both would have reached the
+     owner's email looking like that. A number input really does let
+     somebody type 1e1. */
+  const digits = /^\d{1,2}$/;
   const adults = Number(values.adults);
   if (!values.adults.trim()) {
     errors.adults = "adults";
+  } else if (!digits.test(values.adults.trim())) {
+    errors.adults = "adultsRange";
   } else if (!Number.isInteger(adults) || adults < 1 || adults > 30) {
     errors.adults = "adultsRange";
   }
@@ -144,6 +151,8 @@ export function validateEnquiry(values: EnquiryFields): EnquiryErrors {
   const children = Number(values.children);
   if (!values.children.trim()) {
     errors.children = "children";
+  } else if (!digits.test(values.children.trim())) {
+    errors.children = "childrenRange";
   } else if (!Number.isInteger(children) || children < 0 || children > 30) {
     errors.children = "childrenRange";
   }

@@ -1,0 +1,12 @@
+# How to report a security problem with this site.
+#
+# There is no bug bounty and no formal programme — this is a homestay's
+# website, run by the family. What there is: a person who reads the address
+# below and will answer.
+
+Contact: mailto:stay@taamboolam.com
+Preferred-Languages: en, kn
+
+# Refresh this date when it passes. A security.txt whose expiry has gone by
+# tells a finder the file is abandoned, which is worse than not having one.
+Expires: 2027-09-02T00:00:00.000Z
