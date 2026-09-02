@@ -187,9 +187,7 @@ export const en: Content = {
     opening: [
       "A house is not a set of rooms. It is a sequence: what you see from the street, what the stairwell does with the light, and how long it takes before you stop noticing that you are a guest. Four guest floors, finished in different moods, and nobody has tried to even them out. None of them is the good floor.",
     ],
-    progressLabel: "Reading progress",
     floorsIntro: "Four floors. Three rooms on each.",
-    floorMoreLabel: "More about this floor",
 
     food: {
       eyebrow: "Food",
@@ -401,6 +399,8 @@ export const en: Content = {
       "Something went wrong on our side. Please try again, or write to us directly.",
     errorConfigured:
       "The enquiry form cannot send mail right now. Please write to us directly and we will answer.",
+    errorTooMany:
+      "That is several enquiries in a short time. Please wait a few minutes, or write to us directly at stay@taamboolam.com.",
     errorCheckFields: "Please check the fields marked below.",
     devNote:
       "Development mode: no mail service is configured, so this enquiry was logged to the server terminal instead of being sent.",

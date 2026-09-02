@@ -12,6 +12,71 @@ import { tokens } from "@/lib/tokens";
 
 export const runtime = "nodejs";
 
+/**
+ * A fixed-window rate limit, per client address.
+ *
+ * This endpoint sends mail. Before this, the only thing between it and an
+ * unlimited number of POSTs was a honeypot field, which stops naive bots and
+ * nothing else — a trivial script could fill the owner's inbox and burn a mail
+ * quota. Five in ten minutes is far more than a real guest needs and far less
+ * than an abuser wants.
+ *
+ * KNOWN LIMIT, stated rather than hidden: this counter lives in the memory of
+ * one server process. On a platform that runs several instances, or freezes
+ * and thaws them per request, each instance keeps its own count and the
+ * effective limit is looser than the number below. It raises the cost of abuse;
+ * it does not make abuse impossible. A shared store is the real fix and that is
+ * a deployment decision, not a code one.
+ */
+const RATE_LIMIT = 5;
+const RATE_WINDOW_MS = 10 * 60 * 1000;
+const hits = new Map<string, { count: number; resetAt: number }>();
+
+function clientKey(request: Request): string {
+  /* On Vercel the client address arrives in x-forwarded-for. Take the FIRST
+     entry: the left-most is the original client and anything after it is a
+     proxy. A caller can forge this header, so it is a throttle on ordinary
+     abuse, never an identity. */
+  const forwarded = request.headers.get("x-forwarded-for");
+  if (forwarded) return forwarded.split(",")[0].trim();
+  return request.headers.get("x-real-ip")?.trim() || "unknown";
+}
+
+function rateLimited(request: Request): number | null {
+  const key = clientKey(request);
+  const now = Date.now();
+  const entry = hits.get(key);
+
+  if (!entry || now > entry.resetAt) {
+    hits.set(key, { count: 1, resetAt: now + RATE_WINDOW_MS });
+    /* Opportunistic sweep, so the map cannot grow without bound on a
+       long-lived process. It only runs when a new window opens. */
+    if (hits.size > 5000) {
+      for (const [k, v] of hits) if (now > v.resetAt) hits.delete(k);
+    }
+    return null;
+  }
+
+  if (entry.count >= RATE_LIMIT) {
+    return Math.max(1, Math.ceil((entry.resetAt - now) / 1000));
+  }
+
+  entry.count += 1;
+  return null;
+}
+
+/**
+ * Strip anything that could break out of a mail header line.
+ *
+ * The validator already rejects whitespace inside an email address and caps
+ * every short field. This is the second lock on the same door: even if a
+ * future edit loosens that regex, nothing carrying a carriage return, a line
+ * feed or a control character reaches a Subject or a Reply-To from here.
+ */
+function sanitiseHeader(value: string): string {
+  return value.replace(/[\r\n\u0000-\u001f\u007f]/g, " ").trim();
+}
+
 function escapeHtml(value: string): string {
   return value
     .replace(/&/g, "&amp;")
@@ -45,6 +110,14 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "Malformed request." }, { status: 400 });
   }
 
+  const retryAfter = rateLimited(request);
+  if (retryAfter !== null) {
+    return NextResponse.json(
+      { error: "rate-limited" },
+      { status: 429, headers: { "Retry-After": String(retryAfter) } },
+    );
+  }
+
   const values: EnquiryFields = { ...emptyEnquiry, ...payload };
 
   // A bot filled in a field no person can see. Accept and drop it silently, so
@@ -64,8 +137,10 @@ export async function POST(request: Request) {
   // The owner's copy is always in English, whichever language the guest used.
   const owner = content.en;
 
-  const name = values.name.trim();
-  const email = values.email.trim();
+  /* Sanitised, not merely trimmed: these two are the only guest-supplied
+     values that leave this function inside a mail header. */
+  const name = sanitiseHeader(values.name);
+  const email = sanitiseHeader(values.email);
 
   const visitLabel = {
     stay: owner.form.visitStay,
@@ -122,10 +197,13 @@ export async function POST(request: Request) {
   }
 
   if (result.status === "dry-run") {
-    console.info("[enquiry: dry run]", {
-      ...values,
-      website: undefined,
-    });
+    /* Was: the whole enquiry object, which put the guest's name, email
+       address, phone number and free text into the server log on every dry
+       run. A log line should say the path was taken and nothing more. */
+    console.info(
+      "[enquiry: dry run] a valid enquiry was accepted and not sent",
+      { visitType: values.visitType, locale: values.locale },
+    );
     return NextResponse.json({ ok: true, delivered: false });
   }
 

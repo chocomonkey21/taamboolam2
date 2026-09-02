@@ -1,4 +1,5 @@
 import { ButtonLink } from "@/components/Button";
+import { Datum } from "@/components/Datum";
 import { TileGlyph } from "@/components/TileMotif";
 import { activeCopy } from "@/lib/server-locale";
 
@@ -19,11 +20,12 @@ export default async function NotFound() {
       data-atmosphere="house"
     >
       <div className="container-content flex min-h-[70svh] flex-col justify-center pt-32 pb-20 sm:pt-40">
-        <div className="measure">
-          <TileGlyph className="w-10 text-clay opacity-40" />
-          <p className="type-eyebrow mt-8">{t.notFound.eyebrow}</p>
-          <h1 className="type-h1 mt-5">{t.notFound.heading}</h1>
-          <p className="type-lead mt-6 text-ink-soft">{t.notFound.body}</p>
+        <Datum note={t.notFound.eyebrow} className="max-w-[46rem]">
+          <TileGlyph className="w-9 text-clay opacity-40" />
+          <h1 className="type-h1 mt-7">{t.notFound.heading}</h1>
+          <p className="type-lead measure mt-5 text-ink-soft">
+            {t.notFound.body}
+          </p>
 
           <div className="mt-10 flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-4">
             <ButtonLink href="/">{t.cta.backHome}</ButtonLink>
@@ -31,7 +33,7 @@ export default async function NotFound() {
               {t.cta.explore}
             </ButtonLink>
           </div>
-        </div>
+        </Datum>
       </div>
     </section>
   );

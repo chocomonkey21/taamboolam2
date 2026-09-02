@@ -49,7 +49,51 @@ function readImageFileList(): string {
   }
 }
 
+/**
+ * The security headers that do not need a per-request value.
+ *
+ * The Content-Security-Policy is NOT here — it carries a nonce and so has to
+ * be built per request, which is middleware.ts's whole job. Everything below
+ * is constant, so it is set here instead, where it also covers the API route
+ * and anything else middleware's matcher skips.
+ *
+ * None of these existed before. Verified by reading the live response, not by
+ * assuming: the site was answering with no frame protection, no nosniff and no
+ * referrer policy at all.
+ */
+const securityHeaders = [
+  /* Belt to the CSP's frame-ancestors brace. Older browsers read only this
+     one, and the site was demonstrably framable without it. */
+  { key: "X-Frame-Options", value: "DENY" },
+  /* Stop a browser second-guessing a Content-Type. Matters most for the
+     owner-facing JSON and Markdown under /images. */
+  { key: "X-Content-Type-Options", value: "nosniff" },
+  /* Send the full URL to ourselves, only the origin to anyone else, and
+     nothing at all when leaving HTTPS. The outbound links here are WhatsApp,
+     Instagram and Google Maps; none of them needs our paths. */
+  { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
+  /* This site asks for no device permissions whatsoever. Say so, so that
+     injected content cannot ask on its behalf either. */
+  {
+    key: "Permissions-Policy",
+    value:
+      "camera=(), microphone=(), geolocation=(), payment=(), usb=(), magnetometer=(), gyroscope=(), accelerometer=(), interest-cohort=()",
+  },
+  /* Ignored over plain HTTP, so it is inert in local development and takes
+     effect only once the site is served over TLS. Two years, subdomains
+     included. Preloading is deliberately NOT claimed here: submitting a domain
+     to the preload list is close to irreversible and is the owner's call, not
+     a default. */
+  {
+    key: "Strict-Transport-Security",
+    value: "max-age=63072000; includeSubDomains",
+  },
+];
+
 const nextConfig: NextConfig = {
+  async headers() {
+    return [{ source: "/:path*", headers: securityHeaders }];
+  },
   images: {
     // This site is photography-first. Serve modern formats by default.
     formats: ["image/avif", "image/webp"],

@@ -109,10 +109,7 @@ export type Content = {
     eyebrow: string;
     heading: string;
     opening: string[];
-    progressLabel: string;
     floorsIntro: string;
-    /** Summary label on each floor chapter's disclosure. */
-    floorMoreLabel: string;
     food: { eyebrow: string; heading: string; body: string[] };
     gatherings: {
       eyebrow: string;
@@ -211,6 +208,8 @@ export type Content = {
     errorHeading: string;
     errorBody: string;
     errorConfigured: string;
+    /** Shown when the enquiry endpoint's rate limit has been reached. */
+    errorTooMany: string;
     errorCheckFields: string;
     devNote: string;
     errors: {

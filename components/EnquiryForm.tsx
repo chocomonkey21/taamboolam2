@@ -21,7 +21,7 @@ type Status =
   | { kind: "idle" }
   | { kind: "sending" }
   | { kind: "sent"; delivered: boolean }
-  | { kind: "failed"; reason: "network" | "server" | "unconfigured" };
+  | { kind: "failed"; reason: "network" | "server" | "unconfigured" | "throttled" };
 
 /**
  * The enquiry form.
@@ -129,9 +129,17 @@ export function EnquiryForm() {
         return;
       }
 
+      /* 429 is not a fault, it is a request to wait, and it reads very
+         differently to the guest. 503 means no mail service is configured
+         at all. Everything else is genuinely our side failing. */
       setStatus({
         kind: "failed",
-        reason: response.status === 503 ? "unconfigured" : "server",
+        reason:
+          response.status === 429
+            ? "throttled"
+            : response.status === 503
+              ? "unconfigured"
+              : "server",
       });
     } catch {
       setStatus({ kind: "failed", reason: "network" });
@@ -142,22 +150,20 @@ export function EnquiryForm() {
      there is nothing left to submit twice. */
   if (status.kind === "sent") {
     return (
-      <div
-        role="status"
-        aria-live="polite"
-        className="rounded-md border p-8 sm:p-10"
-        style={{
-          borderColor: "var(--color-stone)",
-          backgroundColor: "var(--color-lime)",
-        }}
-      >
-        <TileGlyph className="w-10 text-clay opacity-45" />
-        <h2 className="type-h2 mt-6">{t.form.successHeading}</h2>
-        <p className="type-lead measure mt-4">{t.form.successBody}</p>
+      <div role="status" aria-live="polite" className="py-6 md:py-10">
+        <TileGlyph className="w-10 text-clay opacity-40" />
+        <h2 className="type-h1 mt-8 max-w-[14ch]">{t.form.successHeading}</h2>
+        <p className="type-lead measure mt-6 text-ink-soft">
+          {t.form.successBody}
+        </p>
         {!status.delivered ? (
           <p className="type-caption measure mt-5">{t.form.devNote}</p>
         ) : null}
-        <div className="mt-8">
+
+        {/* A hairline, then the way back. The button is quiet on purpose: the
+            reader has just done the thing this page exists for, and offering
+            them a second loud action would undo the moment. */}
+        <div className="rule-atmos mt-10 border-t pt-7">
           <Button
             variant="outline"
             onClick={() => {
@@ -192,9 +198,11 @@ export function EnquiryForm() {
           <div className="rounded-sm border border-clay bg-clay/[0.06] px-4 py-3">
             <p className="type-label text-clay-deep">{t.form.errorHeading}</p>
             <p className="type-body mt-1 text-ink">
-              {status.reason === "unconfigured"
-                ? t.form.errorConfigured
-                : t.form.errorBody}
+              {status.reason === "throttled"
+                ? t.form.errorTooMany
+                : status.reason === "unconfigured"
+                  ? t.form.errorConfigured
+                  : t.form.errorBody}
             </p>
           </div>
         ) : null}

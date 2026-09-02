@@ -3,7 +3,6 @@
 import { Arrangement } from "../Arrangement";
 import { ButtonLink } from "../Button";
 import { Datum } from "../Datum";
-import { ExperienceProgress } from "../ExperienceProgress";
 import { FLOOR_CHAPTERS, FloorChapter } from "../FloorChapter";
 import { HouseValues } from "../HouseValues";
 import { Parallax } from "../Parallax";
@@ -21,8 +20,6 @@ export function ExperienceScreen() {
 
   return (
     <>
-      <ExperienceProgress />
-
       {/* ── Opening ──────────────────────────────────────────────────────
           The title, alone, in a lot of paper. Then the house. The only thing
           above the photograph is the heading itself — atmosphere before
@@ -31,7 +28,12 @@ export function ExperienceScreen() {
         className="texture-limewash relative bg-atmos"
         data-atmosphere="house"
       >
-        <div className="container-content pt-32 pb-12 sm:pt-40 md:pt-48 md:pb-16">
+        {/* The top padding used to run to 12rem on desktop, which on a 1280x800
+            laptop left the first screen holding a heading and almost nothing
+            else. Trimmed so the top edge of the courtyard is in view before a
+            reader scrolls: this page's promise is atmosphere first, and a
+            screen of type alone is not atmosphere. */}
+        <div className="container-content pt-28 pb-10 sm:pt-32 md:pt-36 md:pb-14">
           <Datum note={t.experience.eyebrow} className="max-w-[52rem]">
             <Reveal as="h1" variant="wipe" className="type-display">
               {t.experience.heading}
@@ -146,52 +148,53 @@ export function ExperienceScreen() {
       </section>
 
       {/* ── Gatherings ──────────────────────────────────────────────────
-          A gathering is the exception here, not an offering, so the section
-          reads as an aside: the explanation first in a narrow column, the one
-          hard limit pulled out beside it, and the photograph last and wide —
-          the room as evidence after the point has been made, rather than a
-          picture being sold alongside it. */}
+          Words, then the room, then the condition.
+
+          A gathering is the exception in this house, not an offering, and the
+          whole job of this section is to say that something is possible, rare,
+          negotiated and bounded. So the boundary is not folded into a side
+          column where it gets skimmed past with everything else. It comes last
+          and alone, after the photograph, on a stretch of paper nothing else on
+          this page is given — which is the only way a limit reads as a limit
+          rather than as small print. */}
       <section
         className="texture-limewash ground-tint relative"
         data-atmosphere="house"
       >
-        <div className="container-content section-rhythm">
-          <div className="grid gap-10 md:grid-cols-12 md:gap-8">
-            <Datum
-              note={t.experience.gatherings.eyebrow}
-              className="md:col-span-7"
-            >
-              <h2 className="type-h2 max-w-[18ch]">
-                {t.experience.gatherings.heading}
-              </h2>
-              <p className="type-body measure mt-5 text-ink-soft">
-                {t.experience.gatherings.body[0]}
-              </p>
-            </Datum>
-
-            {/* The one thing this section has to be unambiguous about, set
-                apart so it cannot be skimmed past with the rest. */}
-            <p className="type-lead rule-atmos md:col-span-4 md:col-start-9 md:mt-10 md:border-l md:pl-8">
-              {t.experience.gatherings.note}
+        <div className="container-content pt-[clamp(3.75rem,7vw,6.5rem)] pb-10 md:pb-14">
+          <Datum
+            note={t.experience.gatherings.eyebrow}
+            className="max-w-[46rem]"
+          >
+            <h2 className="type-h2 max-w-[20ch]">
+              {t.experience.gatherings.heading}
+            </h2>
+            <p className="type-body measure mt-5 text-ink-soft">
+              {t.experience.gatherings.body[0]}
             </p>
-          </div>
+          </Datum>
         </div>
 
-        <div className="relative">
-          <Reveal variant="photo">
-            <Photo
-              id="experienceGathering"
-              ratio="21 / 9"
-              rounded={false}
-              sizes="100vw"
-              className="!min-h-[16rem] md:!min-h-0"
-            />
-          </Reveal>
-        </div>
+        <Reveal variant="photo">
+          <Photo
+            id="experienceGathering"
+            ratio="21 / 9"
+            rounded={false}
+            sizes="100vw"
+            className="!min-h-[16rem] md:!min-h-0"
+          />
+        </Reveal>
 
-        <div className="container-content pt-4 pb-10">
+        <div className="container-content pt-4">
           <p className="type-caption ml-auto max-w-[46ch] text-right">
             {t.photos.experienceGathering.caption}
+          </p>
+        </div>
+
+        {/* The condition, alone. */}
+        <div className="container-content section-rhythm">
+          <p className="type-h3 max-w-[34ch] text-atmos-ink">
+            {t.experience.gatherings.note}
           </p>
         </div>
       </section>

@@ -56,6 +56,20 @@ export type EnquiryErrors = Partial<Record<keyof EnquiryFields, ErrorKey>>;
 const MAX_TEXT = 4000;
 
 /**
+ * Caps on the short fields.
+ *
+ * The two long fields were already bounded; name, email and phone were not
+ * bounded at all. Two of those three end up inside a mail header — the name
+ * in the Subject, the address in Reply-To — and an unbounded header is a
+ * denial-of-service shaped problem before it is anything else. 254 is the
+ * longest an email address may be per RFC 5321; the other two are simply far
+ * more than any real answer needs.
+ */
+const MAX_NAME = 120;
+const MAX_EMAIL = 254;
+const MAX_PHONE = 40;
+
+/**
  * One validator, used by the browser and again by the server, so the two can
  * never disagree about what a valid enquiry is. It returns message *keys*
  * rather than sentences, because the same enquiry may be shown to the guest in
@@ -64,12 +78,21 @@ const MAX_TEXT = 4000;
 export function validateEnquiry(values: EnquiryFields): EnquiryErrors {
   const errors: EnquiryErrors = {};
 
-  if (!values.name.trim()) errors.name = "name";
+  if (!values.name.trim()) {
+    errors.name = "name";
+  } else if (values.name.length > MAX_NAME) {
+    errors.name = "tooLong";
+  }
 
   const email = values.email.trim();
   if (!email) {
     errors.email = "emailMissing";
+  } else if (email.length > MAX_EMAIL) {
+    errors.email = "tooLong";
   } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) {
+    /* \s covers CR and LF, so an address that passes this can never carry a
+       line break into the Reply-To header. That is load-bearing rather than
+       incidental — sanitiseHeader() in the API route is the other half. */
     errors.email = "emailInvalid";
   }
 
@@ -83,6 +106,8 @@ export function validateEnquiry(values: EnquiryFields): EnquiryErrors {
   const phoneDigits = values.phone.replace(/\D/g, "");
   if (!values.phone.trim()) {
     if (values.visitType === "stay") errors.phone = "phoneMissing";
+  } else if (values.phone.length > MAX_PHONE) {
+    errors.phone = "tooLong";
   } else if (phoneDigits.length < 7) {
     errors.phone = "phoneShort";
   }
