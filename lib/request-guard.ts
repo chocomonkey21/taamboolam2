@@ -10,6 +10,8 @@
  * None of this is a substitute for edge protection. See SECURITY.md.
  */
 
+import { FLOOR_PREFERENCES, VISIT_TYPES } from "./enquiry";
+
 /* ══════════════════════════════════════════════════════════════════════
    Body size
    ══════════════════════════════════════════════════════════════════════ */
@@ -164,11 +166,21 @@ export function enumsValid(values: {
   arrival: string;
   departure: string;
 }): boolean {
-  const visits = ["stay", "gathering", "other"];
-  const floors = ["any", "floor1", "floor2", "floor3", "floor4"];
+  /* Imported, not retyped. These two lists used to be a second copy written
+     out by hand here, and the copy went stale the moment the floors changed:
+     removing "floor4" and adding "terrace" in lib/enquiry.ts left this guard
+     still rejecting every terrace enquiry with 400 and still waving through
+     a preference for the private fourth floor. Caught by posting both values
+     at the running endpoint, not by reading the file.
 
-  if (!visits.includes(values.visitType)) return false;
-  if (!floors.includes(values.floorPreference)) return false;
+     There is now one list. A future change to the floors cannot desynchronise
+     the form from the guard, because there is nothing left to desynchronise. */
+  if (!(VISIT_TYPES as readonly string[]).includes(values.visitType)) {
+    return false;
+  }
+  if (!(FLOOR_PREFERENCES as readonly string[]).includes(values.floorPreference)) {
+    return false;
+  }
 
   /* A date input can only ever produce this shape. Anything else reaches
      formatDate, which hands an unparseable string straight back into the
@@ -322,7 +334,7 @@ export function clientKey(request: Request): string {
  * holding a list of everyone who has written in.
  */
 export function fingerprint(...parts: string[]): string {
-  const input = parts.join(" ").toLowerCase();
+  const input = parts.join("\u0000").toLowerCase();
   let h = 0x811c9dc5;
   for (let i = 0; i < input.length; i++) {
     h ^= input.charCodeAt(i);

@@ -6,16 +6,25 @@ import type { PhotoId } from "@/lib/photos";
 import { Photo } from "./Photo";
 import { useSite } from "./SiteProvider";
 
+/**
+ * The three guest floors, and then the terrace.
+ *
+ * The fourth row is not a fourth floor and must not read as one. It carries
+ * the terrace's own atmosphere — the one that goes cool where the three below
+ * it went warm — and its numeral is a mark rather than "04", because
+ * numbering it would put it back in the sequence the copy spends a paragraph
+ * taking it out of.
+ */
 const FLOORS: { id: FloorId; photo: PhotoId; atmosphere: string }[] = [
   { id: "floor1", photo: "floor1a", atmosphere: "floor-1" },
   { id: "floor2", photo: "floor2a", atmosphere: "floor-2" },
   { id: "floor3", photo: "floor3a", atmosphere: "floor-3" },
-  { id: "floor4", photo: "floor4a", atmosphere: "floor-4" },
+  { id: "terrace", photo: "terraceOpen", atmosphere: "terrace" },
 ];
 
 /**
- * The four floors, read as a section drawn through the building rather than as
- * four cards in a tray.
+ * The house, read as a section drawn through the building rather than as four
+ * cards in a tray.
  *
  * The house's defining fact is that it is stacked, and a row of equal tiles
  * throws that away — it says "four options" when the truth is "one house, four
@@ -32,7 +41,9 @@ const FLOORS: { id: FloorId; photo: PhotoId; atmosphere: string }[] = [
  * pictures do what they are there for: showing that the floors differ.
  *
  * Every floor gets identical treatment — same photo size, same type, same
- * space. None of them is presented as the good one.
+ * space. None of them is presented as the good one. The terrace gets the same
+ * treatment too, so it does not read as a promotion; only its numeral and its
+ * ground say it is a different kind of place.
  *
  * Nothing here is hidden and revealed. These four rows are the home page's
  * route into the house; an observer that has not fired yet used to leave them
@@ -56,9 +67,14 @@ export function FloorLedger() {
               className="group grid grid-cols-[auto_1fr] items-center gap-x-5 gap-y-4 px-3 py-6 sm:gap-x-7 sm:py-7 md:grid-cols-[4.75rem_minmax(0,24rem)_1fr] md:px-5 lg:grid-cols-[6rem_minmax(0,26rem)_1fr]"
             >
               {/* The floor number, at the scale of the drawing rather than of
-                  a list marker. It is the anchor of the row. */}
+                  a list marker. It is the anchor of the row.
+
+                  The terrace is not numbered. It is above the count, not the
+                  next item in it, and an "04" here would undo the whole point
+                  of moving it out of the floor sequence — it is set as a level
+                  mark instead, at the same size, so the column still lines up. */}
               <span className="type-numeral" aria-hidden="true">
-                {String(index + 1).padStart(2, "0")}
+                {floor.id === "terrace" ? "—" : String(index + 1).padStart(2, "0")}
               </span>
 
               <span className="min-w-0">

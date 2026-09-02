@@ -317,6 +317,13 @@ export function EnquiryForm() {
               />
             )}
           </Field>
+
+          {/* The under-tens policy, at the one moment it is worth reading:
+              the reader has just been asked how many children are coming.
+              Spanning both columns inside this pair rather than sitting in
+              the Children field's own hint slot, which would push the two
+              number inputs out of vertical alignment with each other. */}
+          <p className="type-caption col-span-2">{t.form.childrenNote}</p>
         </div>
 
         {/* Only a stay actually needs dates. A gathering is usually being
@@ -376,11 +383,15 @@ export function EnquiryForm() {
               set("floorPreference", e.target.value as FloorPreference)
             }
           >
+            {/* Floors 1 to 3 and the terrace. There is no fourth floor here
+                and there must not be one — it is private and is not let. The
+                list is the same one the server validates against; see
+                FLOOR_PREFERENCES in lib/enquiry.ts. */}
             <option value="any">{t.form.floorAny}</option>
             <option value="floor1">{t.floors.floor1.label}</option>
             <option value="floor2">{t.floors.floor2.label}</option>
             <option value="floor3">{t.floors.floor3.label}</option>
-            <option value="floor4">{t.floors.floor4.label}</option>
+            <option value="terrace">{t.floors.terrace.label}</option>
           </select>
         )}
       </Field>

@@ -169,12 +169,9 @@ export function Footer() {
             </ul>
           </nav>
 
-          <div className="flex flex-col gap-1 md:items-end">
-            <p className="type-caption">
-              © {new Date().getFullYear()} {site.name}. {t.footer.rights}
-            </p>
-            <p className="type-caption">{t.footer.photographyNote}</p>
-          </div>
+          <p className="type-caption md:text-right">
+            © {new Date().getFullYear()} {site.name}. {t.footer.rights}
+          </p>
         </div>
       </div>
 

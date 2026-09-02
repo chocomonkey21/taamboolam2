@@ -7,8 +7,14 @@
  */
 export const site = {
   name: "Taamboolam",
-  /** The name set in Kannada, used beside the wordmark. */
-  nameKn: "ತಂಬೋಲಂ",
+  /**
+   * The name set in Kannada, used beside the wordmark.
+   *
+   * ತಾಂಬೂಲಂ — long aa on the first syllable, long uu on the third. The site
+   * previously carried ತಂಬೋಲಂ, which is a different word and not the house's
+   * name. Corrected by the owner.
+   */
+  nameKn: "ತಾಂಬೂಲಂ",
   url: "https://taamboolam.com",
 
   contact: {

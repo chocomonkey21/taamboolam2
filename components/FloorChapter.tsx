@@ -20,15 +20,19 @@ import { TileCourse } from "./TileMotif";
  *             it. A floor you come up to.
  *  surface  — Floor 3. The material takes the full width of the page before
  *             anything is said about it.
- *  summit   — Floor 4. The room first and large, the view last and edge to
- *             edge. The top of the house, so the page opens out at the end.
+ *  open     — The terrace. Not a floor, so not a floor's layout: the band of
+ *             sky runs edge to edge above everything, the words sit under it
+ *             in a single centred measure rather than in a column beside a
+ *             photograph, and there is no room shot at all. It is the one
+ *             chapter here that is not built around an interior, because the
+ *             terrace is not one.
  *
- * All four carry equal weight: the same number of photographs, the same type
- * sizes, the same space, the same disclosure, the same link into the form. No
- * floor is presented as the good one and none is given an invented theme name
- * — `label` is "Floor 3" and nothing else.
+ * The three floors carry equal weight: the same number of photographs, the
+ * same type sizes, the same space, the same link into the form. No floor is
+ * presented as the good one and none is given an invented theme name —
+ * `label` is "Floor 3" and nothing else.
  */
-type FloorLayout = "settle" | "landing" | "surface" | "summit";
+type FloorLayout = "settle" | "landing" | "surface" | "open";
 
 export type FloorChapterSpec = {
   id: FloorId;
@@ -56,11 +60,14 @@ export const FLOOR_CHAPTERS: FloorChapterSpec[] = [
     photos: ["floor3a", "floor3b"],
     layout: "surface",
   },
+  /* The terrace closes the sequence without joining it. Its atmosphere goes
+     cool where the three floors warmed, and its two photographs are the only
+     pair on the page that are not two views of an interior. */
   {
-    id: "floor4",
-    atmosphere: "floor-4",
-    photos: ["floor4a", "floor4b"],
-    layout: "summit",
+    id: "terrace",
+    atmosphere: "terrace",
+    photos: ["terraceOpen", "terraceSwing"],
+    layout: "open",
   },
 ];
 
@@ -68,14 +75,15 @@ export const FLOOR_CHAPTERS: FloorChapterSpec[] = [
  * One floor of the house.
  *
  * The arrangement of a floor is NOT repeated here. It is stated once, for all
- * four, on the page above. Only what a floor has that the others do not is
- * named again.
+ * three guest floors, on the page above. Only what a floor has that the
+ * others do not is named again.
  *
  * The ornament is not decoration distributed evenly down the page: the tile
- * course at each chapter boundary takes its strength from that floor's own
+ * course at each chapter boundary takes its strength from that level's own
  * `--atmos-pattern`, so it is barely a shadow on Floors 1 and 2, which have no
- * Athangudi tiles, and clearly laid on Floors 3 and 4, which do. The pattern
- * appears where the material actually is.
+ * Athangudi tiles, clearly laid on Floor 3, which does, and back to almost
+ * nothing on the terrace, which has pavers and sky. The pattern appears where
+ * the material actually is.
  */
 export function FloorChapter({
   spec,
@@ -86,14 +94,30 @@ export function FloorChapter({
 }) {
   const { t } = useSite();
   const copy = t.floors[spec.id];
-  const [portrait, landscape] = spec.photos;
+  /* Two photographs per chapter. What shape each one is depends on the
+     layout, which is why they are named by position rather than by
+     orientation: `settle`, `landing` and `surface` take a room and a wide
+     shot, and `open` takes the sky band and the swing. */
+  const [first, second] = spec.photos;
 
   /* The numeral is the chapter's anchor, hung in the margin at the scale of a
      drawing rather than set as a label above the heading. */
+  const centred = spec.layout === "open";
+
   const heading = (
-    <div className="datum">
-      <span aria-hidden="true" className="type-numeral datum-note !mt-0">
-        {String(index + 1).padStart(2, "0")}
+    /* `datum` hangs its note out in the left margin, which is exactly wrong
+       under a centred measure — the note would sit alone off to the side of
+       text that is not aligned to that edge. The terrace chapter is the only
+       centred one, so it drops the plumb line and lets the mark sit above
+       the label. */
+    <div className={centred ? "" : "datum"}>
+      {/* Not numbered for the terrace — see the note in FloorLedger. A level
+          mark keeps the column aligned without putting it back in the count. */}
+      <span
+        aria-hidden="true"
+        className={`type-numeral !mt-0 ${centred ? "block" : "datum-note"}`}
+      >
+        {spec.id === "terrace" ? "—" : String(index + 1).padStart(2, "0")}
       </span>
       <Reveal
         as="h2"
@@ -103,7 +127,13 @@ export function FloorChapter({
       >
         {copy.label}
       </Reveal>
-      <p className="type-lead mt-3 text-atmos-accent">{copy.lead}</p>
+      <p
+        className={`type-lead mt-3 text-atmos-accent ${
+          centred ? "mx-auto max-w-[34ch]" : ""
+        }`}
+      >
+        {copy.lead}
+      </p>
     </div>
   );
 
@@ -180,7 +210,7 @@ export function FloorChapter({
           <div className="mt-10 grid gap-6 md:mt-12 md:grid-cols-12 md:gap-8">
             <Reveal variant="photo" className="md:col-span-5">
               <Photo
-                id={portrait}
+                id={first}
                 sizes="(min-width: 768px) 40vw, 92vw"
                 zoomable
               />
@@ -191,7 +221,7 @@ export function FloorChapter({
               className="md:col-span-6 md:col-start-7 md:mt-20"
             >
               <Photo
-                id={landscape}
+                id={second}
                 sizes="(min-width: 768px) 46vw, 92vw"
                 caption="below"
                 zoomable
@@ -215,7 +245,7 @@ export function FloorChapter({
 
           <Reveal variant="photo" className="mt-10 md:mt-12">
             <Photo
-              id={landscape}
+              id={second}
               ratio="21 / 9"
               sizes="(min-width: 768px) 92vw, 92vw"
               caption="below"
@@ -230,7 +260,7 @@ export function FloorChapter({
               className="w-[70%] md:col-span-4 md:-mt-24 md:w-full"
             >
               <Photo
-                id={portrait}
+                id={first}
                 ratio="4 / 3"
                 sizes="(min-width: 768px) 30vw, 70vw"
                 className="ring-8 ring-[var(--atmos-bg)]"
@@ -255,7 +285,7 @@ export function FloorChapter({
 
           <Reveal variant="photo" className="mt-10 md:mt-12">
             <Photo
-              id={portrait}
+              id={first}
               ratio="21 / 9"
               rounded={false}
               sizes="100vw"
@@ -272,7 +302,7 @@ export function FloorChapter({
                 className="md:col-span-6 md:col-start-7 md:mt-10"
               >
                 <Photo
-                  id={landscape}
+                  id={second}
                   sizes="(min-width: 768px) 46vw, 92vw"
                   zoomable
                 />
@@ -282,40 +312,54 @@ export function FloorChapter({
         </div>
       ) : null}
 
-      {/* ── summit ─────────────────────────────────────────────────────
-          The room first and large, the words in the margin beside it, and the
-          last photograph edge to edge with nothing after it. The top of the
-          house, so the page opens out rather than closing down. */}
-      {spec.layout === "summit" ? (
-        <div className="relative">
-          <div className="container-content pt-[clamp(3.75rem,7vw,6.5rem)]">
-            {heading}
+      {/* ── open ───────────────────────────────────────────────────────
+          The terrace, and the one chapter on this page that is not built
+          around a room.
 
-            <div className="mt-10 grid gap-8 md:mt-12 md:grid-cols-12 md:gap-8">
-              <Reveal variant="photo" className="md:col-span-7">
+          The band of pergola and sky runs the full width above everything —
+          it is a strip, not a frame, and giving it the whole page width is
+          the only way a 3.5:1 crop reads as an opening rather than as a
+          letterboxed photograph. Under it the words sit in one centred
+          measure instead of in a column beside a picture, because there is
+          no second interior to set them against and inventing a two-column
+          grid here would make the terrace look like a fourth floor with a
+          missing photograph.
+
+          The swing comes last and small, off to one side: the terrace's one
+          object, at night, after the daylight band. */}
+      {spec.layout === "open" ? (
+        <div className="relative">
+          <Reveal variant="photo" className="pt-[clamp(3rem,5vw,4.5rem)]">
+            <Photo
+              id={first}
+              rounded={false}
+              sizes="100vw"
+              className="!min-h-[9rem] md:!min-h-0"
+            />
+          </Reveal>
+
+          <div className="container-content pt-10 pb-[clamp(3.75rem,7vw,6.5rem)] md:pt-14">
+            <div className="mx-auto max-w-[46rem] text-center">{heading}</div>
+
+            <div className="mt-10 grid gap-10 md:mt-12 md:grid-cols-12 md:items-start md:gap-8">
+              <div className="md:col-span-7 md:col-start-2">{prose}</div>
+
+              <Reveal
+                variant="photo"
+                delay={90}
+                className="w-[62%] md:col-span-3 md:col-start-10 md:w-full"
+              >
                 <Photo
-                  id={portrait}
-                  ratio="4 / 3"
-                  sizes="(min-width: 768px) 56vw, 92vw"
-                  caption="below"
+                  id={second}
+                  sizes="(min-width: 768px) 24vw, 62vw"
                   zoomable
                 />
               </Reveal>
-              <div className="md:col-span-4 md:col-start-9">{prose}</div>
             </div>
           </div>
-
-          <Reveal variant="photo" className="mt-12 md:mt-16">
-            <Photo
-              id={landscape}
-              ratio="21 / 9"
-              rounded={false}
-              sizes="100vw"
-              className="!min-h-[16rem] md:!min-h-0"
-            />
-          </Reveal>
         </div>
       ) : null}
+
     </section>
   );
 }

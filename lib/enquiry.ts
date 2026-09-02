@@ -3,12 +3,23 @@ import type { Content, Locale } from "./content";
 export const VISIT_TYPES = ["stay", "gathering", "other"] as const;
 export type VisitType = (typeof VISIT_TYPES)[number];
 
+/**
+ * What a guest may ask for.
+ *
+ * "floor4" is deliberately absent: the fourth floor is private and is not let
+ * to guests, so it must never appear as a preference anywhere. "terrace" is
+ * here because guests do ask for it — it is shared by everyone staying, and
+ * saying so in an enquiry tells the owner something useful.
+ *
+ * This array is also the allow-list the API route checks a submitted value
+ * against, so adding to it is the only way a new option becomes accepted.
+ */
 export const FLOOR_PREFERENCES = [
   "any",
   "floor1",
   "floor2",
   "floor3",
-  "floor4",
+  "terrace",
 ] as const;
 export type FloorPreference = (typeof FLOOR_PREFERENCES)[number];
 

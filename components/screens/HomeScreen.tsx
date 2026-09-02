@@ -22,8 +22,8 @@ import { Wordmark } from "../Wordmark";
  * reading the words. Here the shapes carry the meaning:
  *
  *   1  the house, whole, and its materials laid across the foot of the frame
- *   2  a typographic pause, then one wide photograph
- *   3  the plan, and the four floors read as a section drawing
+ *   2  what this place is, one object beside it, then one wide photograph
+ *   3  the plan, and the levels read as a section drawing
  *   4  a cluster of details at three crops
  *   5  the one dark room on the site
  *   6  a wide frame, then the house's terms as plain statements
@@ -56,10 +56,18 @@ export function HomeScreen() {
             objectPosition="center 55%"
           />
           {/* Two scrims, not a filter, and both directional. The lower-left one
-              carries everything that is set on the photograph and is dense
-              enough that paper-white type clears 4.5:1 over the brightest
-              pixel it covers. The top one exists only so the two header plates
-              stay legible whatever the sky in the picture happens to do.
+              carries everything that is set on the photograph; the top one
+              exists only so the two header plates stay legible whatever is
+              behind them.
+
+              The diagonal's mid stops were raised when the owner's own
+              photograph replaced the stock one. The stock hero was a dark
+              exterior among trees and the scrim barely had to work; this is a
+              bright interior with a pale green wall directly behind the end of
+              the lead paragraph. Measured against the composited pixels rather
+              than guessed at: the lead was landing at 4.33:1, which fails AA
+              for 21px text. At 0.86/0.60/0.24 it measures 5.0:1, and the
+              wordmark — large text, so its floor is 3:1 — sits at 5.5:1.
 
               The old third scrim — a radial vignette pooled under centred text
               — is gone with the centred text. It was darkening the middle of
@@ -77,7 +85,31 @@ export function HomeScreen() {
             className="absolute inset-0"
             style={{
               background:
-                "linear-gradient(to top right, rgb(22 17 12 / 0.94) 0%, rgb(22 17 12 / 0.82) 26%, rgb(22 17 12 / 0.52) 48%, rgb(22 17 12 / 0.18) 70%, rgb(22 17 12 / 0) 88%)",
+                "linear-gradient(to top right, rgb(22 17 12 / 0.94) 0%, rgb(22 17 12 / 0.86) 26%, rgb(22 17 12 / 0.60) 48%, rgb(22 17 12 / 0.24) 70%, rgb(22 17 12 / 0) 88%)",
+            }}
+          />
+
+          {/* A third scrim, phones only.
+
+              The diagonal above is the right shape for a wide viewport, where
+              the text sits in the left 45% of the frame and the gradient is
+              densest exactly there. On a 375px screen the same text runs to
+              90% of the width — the last words of every line land out where
+              the diagonal has already faded, and the Kannada setting is the
+              worst case because it wraps to four full-measure lines.
+
+              Measured, not assumed: at 375x812 the lead was 3.38:1 before the
+              diagonal was retuned and still only 4.33:1 after, against a 4.5
+              floor for 17px text. Anchoring a second gradient to the bottom
+              edge — which is where the text actually is on a phone — puts it
+              at 5.5:1. Hidden from md up, where it would only muddy a
+              composition that already measures clean. */}
+          <div
+            aria-hidden="true"
+            className="absolute inset-0 md:hidden"
+            style={{
+              background:
+                "linear-gradient(to top, rgb(22 17 12 / 0.42) 0%, rgb(22 17 12 / 0.16) 40%, rgb(22 17 12 / 0) 70%)",
             }}
           />
         </div>
@@ -129,25 +161,52 @@ export function HomeScreen() {
         <MaterialStrip className="relative z-10" height="0.6875rem" />
       </section>
 
-      {/* ── 2 · What this is ─────────────────────────────────────────────
-          A typographic pause. No photograph beside the words and nothing in a
-          second column: after a full-bleed photograph the page needs somewhere
-          quiet to land, and one short paragraph in a lot of paper is that.
-          The picture follows it, at full width, once the reader knows what
-          they are looking at. */}
+      {/* ── 2 · About ────────────────────────────────────────────────────
+          What this place is, said once and early.
+
+          Nearly a typographic pause: after a full-bleed photograph the page
+          needs somewhere quiet to land, and two short paragraphs in a lot of
+          paper are that. The one object beside them is deliberate and small —
+          a water bowl somebody put in a corner — because "a house that was
+          made rather than fitted out" is a claim best supported by a thing
+          rather than by an adjective. The wide photograph follows, once the
+          reader knows what they are looking at. */}
       <section
         className="texture-limewash relative bg-atmos"
         data-atmosphere="house"
       >
         <div className="container-content section-rhythm-wide">
-          <Datum note={t.home.intro.eyebrow} className="max-w-[54rem]">
-            <Reveal as="h2" variant="wipe" className="type-display">
-              {t.home.intro.heading}
+          <div className="grid gap-10 md:grid-cols-12 md:gap-8">
+            <Datum note={t.about.eyebrow} className="md:col-span-8">
+              <Reveal as="h2" variant="wipe" className="type-display">
+                {t.about.heading}
+              </Reveal>
+              <p className="type-lead measure mt-8 text-ink-soft">
+                {t.about.body[0]}
+              </p>
+              <p className="type-body measure mt-5 text-ink-soft">
+                {t.about.body[1]}
+              </p>
+            </Datum>
+
+            <Reveal
+              variant="photo"
+              delay={80}
+              className="w-[62%] md:col-span-3 md:col-start-10 md:mt-14 md:w-full"
+            >
+              <Photo
+                id="valuesCorner"
+                sizes="(min-width: 768px) 24vw, 62vw"
+                zoomable
+              />
             </Reveal>
-            <p className="type-lead measure mt-8 text-ink-soft">
-              {t.home.intro.body[0]}
-            </p>
-          </Datum>
+          </div>
+
+          {/* The one line that says who this suits, set apart on a hairline
+              rather than folded into the paragraph above it. */}
+          <p className="type-annotation rule-atmos mt-12 border-t pt-5 md:mt-14">
+            {t.about.note}
+          </p>
         </div>
 
         <div className="relative">
@@ -176,9 +235,10 @@ export function HomeScreen() {
         </div>
       </section>
 
-      {/* ── 3 · The plan, and the four floors ────────────────────────────
-          One section, because they are one idea: every floor is the same plan,
-          and what differs is atmosphere. */}
+      {/* ── 3 · The plan, and the levels ─────────────────────────────────
+          One section, because they are one idea: every guest floor is the
+          same plan, and what differs is atmosphere. The terrace closes the
+          ledger without being numbered into it. */}
       <section
         className="texture-limewash relative overflow-hidden bg-atmos-tint"
         data-atmosphere="house"
@@ -254,7 +314,7 @@ export function HomeScreen() {
               className="col-span-1 md:col-span-3 md:col-start-2 md:-mt-24"
             >
               <Photo
-                id="craftHands"
+                id="craftJoinery"
                 sizes="(min-width: 768px) 24vw, 92vw"
                 zoomable
               />
@@ -270,7 +330,7 @@ export function HomeScreen() {
               className="col-span-1 md:col-span-3 md:col-start-10 md:mt-12"
             >
               <Photo
-                id="craftTextile"
+                id="craftCane"
                 sizes="(min-width: 768px) 24vw, 92vw"
                 zoomable
               />
@@ -284,14 +344,19 @@ export function HomeScreen() {
 
           Food was the worst offender on the old page: a label, a heading, a
           paragraph and a photograph in the next column — the exact block the
-          rest of the page was already made of, applied to the one subject with
-          a genuine still life in it. So this is composed as a table instead.
-          The ground goes to slate, the meal is the largest photograph on the
-          page and it runs past the container, a second dish overlaps its
-          corner the way a second plate would, and the words are not a column
-          at all: a heading, one line, and a note set against a hairline at the
-          far corner, like something written on the back of a card and left
-          beside the food. */}
+          rest of the page was already made of, applied to the one subject
+          with a genuine still life in it. So this is composed as a table
+          instead. The ground goes to slate, the words are set as a heading, a
+          line and a condition rather than as a column of body copy, and the
+          photograph is a single object laid on the dark, ringed in the ground
+          colour so it reads as something placed there.
+
+          It is one photograph now, not two. The owner's food photography is a
+          single frame lifted from a phone video — genuinely good, and 760px
+          wide. Enlarging it to fill half the section would have shown the
+          reader the compression rather than the food, so the composition puts
+          the weight on the type and lets the picture be exactly as big as it
+          can afford to be. Fewer, stronger. */}
       <section
         className="texture-plaster relative overflow-hidden bg-atmos"
         data-atmosphere="night"
@@ -299,20 +364,16 @@ export function HomeScreen() {
         <TileCourse className="absolute inset-x-0 top-0" fade={false} />
 
         <div className="relative container-content section-rhythm-wide">
-          <div className="grid items-center gap-10 md:grid-cols-12 md:gap-8">
-            <div className="md:col-span-5 lg:col-span-4">
-              <Reveal
-                as="h2"
-                variant="wipe"
-                className="type-h1 text-atmos-ink"
-              >
+          <div className="grid items-center gap-12 md:grid-cols-12 md:gap-8">
+            <div className="md:col-span-6 lg:col-span-5">
+              <Reveal as="h2" variant="wipe" className="type-h1 text-atmos-ink">
                 {t.home.food.heading}
               </Reveal>
-              <p className="type-lead mt-6 max-w-[30ch] text-atmos-soft">
+              <p className="type-lead mt-6 max-w-[34ch] text-atmos-soft">
                 {t.home.food.body[0]}
               </p>
 
-              {/* The note. Set against a hairline in the floor's own accent,
+              {/* The note. Set against a hairline in this ground's own accent,
                   at caption scale — it is the smallest type in the section and
                   the only thing in it that is a condition rather than a
                   description. */}
@@ -321,41 +382,15 @@ export function HomeScreen() {
               </p>
             </div>
 
-            {/* Out of flow on desktop so the meal can run past the right edge
-                of the page entirely. On small screens both return to the flow
-                underneath, where there is no edge to run off.
-
-                The min-height is what makes that safe: the two photographs are
-                absolutely positioned and so contribute nothing to the row's
-                height, and without it the row was as tall as the paragraph on
-                the left and the section's own overflow clipped the bottom of
-                the dish. 36vw is the meal's own height at 48vw wide and a 4:3
-                crop, which is the tallest thing in the group. */}
-            <div className="relative md:col-span-7 md:col-start-6 md:min-h-[36vw]">
-              <Reveal
-                variant="photo"
-                className="md:absolute md:top-1/2 md:left-0 md:w-[55vw] md:-translate-y-1/2 lg:w-[52vw]"
-              >
+            {/* Set toward the outer edge and kept to its own true size. The
+                caption carries the second half of the offer — that it is
+                cooked when asked for, on nobody's timetable. */}
+            <div className="md:col-span-5 md:col-start-8">
+              <Reveal variant="photo" className="w-[68%] sm:w-[54%] md:w-full">
                 <Photo
-                  id="foodTable"
-                  ratio="4 / 3"
-                  sizes="(min-width: 768px) 55vw, 92vw"
-                  zoomable
-                />
-              </Reveal>
-
-              {/* The second plate, overlapping the first at its lower left —
-                  ringed in the ground colour so it reads as an object laid on
-                  top rather than as a second panel in a grid. */}
-              <Reveal
-                variant="photo"
-                delay={120}
-                className="mt-5 w-[46%] md:absolute md:top-[calc(50%+1rem)] md:-left-14 md:z-10 md:mt-0 md:w-[13rem]"
-              >
-                <Photo
-                  id="foodDetail"
-                  sizes="(min-width: 768px) 13rem, 46vw"
-                  className="ring-8 ring-[var(--atmos-bg)]"
+                  id="foodStill"
+                  sizes="(min-width: 768px) 34vw, 68vw"
+                  caption="below"
                   zoomable
                 />
               </Reveal>
@@ -385,25 +420,18 @@ export function HomeScreen() {
         </div>
 
         <div className="container-content section-rhythm">
-          <div className="grid gap-10 md:grid-cols-12 md:gap-8">
-            <Datum note={t.home.values.eyebrow} className="md:col-span-7">
-              <h2 className="type-h1 max-w-[18ch]">{t.home.values.heading}</h2>
-              <p className="type-body measure mt-5 text-ink-soft">
-                {t.home.values.body}
-              </p>
-            </Datum>
-
-            <Reveal
-              variant="photo"
-              className="md:col-span-4 md:col-start-9 md:-mt-28"
-            >
-              <Photo
-                id="valuesCorner"
-                sizes="(min-width: 768px) 30vw, 92vw"
-                className="ring-8 ring-[var(--atmos-bg)]"
-              />
-            </Reveal>
-          </div>
+          {/* No photograph beside this heading any more. The corner it used
+              to show now opens the About section, where it is doing work; here
+              it was a decorative portrait next to a plate of terms, and this
+              section already has the largest photograph on the page directly
+              above it. What follows is the one stretch of the site that is
+              purely conditions, and it reads better as exactly that. */}
+          <Datum note={t.home.values.eyebrow}>
+            <h2 className="type-h1 max-w-[18ch]">{t.home.values.heading}</h2>
+            <p className="type-body measure mt-5 text-ink-soft">
+              {t.home.values.body}
+            </p>
+          </Datum>
 
           <div className="mt-14 md:mt-16">
             <HouseValues variant="embedded" />

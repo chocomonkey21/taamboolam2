@@ -23,7 +23,6 @@ const root = path.dirname(path.dirname(fileURLToPath(import.meta.url)));
 const read = (p) => readFileSync(path.join(root, p), "utf8");
 
 const site = read("lib/site.ts");
-const config = read("lib/config.ts");
 
 const pending = [];
 
@@ -38,13 +37,6 @@ if (/mapLinkIsPlaceholder:\s*true/.test(site)) {
   pending.push([
     "Map pin is a geocoded address search, not the owner's own pin",
     "lib/site.ts → location.mapLink, then set mapLinkIsPlaceholder: false",
-  ]);
-}
-
-if (/bathrooms:\s*null/.test(config)) {
-  pending.push([
-    "Bathroom arrangement is unconfirmed — the site says so rather than guessing",
-    "lib/config.ts → provisional.bathrooms (both languages required)",
   ]);
 }
 

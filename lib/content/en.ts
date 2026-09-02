@@ -8,10 +8,10 @@ export const en: Content = {
   meta: {
     homeTitle: "Taamboolam — a homestay in Jayanagar, Bengaluru",
     homeDescription:
-      "A four-floor family home in Jayanagar, Bengaluru, kept as a homestay. Rooms are booked one at a time, by enquiry, and the owner answers every message personally.",
+      "A family home in Jayanagar, Bengaluru, kept as a homestay. Three guest floors and a terrace. Rooms are taken one at a time, by enquiry, and the owner answers every message personally.",
     experienceTitle: "The Experience",
     experienceDescription:
-      "The story of the house, floor by floor — four guest floors, three rooms on each, shared halls and balconies, and the materials the house is made of.",
+      "The story of the house, floor by floor — three guest floors, each with two guest bedrooms and a master bedroom, their own living room, dining area and kitchen, and a terrace above them all.",
     enquireTitle: "Enquire",
     enquireDescription:
       "Ask about staying at Taamboolam, or about a small gathering. There is no instant booking. The owner reads every enquiry.",
@@ -31,82 +31,94 @@ export const en: Content = {
   cta: {
     enquire: "Enquire about a stay",
     explore: "Explore Taamboolam",
-    readTheStory: "Walk through all four floors",
+    readTheStory: "Walk through the house",
     askAboutFloor: "Ask about this floor",
     backHome: "Back to the beginning",
   },
 
   photos: {
     hero: {
-      alt: "A tile-roofed house with a deep verandah, half hidden among trees.",
+      alt: "A living room furnished in cane, with two palms and a framed drawing on a plain wall.",
     },
     intro: {
-      alt: "An open courtyard at the centre of a house, seen from the floor above.",
+      alt: "A kitchen and dining table under woven pendant shades, on a floor of patterned tiles.",
       caption:
         "The house is lived in. Guests are invited into it, not around it.",
     },
-    stayingMorning: {
-      alt: "Morning light falling across a room and onto a bed.",
+
+    planLiving: {
+      alt: "The living room of one floor, with cane seating and daylight from a tall window.",
+      caption: "Each floor keeps its own living room. It is shared only by that floor.",
     },
-    stayingShared: {
-      alt: "A shaded verandah lined with potted plants and wooden chairs.",
-      caption: "Each floor keeps its own hall. It is shared only by that floor.",
+    planKitchen: {
+      alt: "A kitchen counter with a kettle, a microwave and a small fridge beside a dining table.",
+      caption:
+        "A kettle, a microwave, a bar fridge, cutlery and crockery. No stove.",
     },
-    stayingBalcony: {
-      alt: "Potted plants crowded against a warm yellow wall.",
-      caption: "Every floor has a balcony.",
-    },
-    floor1a: { alt: "A calm, uncluttered room with daylight from a single window." },
+
+    floor1a: { alt: "A bedroom made up in white, on a floor of maroon and white tiles." },
     floor1b: {
-      alt: "A sitting room with terracotta walls, a low sofa and a small table.",
-      caption: "Floor 1 — the hall, shared by the three rooms on this floor.",
+      alt: "A wide living room with cane chairs, potted palms and a plain painted wall.",
+      caption: "Floor 1 — the living room, shared by the three bedrooms on this floor.",
     },
-    floor2a: { alt: "A simple bedroom with a wooden headboard and a bedside lamp." },
+    floor2a: { alt: "A quiet bedroom with a dark headboard, a wooden floor and light curtains." },
     floor2b: {
-      alt: "A home kitchen with painted cabinets and a window over the counter.",
-      caption: "Floor 2 — the kitchen, for the guests staying on this floor.",
+      alt: "A blue kitchen with a cane dining set, a kettle and a small fridge.",
+      caption: "Floor 2 — the kitchen and dining area, for the guests staying on this floor.",
     },
     floor3a: {
-      alt: "Handmade patterned floor tiles in ochre, blue and chalk white.",
-      caption: "Athangudi tiles, laid by hand and left slightly irregular.",
+      alt: "A bedroom standing on handmade floor tiles patterned in ochre, green and chalk white.",
+      caption: "Athangudi-style tiles, laid by hand and left slightly irregular.",
     },
     floor3b: {
-      alt: "A dim room where a patterned tiled floor catches the light.",
+      alt: "A dining table and kitchen in wood and yellow, on a patterned tiled floor.",
     },
-    floor4a: {
-      alt: "A geometric tiled floor in oxide red, black and white.",
-      caption: "No two tiles are quite identical. That is how they are made.",
+
+    terraceOpen: {
+      alt: "A pergola roof over the terrace, with planters hanging along it against the sky.",
+      caption: "The terrace, open to everyone staying in the house.",
     },
-    floor4b: {
-      alt: "A doorway framed in blue and white pattern, with steps leading up.",
+    terraceSwing: {
+      alt: "A carved wooden swing hanging on brass chains on the terrace at night, with the city beyond.",
     },
-    stair: {
-      alt: "A wooden staircase rising between floors.",
-      caption: "There is a lift, and there are stairs.",
+
+    houseSection: {
+      alt: "A panelled wooden wall with a small shelf, standing on a tiled floor with a painted border.",
+      caption: "Wood, and a painted tile border. The house was made rather than fitted out.",
     },
-    craftTiles: { alt: "A close detail of a handmade tile border in red and ochre." },
-    craftHands: { alt: "Hands shaping wet clay on a potter's wheel." },
-    craftTextile: { alt: "A weaver working at a hand loom." },
-    foodTable: {
-      alt: "A South Indian meal laid out on a banana leaf.",
-      caption: "Meals are arranged on request, not served on a schedule.",
+
+    craftTiles: {
+      alt: "A close view of a painted tile border meeting a polished red oxide floor.",
     },
-    foodDetail: { alt: "A dosa served on a banana leaf." },
+    craftJoinery: {
+      alt: "Wood and glass kitchen cabinets under three woven pendant shades.",
+    },
+    craftCane: {
+      alt: "The woven lattice back of a cane chair, with a palm behind it.",
+    },
+
+    foodStill: {
+      alt: "A flatbread cooking on a clay griddle over a low fire.",
+      caption: "Cooked when you ask for it. There is no menu and no set time.",
+    },
+
     valuesCorner: {
-      alt: "Green plants growing against a window grille.",
+      alt: "A bamboo water feature standing in a stone bowl on a patterned tiled floor.",
     },
+
     invitation: {
-      alt: "A canopy of trees seen from below.",
+      alt: "The covered ground floor at night, lit warmly, with plants along a timber screen.",
     },
+
     experienceOpening: {
-      alt: "The tiled courtyard of a traditional house, seen from above.",
+      alt: "A living room with wooden seating on a deep red tiled floor with a painted border.",
     },
     experienceGathering: {
-      alt: "A long communal wooden table under a high timber roof.",
+      alt: "The sun going down behind trees, seen from the terrace.",
       caption: "Gatherings happen here occasionally, and only by arrangement.",
     },
     experienceClose: {
-      alt: "A tile-roofed house half hidden among trees.",
+      alt: "The entrance of the house at night, lit warmly under a deep porch.",
     },
   },
 
@@ -118,45 +130,102 @@ export const en: Content = {
   arrangement: {
     eyebrow: "The arrangement",
     heading: "A floor is a household",
-    body: "Every floor is the same plan. What changes between them is the light, the height and the materials — never the layout.",
+    body: "Every guest floor is the same plan. What changes between them is the light, the height and the materials — never the layout.",
     items: [
-      "Three rooms",
-      "A queen bed in each, suitable for two adults",
-      "A hall and kitchen shared only by that floor",
-      "A balcony",
+      "Two guest bedrooms, sharing a common bathroom",
+      "One master bedroom, with a walk-in closet and an attached bathroom",
+      "A balcony off the master bedroom",
+      "A living room, dining area and kitchen, shared only by that floor",
     ],
-    sameNote: "The same on all four floors.",
+    sameNote: "The same on Floors 1, 2 and 3.",
     bookingNote:
       "Rooms are taken one at a time. With enough people, a floor becomes yours.",
+  },
+
+  about: {
+    eyebrow: "About",
+    heading: "A house somebody made, kept as a homestay",
+    body: [
+      "Taamboolam is a family home in Jayanagar that was built slowly and is still cared for by the people who built it. The tiles, the joinery, the cane and the small things on the shelves were chosen one at a time rather than specified in a schedule, and none of it was bought to look like anything in particular.",
+      "It is not a hotel and it does not behave like one: no front desk, no key card, no menu card. What it asks in return is that you treat it as a house — one that other people are also living in while you are here.",
+    ],
+    note: "Best suited to guests who would rather stay in a home than in a room.",
+  },
+
+  faq: {
+    eyebrow: "The details",
+    heading: "What is shared, and what is not",
+    intro:
+      "The questions people write in and ask. Answered here so nobody has to.",
+    items: [
+      {
+        q: "What is shared on each floor?",
+        a: [
+          "A living room, a dining area, a kitchen and a balcony. All four are reserved for the people staying on that floor — nobody from another floor uses them.",
+          "The two guest bedrooms share a common bathroom between them. The master bedroom has its own.",
+        ],
+      },
+      {
+        q: "What is in the kitchen?",
+        a: [
+          "A microwave, a bar fridge, an electric kettle, cutlery and crockery. Enough to make tea, keep things cold, and reheat what arrives.",
+        ],
+      },
+      {
+        q: "Is there an active kitchen?",
+        a: [
+          "No. There is no stove and no chimney, and no cooking setup of any kind. Meals cannot be prepared here — the kitchen is for keeping and reheating, not for cooking.",
+        ],
+      },
+      {
+        q: "How is food arranged?",
+        a: [
+          "South Indian homemade organic food is available on request. North Indian food can be arranged too, if you ask for it.",
+          "It is sourced when you ask, not served on a schedule. There is no fixed menu and no set price — say what you would like and we will tell you what is possible.",
+        ],
+      },
+      {
+        q: "Can we book a whole floor?",
+        a: [
+          "Yes. Rooms are given out one at a time, so a floor fills up room by room — but with enough people the whole floor is yours, and its living room, dining area, kitchen and balcony come with it.",
+        ],
+      },
+      {
+        q: "Can we bring children?",
+        a: [
+          "Yes. Children under 10 stay free when accompanied by a parent.",
+          "Tell us how many are coming when you write, so we can suggest the right floor. It does not add a bed to a room.",
+        ],
+      },
+      {
+        q: "What should we know about the terrace?",
+        a: [
+          "It is open to everyone staying in the house, at any hour. Part of it is covered and part of it is not, and there is a swing at one end.",
+          "It is not a room and it cannot be booked. It belongs to no single floor, which is why people end up there.",
+        ],
+      },
+    ],
   },
 
   home: {
     hero: {
       location: "Jayanagar, Bengaluru",
       description:
-        "A family home of four guest floors, kept as a homestay. Three rooms on each, taken one at a time, by enquiry.",
-    },
-
-    intro: {
-      eyebrow: "What this is",
-      heading: "A home, kept as a homestay",
-      body: [
-        "A house in Jayanagar that a family built and still cares for. It was not converted into a hotel and it does not behave like one: no front desk, no key card, no menu card.",
-      ],
+        "A family home of three guest floors and a terrace, kept as a homestay. Rooms are taken one at a time, by enquiry.",
     },
 
     floors: {
-      eyebrow: "The four floors",
-      heading: "Four floors, each with its own temperature",
-      body: "Floors 1 and 2 are quiet and familiar. Floors 3 and 4 are where the materials speak louder — colour, natural surfaces, Athangudi tiles laid by hand.",
-      link: "Walk through all four floors",
+      eyebrow: "The floors",
+      heading: "Three floors, and the terrace above them",
+      body: "Floors 1, 2 and 3 are the same plan in three different tempers — the light, the height and the materials change, the layout does not. Above them the terrace belongs to nobody in particular, which is why everybody ends up there.",
+      link: "Walk through the house",
     },
 
     craft: {
       eyebrow: "How it is made",
       heading: "Made slowly, by people, from materials that age well",
       body: [
-        "The surfaces were chosen rather than specified, and much of the work was done by artisans the family has worked with before. Athangudi tiles, made by hand and cured in the sun, carry small irregularities a machine would have corrected. Things were made one at a time, and it shows.",
+        "The surfaces were chosen rather than specified, and much of the work was done by people the family had worked with before. Tiles made by hand and cured in the sun carry small irregularities a machine would have corrected. Things were made one at a time, and it shows.",
       ],
     },
 
@@ -164,9 +233,9 @@ export const en: Content = {
       eyebrow: "Eating here",
       heading: "Food, if you ask for it",
       body: [
-        "Home-style meals, cooked on request by a kitchen the family has trusted for years. Or use the kitchen on your floor and cook for yourself.",
+        "South Indian home cooking, made fresh and organic, arranged on request. North Indian food can be arranged too if that is what you would rather eat.",
       ],
-      note: "Arranged by request, in advance.",
+      note: "Sourced on request. No fixed menu, no set price, no timings.",
     },
 
     values: {
@@ -185,16 +254,16 @@ export const en: Content = {
     eyebrow: "The Experience",
     heading: "The whole house, from the door upwards",
     opening: [
-      "A house is not a set of rooms. It is a sequence: what you see from the street, what the stairwell does with the light, and how long it takes before you stop noticing that you are a guest. Four guest floors, finished in different moods, and nobody has tried to even them out. None of them is the good floor.",
+      "A house is not a set of rooms. It is a sequence: what you see from the street, what the stairwell does with the light, and how long it takes before you stop noticing that you are a guest. Three guest floors, finished in different moods, and nobody has tried to even them out. None of them is the good floor.",
     ],
-    floorsIntro: "Four floors. Three rooms on each.",
+    floorsIntro: "Three floors. Then the terrace.",
 
     food: {
       eyebrow: "Food",
       heading: "A quiet extension of the house",
       body: [
-        "Meals are not a service here, they are an offer. Home-style food can be arranged on request through a kitchen partner the family has worked with for years — the same cooking they would put on their own table.",
-        "Ask when you enquire, or once you are here. Every floor also has its own kitchen, and cooking is allowed. Many guests do both.",
+        "Meals are not a service here, they are an offer. South Indian homemade organic food can be arranged on request, and North Indian food too if that is what you would rather eat.",
+        "Nothing runs to a timetable and nothing is priced on this site. Say what you would like when you enquire, or once you are here, and it is sourced for you. The kitchen on your floor will keep it and warm it; it will not cook it.",
       ],
     },
 
@@ -202,7 +271,7 @@ export const en: Content = {
       eyebrow: "Gatherings",
       heading: "Occasionally, the house holds more than guests",
       body: [
-        "Sometimes the house is used for something other than a stay — a workshop, a small singing evening, a family occasion. Roughly twenty to twenty-five people is the size it takes well. These are never listed and never bookable: they happen because somebody wrote and asked, and the fit was right for both sides.",
+        "Sometimes the house is used for something other than a stay — a workshop, a small singing evening, a family occasion. Roughly twenty to twenty-five people is the size it takes well, and the terrace is usually where it happens. These are never listed and never bookable: they happen because somebody wrote and asked, and the fit was right for both sides.",
       ],
       note: "If you have something in mind, say so in your enquiry and describe it. Parties are the one thing the house does not do.",
     },
@@ -221,7 +290,7 @@ export const en: Content = {
         "Floor 1 is deliberately unremarkable, and that is its strength. It is the floor that feels most like an ordinary, comfortable home — the kind you have stayed in before and did not have to learn.",
       ],
       more: [
-        "The hall has somewhere to sit and somewhere to put a cup down. The balcony faces outward, so you hear the neighbourhood before you see it.",
+        "The living room has somewhere to sit and somewhere to put a cup down. The balcony faces outward, so you hear the neighbourhood before you see it.",
       ],
       distinct: [],
     },
@@ -240,23 +309,23 @@ export const en: Content = {
       label: "Floor 3",
       lead: "Where the materials start speaking.",
       body: [
-        "Something changes on Floor 3. The surfaces get louder — not brighter exactly, but more present. Athangudi tiles run through the floors here, each one carrying the small irregularities of having been made rather than manufactured.",
+        "Something changes on Floor 3. The surfaces get louder — not brighter exactly, but more present. Handmade tiles run through the floors here, each one carrying the small irregularities of having been made rather than manufactured.",
       ],
       more: [
         "The colour is warm and mineral: ochre, leaf green, oxide red, chalk white. It came out of the tiles and then spread to everything else. Guests who like this floor tend to like it immediately.",
       ],
-      distinct: ["Athangudi tiles, laid by hand"],
+      distinct: ["Athangudi-style tiles, laid by hand"],
     },
-    floor4: {
-      label: "Floor 4",
-      lead: "The top of the house, and the most itself.",
+    terrace: {
+      label: "Terrace",
+      lead: "Above the third floor, and shared by everybody.",
       body: [
-        "The highest floor guests use, and the one that commits hardest. More tile, more colour, more natural material left visibly natural. The light up here is the best in the house and the balcony proves it.",
+        "At the top the house stops being floors and becomes sky. Part of the terrace is under a pergola and part of it is open, there are planters hung along the beams, and a carved wooden swing at one end. The whole neighbourhood is laid out below it.",
       ],
       more: [
-        "It is also the quietest, being furthest from the door. People who come to work on something — writing, making, thinking — often ask for this floor by name.",
+        "It belongs to no single floor, which is exactly why it is where people end up — usually late, after the heat has gone out of the day and the city has put its lights on. Nothing up here is scheduled and nothing up here is booked.",
       ],
-      distinct: ["Athangudi tiles, laid by hand"],
+      distinct: ["Open to everyone staying in the house"],
     },
   },
 
@@ -275,8 +344,12 @@ export const en: Content = {
         body: "Small gatherings can be arranged in advance. Parties cannot, and this is not negotiable.",
       },
       {
-        title: "Pets and children are welcome",
-        body: "Both. Tell us who is coming so we can suggest the right floor.",
+        title: "Children are welcome",
+        body: "Children under 10 stay free when accompanied by a parent. Tell us how many are coming so we can suggest the right floor.",
+      },
+      {
+        title: "Pets are not accommodated",
+        body: "We love animals too, but to protect the comfort of the home and all our guests, pets are not accommodated.",
       },
     ],
     groups: [
@@ -301,8 +374,8 @@ export const en: Content = {
         label: "The house's character",
         items: [
           {
-            title: "Cooking is allowed",
-            body: "Every floor has a kitchen and it is meant to be used.",
+            title: "The kitchens are for keeping, not cooking",
+            body: "Each floor has a microwave, a bar fridge, a kettle, cutlery and crockery. There is no stove and no chimney, so meals cannot be cooked here — food is sourced for you on request.",
           },
           {
             title: "Treat the house as made, not bought",
@@ -318,14 +391,13 @@ export const en: Content = {
     practicalHeading: "Practical things",
     practicalLabel: "The practical details",
     practical: [
-      "The fifth floor is private and not normally accessible to guests.",
+      "Floors 1, 2 and 3 are the guest floors. The fourth floor is private and is not accessible to guests.",
+      "The terrace is open to everyone staying in the house.",
       "There is a lift, and there are stairs.",
       "Parking is available on the ground floor for small to medium vehicles, scooters and bikes.",
     ],
     enquiryOnly:
       "Rooms are arranged by enquiry. There is no instant booking and no pricing on this site.",
-    pendingBathrooms:
-      "Bathroom arrangements are being confirmed with the owner. Ask in your enquiry and you will get a straight answer rather than a guess.",
   },
 
   notFound: {
@@ -352,8 +424,6 @@ export const en: Content = {
     gatherings:
       "Small gatherings of about twenty to twenty-five people are possible, by direct enquiry only.",
     rights: "All rights reserved.",
-    photographyNote:
-      "Photography on this site is temporary and does not show the house.",
   },
 
   form: {
@@ -371,6 +441,7 @@ export const en: Content = {
     departure: "Leaving",
     adults: "Adults",
     children: "Children",
+    childrenNote: "Children under 10 stay free when accompanied by a parent.",
     visitType: "What is this about?",
     visitStay: "Staying at the homestay",
     visitGathering: "Planning a small gathering",

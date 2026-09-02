@@ -54,11 +54,12 @@ export function EnquireScreen() {
               reader who decides halfway down that they would rather just send
               a message does not have to scroll back up to find out how. */}
           <aside className="md:col-span-4 md:col-start-9 md:sticky md:top-28 md:self-start">
+            {/* The living room of a floor, not a bedroom. What somebody is
+                enquiring about here is a household, and the photograph beside
+                the form should be the thing the form is actually asking them
+                to describe themselves into. */}
             <Reveal variant="photo">
-              <Photo
-                id="stayingMorning"
-                sizes="(min-width: 768px) 30vw, 92vw"
-              />
+              <Photo id="planLiving" sizes="(min-width: 768px) 30vw, 92vw" />
             </Reveal>
 
             <p className="type-body rule-atmos mt-6 border-t pt-5 text-ink-soft">

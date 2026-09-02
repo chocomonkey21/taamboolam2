@@ -8,7 +8,20 @@ import type { PhotoId } from "@/lib/photos";
 
 export type Locale = "en" | "kn";
 
-export type FloorId = "floor1" | "floor2" | "floor3" | "floor4";
+/**
+ * The guest-accessible levels, in the order they are climbed.
+ *
+ * There is no "floor4" here and there must not be one: the fourth floor is
+ * private and is not let to guests. The terrace is the fourth entry because
+ * it is the fourth place a guest can go, not because it is a fourth floor —
+ * it is shared by everyone staying, and it is never presented as a room.
+ *
+ * This union is load-bearing. It is the type of the floor-preference field on
+ * the enquiry form, of the chapter list on the Experience page and of the
+ * ledger on the home page, so re-introducing "floor4" anywhere would be a
+ * compile error in every locale file until somebody wrote copy for it.
+ */
+export type FloorId = "floor1" | "floor2" | "floor3" | "terrace";
 
 export type FloorCopy = {
   /** "Floor 1" — never a theme name, never a room name. */
@@ -22,7 +35,7 @@ export type FloorCopy = {
   /**
    * Only what this floor has that the shared arrangement does not already
    * cover. Empty for floors that are simply the standard plan — the
-   * arrangement is stated once, for all four floors, and never repeated here.
+   * arrangement is stated once, for Floors 1 to 3, and never repeated here.
    */
   distinct: string[];
 };
@@ -84,15 +97,46 @@ export type Content = {
     eyebrow: string;
     heading: string;
     body: string;
-    /** Rooms, bed, shared hall and kitchen, balcony. Four short lines. */
+    /**
+     * The rooms, the bathrooms, the balcony and the shared spaces. Four short
+     * lines, and no bed sizes in any of them — what a room contains is the
+     * owner's to state on enquiry, not this site's to guess.
+     */
     items: string[];
     sameNote: string;
     bookingNote: string;
   };
 
+  /**
+   * What Taamboolam is, said once and plainly.
+   *
+   * Not a biography. The house is the subject; the family appears only as the
+   * reason it is the way it is.
+   */
+  about: {
+    eyebrow: string;
+    heading: string;
+    body: string[];
+    note: string;
+  };
+
+  /**
+   * The questions a reader would otherwise have to write in and ask.
+   *
+   * Rendered as native disclosures, so the label has to name what is inside
+   * it. Nothing a guest must know before arriving belongs behind one of
+   * these — the kitchen having no stove is stated in the answer AND in the
+   * house values, because discovering it on arrival would be a bad evening.
+   */
+  faq: {
+    eyebrow: string;
+    heading: string;
+    intro: string;
+    items: { q: string; a: string[] }[];
+  };
+
   home: {
     hero: { location: string; description: string };
-    intro: { eyebrow: string; heading: string; body: string[] };
     floors: {
       eyebrow: string;
       heading: string;
@@ -144,8 +188,6 @@ export type Content = {
     practical: string[];
     /** Stays visible. How a room is got is not a detail. */
     enquiryOnly: string;
-    /** Rendered only when the matching value in lib/config.ts is filled in. */
-    pendingBathrooms: string;
   };
 
   /** The page that exists only when a reader has arrived somewhere wrong. */
@@ -170,7 +212,6 @@ export type Content = {
     pages: string;
     gatherings: string;
     rights: string;
-    photographyNote: string;
   };
 
   form: {
@@ -184,6 +225,8 @@ export type Content = {
     departure: string;
     adults: string;
     children: string;
+    /** Sits under the children field, and again in the house values. */
+    childrenNote: string;
     visitType: string;
     visitStay: string;
     visitGathering: string;

@@ -41,7 +41,7 @@ export function Opening() {
     <div className="opening-veil pointer-events-none" aria-hidden="true">
       {/* Uppercase and open tracking are a Latin setting only. Kannada has no
           capitals, and letterspacing pulls its conjuncts apart into separate
-          marks — ತಂಬೋಲಂ must be set solid, the same rule the wordmark follows.
+          marks — ತಾಂಬೂಲಂ must be set solid, the same rule the wordmark follows.
           It also sets a little larger, because losing that treatment loses the
           weight it carries. */}
       <span

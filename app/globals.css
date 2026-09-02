@@ -3,10 +3,12 @@
 /* ==========================================================================
    Taamboolam — design system
 
-   The house is a stack. Five levels, four of them for guests, climbed by
-   stairs and a lift, and the materials change as you climb. Everything below
-   is built on that one fact: a vertical datum, a course of tiles laid at each
-   boundary, and a palette that warms as the page rises.
+   The house is a stack. Three guest floors, a private fourth, and a terrace
+   over the top of them, climbed by stairs and a lift, and the materials
+   change as you climb. Everything below is built on that one fact: a vertical
+   datum, a course of tiles laid at each boundary, and a palette that warms as
+   the page rises — until the terrace, where it deliberately stops warming and
+   goes to sky.
 
    The palette is drawn from the materials the house is actually made of:
    limewash, clay, stone, wood, leaf, indigo. Nothing here is a brand colour
@@ -66,12 +68,20 @@
    Atmosphere — the ambient tone of a stretch of page.
 
    `data-atmosphere` shifts the ground the content sits on. Floors 1 and 2 stay
-   close to the house's default warm white. Floors 3 and 4 pick up the tiles:
+   close to the house's default warm white. Floor 3 picks up the tiles:
    perceptible, but never a colour wash.
+
+   The terrace breaks the sequence rather than continuing it, and that break is
+   load-bearing. Three warm grounds getting warmer as you climb, then one that
+   goes cool and pale, is how a reader is told — before reading a word — that
+   the terrace is not the fourth floor. It is the one place in the palette
+   where the indigo of an Athangudi tile is the accent rather than the clay.
 
    --atmos-pattern is how strongly the tile course prints on that ground. It is
    the structural half of "the material starts speaking on Floor 3": the same
    band of ornament is nearly invisible downstairs and clearly laid upstairs.
+   It drops back at the terrace, because the terrace has no tiles — it has
+   pavers, a pergola and sky.
    -------------------------------------------------------------------------- */
 
 :root,
@@ -105,8 +115,8 @@
   --atmos-pattern: 0.07;
 }
 
-/* Floors 3 and 4 are where the material starts speaking. The shift is
-   deliberately more perceptible here than anywhere else on the site. */
+/* Floor 3 is where the material starts speaking. The shift is deliberately
+   more perceptible here than anywhere else on the site. */
 [data-atmosphere="floor-3"] {
   --atmos-bg: #f6efdf;
   --atmos-tint: #ecdfc2;
@@ -117,14 +127,20 @@
   --atmos-pattern: 0.2;
 }
 
-[data-atmosphere="floor-4"] {
-  --atmos-bg: #f4ebe2;
-  --atmos-tint: #e8d8c8;
-  --atmos-rule: #d6bda6;
-  --atmos-accent: var(--color-clay);
-  --atmos-accent-ink: #7c2f14;
-  --atmos-ink: #2f2018;
-  --atmos-pattern: 0.26;
+/* The terrace. Not a floor, and the palette says so before the copy does:
+   the ground goes cool and open where the three floors below it went warm,
+   and the accent is the indigo out of a tile rather than the clay.
+   --atmos-accent-ink is darkened from the raw indigo token until it clears
+   4.5:1 on this ground — the accent colour and the accent *ink* are separate
+   tokens on every atmosphere for exactly this reason. */
+[data-atmosphere="terrace"] {
+  --atmos-bg: #eef1ef;
+  --atmos-tint: #dfe5e4;
+  --atmos-rule: #c4cdcd;
+  --atmos-accent: var(--color-indigo);
+  --atmos-accent-ink: #2d425a;
+  --atmos-ink: #1f2830;
+  --atmos-pattern: 0.06;
 }
 
 /* The one dark stretch. Used once per page at most. Tokens invert so every
