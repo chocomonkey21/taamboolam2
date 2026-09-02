@@ -31,10 +31,21 @@ export function LanguageToggle({
 
   return (
     <div
-      className={`inline-flex items-center rounded-full border border-current/25 p-0.5 ${className}`}
+      /* inline-grid with two equal columns, so the indicator below can be
+         exactly half the track and travel exactly its own width. An
+         inline-flex row sized to each label would need measuring in JS,
+         and "English" and "ಕನ್ನಡ" are not the same width. */
+      className={`relative isolate inline-grid grid-cols-2 items-center rounded-full border border-current/25 p-0.5 ${className}`}
       role="group"
       aria-label={t.languageLabel}
     >
+      {/* The indicator. Purely decorative — the buttons carry aria-pressed,
+         so a screen reader never depends on this. */}
+      <span
+        aria-hidden="true"
+        data-at={locale}
+        className="lang-indicator absolute inset-y-0.5 left-0.5 -z-10 w-[calc(50%-0.125rem)] rounded-full bg-current/[0.14]"
+      />
       {(["en", "kn"] as const).map((code) => {
         const active = locale === code;
         return (
@@ -44,10 +55,10 @@ export function LanguageToggle({
             lang={code}
             onClick={() => setLocale(code)}
             aria-pressed={active}
-            className={`type-label inline-flex items-center justify-center rounded-full leading-none transition-colors duration-200 ${size} ${
-              active
-                ? "bg-current/[0.14] font-medium"
-                : "opacity-65 hover:opacity-100"
+            /* The background moved to the shared indicator above; what is
+               left here is only the type's own weight and opacity. */
+            className={`type-label inline-flex items-center justify-center rounded-full leading-none transition-[opacity,font-weight] duration-200 ${size} ${
+              active ? "font-medium" : "opacity-65 hover:opacity-100"
             }`}
           >
             {content[code].localeName}

@@ -891,6 +891,54 @@
   }
 
   /* ------------------------------------------------------------------------
+     The language indicator.
+
+     Picking a language used to recolour one button and uncolour the other —
+     two unrelated events where there is really one thing moving between two
+     positions. A single ground now slides under the labels, so the change is
+     continuous and the eye can follow it.
+
+     A transition rather than a keyframe, so a reader who changes their mind
+     mid-slide retargets from wherever it currently is instead of snapping.
+     260ms: a rare interaction, and one where the movement IS the message.
+     ---------------------------------------------------------------------- */
+  .lang-indicator {
+    transition: transform 260ms var(--ease-material);
+  }
+
+  .lang-indicator[data-at="kn"] {
+    /* Exactly its own width, which the inline-grid's two equal columns make
+       exactly one cell. */
+    transform: translateX(100%);
+  }
+
+  /* ------------------------------------------------------------------------
+     The enquiry form's conditional question.
+
+     Choosing a different kind of visit replaces one textarea, its label and
+     its hint with another, in the same place. Silently, before this: a
+     reader who glanced away simply found a different question sitting there.
+
+     Enter only, and short. The outgoing field goes the instant the choice is
+     made — an exit would put a delay between a click and its answer, and
+     "subtler than the enter" here means none at all.
+     ---------------------------------------------------------------------- */
+  .field-swap {
+    animation: field-swap 200ms var(--ease-material) both;
+  }
+
+  @keyframes field-swap {
+    from {
+      opacity: 0;
+      transform: translate3d(0, 4px, 0);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  /* ------------------------------------------------------------------------
      Disclosure — native <details>, styled.
      ---------------------------------------------------------------------- */
 
@@ -1062,14 +1110,19 @@
     animation: loading-breathe 2600ms var(--ease-soft) infinite;
   }
 
+  /* The cycle used to begin at 0.28 and peak at 0.6. A route transition is
+     usually over in a few hundred milliseconds, so the mark was only ever
+     seen in the first slice of a 2.6-second breath — which is to say it was
+     seen at almost nothing. The floor is now legible on its own, and the
+     breath is what happens if the wait turns out to be a long one. */
   @keyframes loading-breathe {
     0%,
     100% {
-      opacity: 0.28;
-      transform: scale(0.97);
+      opacity: 0.5;
+      transform: scale(0.98);
     }
     50% {
-      opacity: 0.6;
+      opacity: 0.85;
       transform: scale(1);
     }
   }
@@ -1106,8 +1159,15 @@
 
   .disclosure-tick,
   .ledger-row,
-  .nav-plate {
+  .nav-plate,
+  .lang-indicator {
     transition: none;
+  }
+
+  /* The indicator still MOVES — it has to, or it would sit under the wrong
+     label — it simply arrives without travelling. */
+  .field-swap {
+    animation: none;
   }
 
   /* Retraction is disabled at source under reduced motion; this is the belt to
