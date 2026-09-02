@@ -32,10 +32,11 @@ turned away before the server does work worth the attacker's time.
 | 4 | Body read with a hard 16KB ceiling | `413` / `400` |
 | 5 | Every field forced to its declared type | — |
 | 6 | Honeypot field filled | `200`, silently dropped |
-| 7 | Full server-side validation | `422` |
-| 8 | Per-email throttle — 3 per hour | `429` |
-| 9 | Duplicate within 5 minutes | `200`, marked duplicate |
-| 10 | Mail send, 10s deadline | `502` on timeout or failure |
+| 7 | Closed-set fields are members of their set | `400` |
+| 8 | Full server-side validation | `422` |
+| 9 | Per-email throttle — 3 per hour | `429` |
+| 10 | Duplicate within 5 minutes | `200`, marked duplicate |
+| 11 | Mail send, 10s deadline | `502` on timeout or failure |
 
 The whole invocation is capped at 15 seconds (`maxDuration`).
 
@@ -60,6 +61,13 @@ otherwise invites a third.
 - Delivery is never claimed unless the provider confirms it. With no API key
   the endpoint answers `503` and the interface tells the guest plainly to write
   directly. There is no thank-you for a message that went nowhere.
+
+### Failure
+
+`app/error.tsx` and `app/global-error.tsx` catch a thrown route and a thrown
+root layout. Neither shows the reader anything about the failure — no message,
+no stack, no digest on screen. Only the digest reaches the console, and it is
+the framework own correlation id rather than anything a guest typed.
 
 ### Data handling
 

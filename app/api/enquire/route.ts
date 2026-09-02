@@ -11,6 +11,7 @@ import {
   asCleanStrings,
   clientKey,
   declaredTooLarge,
+  enumsValid,
   fingerprint,
   originAllowed,
   readJsonLimited,
@@ -147,6 +148,13 @@ export async function POST(request: Request) {
   // the bot learns nothing from the response.
   if (values.website.trim()) {
     return NextResponse.json({ ok: true, delivered: true });
+  }
+
+  /* Closed-set fields, checked before anything indexes an object with them.
+     A real browser cannot send a value outside these sets, so this is a
+     malformed request rather than a correctable one. */
+  if (!enumsValid(values)) {
+    return NextResponse.json({ error: "malformed" }, { status: 400 });
   }
 
   // The same validator the browser ran. Never trust that it did.

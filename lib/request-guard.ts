@@ -139,6 +139,48 @@ export function asCleanStrings<T extends Record<string, unknown>>(
   return out as T;
 }
 
+/**
+ * Are the closed-set fields actually members of their sets?
+ *
+ * asCleanStrings fixes values of the wrong type. These are the right type —
+ * strings — and simply not members, which is a different bug and was still
+ * live after that fix. Probed against the running site:
+ *
+ *   {"visitType":"evil"}          → the label lookup returned undefined,
+ *                                   escapeHtml(undefined) threw, 500.
+ *   {"floorPreference":"__proto__"} → the floors lookup reached into
+ *                                   Object.prototype, .label was undefined, 500.
+ *
+ * The second is why this checks membership of an explicit list rather than
+ * truthiness of a lookup: `floors["__proto__"]` is truthy.
+ *
+ * A real browser cannot produce either. A request carrying one did not come
+ * from our form, so the route answers 400 rather than 422 — there is no
+ * field for the sender to correct.
+ */
+export function enumsValid(values: {
+  visitType: string;
+  floorPreference: string;
+  arrival: string;
+  departure: string;
+}): boolean {
+  const visits = ["stay", "gathering", "other"];
+  const floors = ["any", "floor1", "floor2", "floor3", "floor4"];
+
+  if (!visits.includes(values.visitType)) return false;
+  if (!floors.includes(values.floorPreference)) return false;
+
+  /* A date input can only ever produce this shape. Anything else reaches
+     formatDate, which hands an unparseable string straight back into the
+     owner's email. */
+  const isoDate = /^\d{4}-\d{2}-\d{2}$/;
+  for (const value of [values.arrival, values.departure]) {
+    if (value !== "" && !isoDate.test(value)) return false;
+  }
+
+  return true;
+}
+
 /* ══════════════════════════════════════════════════════════════════════
    Origin
    ══════════════════════════════════════════════════════════════════════ */
