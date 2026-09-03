@@ -2,10 +2,18 @@
 
 Website for Taamboolam, a family homestay in Jayanagar, south Bengaluru.
 
-Three pages — **Home**, **The Experience**, **Enquire** — and a shared *Find Us*
-footer that closes every one of them. There is no pricing, no availability and
-no booking anywhere on the site, by design. The only conversion is an enquiry
-that a person reads and answers.
+**Live at https://www.taamboolam.com**
+
+Three pages — **Home**, **The Experience**, **Enquire** — plus a **Privacy**
+notice, and a shared *Find Us* footer that closes every one of them. There is
+no pricing, no availability and no booking anywhere on the site, by design. The
+only conversion is an enquiry that a person reads and answers.
+
+Three documents sit beside this one:
+
+- **`HANDOFF.md`** — accounts, deployment, and what to do when something breaks
+- **`CONTENT.md`** — for the owner: what is confirmed, and what is still open
+- **`SECURITY.md`** — what the code defends against, and what it does not
 
 ---
 
@@ -34,7 +42,7 @@ Copy `.env.example` to `.env.local`.
 | Variable | What it does |
 |---|---|
 | `RESEND_API_KEY` | Required in production. Without it, enquiries are refused with an honest error rather than silently dropped. |
-| `ENQUIRY_TO_EMAIL` | Where enquiries land. Defaults to the address in `lib/site.ts`. |
+| `ENQUIRY_TO_EMAIL` | Optional. Overrides where enquiries land — used for testing, then removed. Defaults to the address in `lib/site.ts`. |
 | `ENQUIRY_FROM_EMAIL` | Sender. Must be on a domain verified with the mail provider. |
 | `ENQUIRY_DRY_RUN` | Development only. Logs the enquiry instead of sending it, and labels the success screen accordingly. |
 
@@ -76,8 +84,10 @@ byte of HTML: no flash of English, no hydration mismatch, and a correct
 
 This is why the three pages render dynamically rather than statically.
 
-The Kannada is a **written first draft awaiting native review** — see
-`CONTENT.md`.
+The Kannada was **read and approved by the owner**. Anything added to the
+English file from here is an unreviewed draft in Kannada until somebody reads
+it — the header of `lib/content/kn.ts` says so, and names the one string that
+was added after that review.
 
 ### Design tokens
 
@@ -138,14 +148,21 @@ shown to a guest in Kannada and mailed to the owner in English.
 
 ## Deploying
 
-Push to a Git remote and import the project. Set the environment variables
-above, then send one real enquiry through the deployed form and confirm it
-arrives in the inbox and that replying reaches the guest.
+Vercel builds from `main`. **Pushing to `main` deploys** — there is no separate
+publish step and no staging site. Any other branch builds a preview at its own
+URL and touches nothing public, which is the safe way to try something.
+
+The apex redirects to `www`, and `site.url` in `lib/site.ts` has to match
+whichever of the two Vercel redirects *to* — it feeds the sitemap, robots.txt
+and every share preview. `npm run build` checks that they still agree.
+
+Full deployment detail, including the account inventory, is in **`HANDOFF.md`**.
 
 ## What is still outstanding
 
-See **`CONTENT.md`**. In short: the phone number and the map pin are still
-placeholders, the Kannada needs a native read, which photograph belongs to
-which floor is an assumption waiting on the owner, and four things named in the
-copy — a walk-in closet, a bathroom, a balcony, and the terrace in daylight —
-have no photograph and have not been substituted for.
+See **`CONTENT.md`**. Nothing blocking: which photograph belongs to which floor
+is an assumption waiting on the owner; four things named in the copy — a
+walk-in closet, a bathroom, a balcony, and the terrace in daylight without
+people — have no photograph and have not been substituted for; and a handful of
+practical guest questions (check-in times, towels, laundry) are still
+unanswered.

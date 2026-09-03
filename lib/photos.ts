@@ -68,12 +68,11 @@ export const photos: Record<PhotoId, PhotoMeta> = {
   floor3a: { src: "/images/floor-3-a.jpg", ratio: "4 / 5" },
   floor3b: { src: "/images/floor-3-b.jpg", ratio: "3 / 2" },
 
-  /* A band, not a landscape frame. The only daylight photograph of the
-     terrace has eight identifiable people standing in the middle of it, so
-     this is the strip above them — pergola, hanging planters, sky. The shape
-     is the crop's own, and the layouts are built around it rather than the
-     other way round. */
-  terraceOpen: { src: "/images/terrace-open.jpg", ratio: "120 / 25.5" },
+  /* The terrace with people on it. This was a thin strip cropped from above
+     their heads while nobody had recorded their permission; the owner has
+     since confirmed it, so the frame drops to include them and the terrace
+     stops looking like an empty roof. */
+  terraceOpen: { src: "/images/terrace-open.jpg", ratio: "16 / 9" },
   terraceSwing: { src: "/images/terrace-swing.jpg", ratio: "4 / 5" },
 
   houseSection: { src: "/images/house-section.jpg", ratio: "3 / 4" },
