@@ -60,11 +60,20 @@ const jobs = [
   // The only daylight photograph of the terrace has eight identifiable
   // people in it. This takes the band above them: the pergola, the hanging
   // planters and the sky. Nobody in the frame, and nothing invented.
+  // A 3.5:1 band was still a third corrugated roof, and the roof is the
+  // least interesting thing up here. Starting the crop lower gives the
+  // planters, the sky and the rooftops the frame instead.
+  //
+  // The sky also needed pulling back: a phone camera under a white roof
+  // rendered it electric cyan, which was the one colour on the site that
+  // belonged to no part of the palette. Desaturated to sit beside the warm
+  // grounds rather than shout over them.
   {
     out: "terrace-open.jpg",
     src: "IMG-20260901-WA0003.jpg",
-    crop: { left: 0, top: 40, width: 1200, height: 345 },
+    crop: { left: 0, top: 130, width: 1200, height: 255 },
     w: 1200,
+    tone: (p) => p.linear([1.02, 1.01, 0.94], [0, 0, 6]).modulate({ saturation: 0.72 }),
   },
   {
     out: "terrace-swing.jpg",
@@ -80,19 +89,24 @@ const jobs = [
 
   // ── Materials and detail ────────────────────────────────────────────
   { out: "house-section.jpg", src: "IMG-20260902-WA0019.jpg", w: 1014, ar: 3 / 4 },
+  // Low and tight on the painted border where it meets the red oxide floor.
+  // A squarer crop higher up put half a bed in the frame, and a bed under a
+  // heading that says "how it is made" reads as a bedroom, not a material.
   {
     out: "craft-tiles.jpg",
     src: "IMG-20260902-WA0021.jpg",
-    crop: { left: 60, top: 420, width: 640, height: 640 },
+    crop: { left: 60, top: 620, width: 446, height: 446 },
     w: 900,
     upscale: true,
   },
+  // 16:9, because this is now the wide photograph that opens "how it is
+  // made" on the home page. It was a square, and the layout cover-cropped
+  // it to 16:9 and threw the joinery away.
   {
     out: "craft-joinery.jpg",
     src: "IMG-20260902-WA0018.jpg",
-    crop: { left: 300, top: 20, width: 640, height: 640 },
-    w: 900,
-    upscale: true,
+    crop: { left: 40, top: 30, width: 1520, height: 855 },
+    w: 1520,
   },
   {
     out: "craft-cane.jpg",

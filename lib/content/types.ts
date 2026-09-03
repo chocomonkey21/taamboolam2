@@ -75,6 +75,13 @@ export type Content = {
     readTheStory: string;
     /** Ends each floor chapter, and carries that floor into the form. */
     askAboutFloor: string;
+    /**
+     * The same link at the end of the terrace chapter.
+     *
+     * A separate string because askAboutFloor says "this floor", and the
+     * whole chapter above it is an argument that the terrace is not one.
+     */
+    askAboutTerrace: string;
     backHome: string;
   };
 

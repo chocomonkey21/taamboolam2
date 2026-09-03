@@ -33,6 +33,7 @@ export const en: Content = {
     explore: "Explore Taamboolam",
     readTheStory: "Walk through the house",
     askAboutFloor: "Ask about this floor",
+    askAboutTerrace: "Ask about staying here",
     backHome: "Back to the beginning",
   },
 
@@ -144,7 +145,7 @@ export const en: Content = {
 
   about: {
     eyebrow: "About",
-    heading: "A house somebody made, kept as a homestay",
+    heading: "A house somebody made",
     body: [
       "Taamboolam is a family home in Jayanagar that was built slowly and is still cared for by the people who built it. The tiles, the joinery, the cane and the small things on the shelves were chosen one at a time rather than specified in a schedule, and none of it was bought to look like anything in particular.",
       "It is not a hotel and it does not behave like one: no front desk, no key card, no menu card. What it asks in return is that you treat it as a house — one that other people are also living in while you are here.",

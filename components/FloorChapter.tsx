@@ -177,7 +177,7 @@ export function FloorChapter({
           remember which one they liked. */}
       <p className="mt-8">
         <TextLink href={`/enquire?floor=${spec.id}`}>
-          {t.cta.askAboutFloor}
+          {spec.id === "terrace" ? t.cta.askAboutTerrace : t.cta.askAboutFloor}
         </TextLink>
       </p>
     </>

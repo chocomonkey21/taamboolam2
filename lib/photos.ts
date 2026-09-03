@@ -73,13 +73,14 @@ export const photos: Record<PhotoId, PhotoMeta> = {
      this is the strip above them — pergola, hanging planters, sky. The shape
      is the crop's own, and the layouts are built around it rather than the
      other way round. */
-  terraceOpen: { src: "/images/terrace-open.jpg", ratio: "120 / 34.5" },
+  terraceOpen: { src: "/images/terrace-open.jpg", ratio: "120 / 25.5" },
   terraceSwing: { src: "/images/terrace-swing.jpg", ratio: "4 / 5" },
 
   houseSection: { src: "/images/house-section.jpg", ratio: "3 / 4" },
 
   craftTiles: { src: "/images/craft-tiles.jpg", ratio: "1 / 1" },
-  craftJoinery: { src: "/images/craft-joinery.jpg", ratio: "1 / 1" },
+  /* Wide, not square: this is the photograph that opens the craft section. */
+  craftJoinery: { src: "/images/craft-joinery.jpg", ratio: "16 / 9" },
   craftCane: { src: "/images/craft-cane.jpg", ratio: "1 / 1" },
 
   foodStill: { src: "/images/food-still.jpg", ratio: "4 / 5" },

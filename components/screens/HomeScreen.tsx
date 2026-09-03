@@ -177,8 +177,18 @@ export function HomeScreen() {
       >
         <div className="container-content section-rhythm-wide">
           <div className="grid gap-10 md:grid-cols-12 md:gap-8">
-            <Datum note={t.about.eyebrow} className="md:col-span-8">
-              <Reveal as="h2" variant="wipe" className="type-display">
+            {/* The heading is capped at a measure rather than left to fill the
+                column. At display size on a wide screen an uncapped forty
+                characters wrapped to four ragged lines across nine hundred
+                pixels while the paragraph under it stopped at a readable
+                sixty — a heading and a body that visibly did not belong to the
+                same block. Capped, it breaks where a person would break it. */}
+            <Datum note={t.about.eyebrow} className="md:col-span-7">
+              <Reveal
+                as="h2"
+                variant="wipe"
+                className="type-display max-w-[15ch]"
+              >
                 {t.about.heading}
               </Reveal>
               <p className="type-lead measure mt-8 text-ink-soft">
@@ -189,14 +199,18 @@ export function HomeScreen() {
               </p>
             </Datum>
 
+            {/* Set against the paragraphs rather than floating beside the
+                heading, and given a real column instead of a sliver — it was
+                a small picture high in a tall empty corner, which is the exact
+                hole this page's other sections were composed to avoid. */}
             <Reveal
               variant="photo"
               delay={80}
-              className="w-[62%] md:col-span-3 md:col-start-10 md:mt-14 md:w-full"
+              className="w-[62%] md:col-span-4 md:col-start-9 md:mt-32 md:w-full"
             >
               <Photo
                 id="valuesCorner"
-                sizes="(min-width: 768px) 24vw, 62vw"
+                sizes="(min-width: 768px) 30vw, 62vw"
                 zoomable
               />
             </Reveal>
@@ -295,12 +309,20 @@ export function HomeScreen() {
           </Datum>
 
           <div className="mt-12 grid gap-6 md:mt-16 md:grid-cols-12 md:gap-8">
-            {/* The wide tile shot, offset right and running past the column
-                the text sits in. */}
+            {/* The wide shot, offset right and running past the column the
+                text sits in.
+
+                This slot needs a photograph that is natively wide. It used to
+                hold craftTiles, which is a square detail of a tile border —
+                cover-cropped to 16:9 it lost the border entirely and came out
+                as the corner of a bed, which is not what "how it is made"
+                should open with. The joinery is the right lead: cabinet
+                fronts, glass, and three woven shades, all of it made rather
+                than bought. The tile border keeps its square below, where a
+                detail belongs. */}
             <Reveal variant="photo" className="md:col-span-8 md:col-start-5">
               <Photo
-                id="craftTiles"
-                ratio="16 / 9"
+                id="craftJoinery"
                 sizes="(min-width: 768px) 62vw, 92vw"
                 zoomable
               />
@@ -314,7 +336,7 @@ export function HomeScreen() {
               className="col-span-1 md:col-span-3 md:col-start-2 md:-mt-24"
             >
               <Photo
-                id="craftJoinery"
+                id="craftTiles"
                 sizes="(min-width: 768px) 24vw, 92vw"
                 zoomable
               />
