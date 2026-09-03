@@ -15,7 +15,19 @@ export const site = {
    * name. Corrected by the owner.
    */
   nameKn: "ತಾಂಬೂಲಂ",
-  url: "https://taamboolam.com",
+  /**
+   * The canonical origin, and it must match what the host actually serves.
+   *
+   * Vercel is configured with www as canonical: https://taamboolam.com answers
+   * 308 and sends everything to https://www.taamboolam.com. This value feeds
+   * the sitemap, robots.txt and every share preview, so while it said the
+   * apex, every URL a crawler was handed redirected before it resolved.
+   *
+   * If the redirect is ever flipped the other way in Vercel, flip this too —
+   * they are one decision recorded in two places, and only one of them is
+   * visible from the browser.
+   */
+  url: "https://www.taamboolam.com",
 
   contact: {
     /** The owner's number. Confirmed. */
