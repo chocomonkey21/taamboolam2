@@ -4,6 +4,7 @@ import { Arrangement } from "../Arrangement";
 import { ButtonLink } from "../Button";
 import { Datum } from "../Datum";
 import { FLOOR_CHAPTERS, FloorChapter } from "../FloorChapter";
+import { HouseFaq } from "../HouseFaq";
 import { HouseValues } from "../HouseValues";
 import { Parallax } from "../Parallax";
 import { Photo } from "../Photo";
@@ -14,6 +15,12 @@ import { MaterialStrip, TileCourse, TileGlyph } from "../TileMotif";
 /**
  * One continuous story, read the way the house is climbed. Not four pages, not
  * a tabbed selector, and no floor presented as the good one.
+ *
+ * The sequence is three guest floors and then the terrace — which gets a
+ * chapter because guests use it, and gets a layout unlike the other three
+ * because it is not a floor. The private fourth floor is not a chapter, is not
+ * photographed, and appears only once, in the practical details, as the thing
+ * it is: not accessible.
  */
 export function ExperienceScreen() {
   const { t } = useSite();
@@ -61,14 +68,17 @@ export function ExperienceScreen() {
               </p>
             </div>
 
-            {/* The stair, offset upward so it breaks the line the paragraph
-                sits on — the one vertical thing on a page about a stack. */}
+            {/* A wall, offset upward so it breaks the line the paragraph sits
+                on — the one vertical thing on a page about a stack. There is
+                no photograph of the stair itself, so rather than caption
+                something else as one, this is what the paragraph is actually
+                about: the house as a made object, panel by panel. */}
             <Reveal
               variant="photo"
               className="md:col-span-4 md:col-start-9 md:-mt-24"
             >
               <Photo
-                id="stair"
+                id="houseSection"
                 sizes="(min-width: 768px) 30vw, 92vw"
                 caption="below"
                 className="ring-8 ring-[var(--atmos-bg)]"
@@ -94,17 +104,37 @@ export function ExperienceScreen() {
         </div>
       </section>
 
-      {/* ── The four floors ──────────────────────────────────────────────── */}
+      {/* ── The three floors, and then the terrace ───────────────────────── */}
       {FLOOR_CHAPTERS.map((spec, index) => (
         <FloorChapter key={spec.id} spec={spec} index={index} />
       ))}
 
+      {/* ── What is shared ───────────────────────────────────────────────
+          Straight after the last chapter, because it is the question the
+          chapters raise: a reader who has just been told that a floor is a
+          household wants to know exactly what comes with one.
+
+          Disclosures rather than a wall of prose. Seven answers set out flat
+          would be the longest stretch of body copy on the site, and six of
+          the seven are only wanted by some readers. The one that is wanted by
+          all of them — that the kitchen cannot cook — is also stated in the
+          house values below and captioned on the photograph of the kitchen,
+          so it is never only behind a closed row. */}
+      <section
+        className="texture-limewash ground-tint relative"
+        data-atmosphere="house"
+      >
+        <div className="container-content section-rhythm">
+          <HouseFaq />
+        </div>
+      </section>
+
       {/* ── Food ─────────────────────────────────────────────────────────
-          A still life, and the words set around it as notes rather than under
-          it as a column. The home page gives food a dark room; here it is the
-          quietest stretch on a long page, which is the other half of the same
-          idea: it is not a service with a layout of its own, it is something
-          that happens on a table in this house. */}
+          One still life, and the words set around it as notes rather than
+          under it as a column. The home page gives food a dark room; here it
+          is the quietest stretch on a long page, which is the other half of
+          the same idea: it is not a service with a layout of its own, it is
+          something that happens on a table in this house. */}
       <section
         className="texture-limewash relative bg-atmos"
         data-atmosphere="house"
@@ -116,32 +146,29 @@ export function ExperienceScreen() {
             <h2 className="type-h1">{t.experience.food.heading}</h2>
           </Datum>
 
-          <div className="relative mt-10 grid gap-8 md:mt-14 md:grid-cols-12 md:gap-8">
-            <Reveal variant="photo" className="md:col-span-8">
+          <div className="relative mt-10 grid gap-10 md:mt-14 md:grid-cols-12 md:gap-8">
+            {/* The photograph leads on this page and is followed rather than
+                flanked, which is the reverse of the home page's treatment of
+                the same subject. Held to a third of the width: it is a 760px
+                frame lifted from the owner's video, and stretching it across
+                two thirds would show the reader the compression instead of
+                the food. */}
+            <Reveal variant="photo" className="md:col-span-4">
               <Photo
-                id="foodTable"
-                ratio="3 / 2"
-                sizes="(min-width: 768px) 62vw, 92vw"
+                id="foodStill"
+                sizes="(min-width: 768px) 30vw, 92vw"
                 caption="below"
                 zoomable
               />
             </Reveal>
 
-            <div className="md:col-span-4 md:pt-4">
-              <p className="type-body text-ink-soft">
+            <div className="md:col-span-7 md:col-start-6 md:pt-6">
+              <p className="type-lead text-ink-soft">
                 {t.experience.food.body[0]}
               </p>
-              <p className="type-body mt-5 text-ink-soft">
+              <p className="type-body measure mt-5 text-ink-soft">
                 {t.experience.food.body[1]}
               </p>
-
-              <Reveal variant="photo" className="mt-8 w-[58%] md:w-full">
-                <Photo
-                  id="foodDetail"
-                  sizes="(min-width: 768px) 30vw, 58vw"
-                  zoomable
-                />
-              </Reveal>
             </div>
           </div>
         </div>

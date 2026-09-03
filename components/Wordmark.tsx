@@ -51,7 +51,7 @@ export function Wordmark({
     >
       {/* Open tracking and uppercase belong to the Latin setting only.
           Kannada has no capitals, and letterspacing pulls its conjuncts apart
-          into separate marks — ತಂಬೋಲಂ must be set solid. */}
+          into separate marks — ತಾಂಬೂಲಂ must be set solid. */}
       <span
         className={`font-heading leading-none font-normal ${
           kannadaFirst ? "" : "tracking-[0.2em] uppercase"

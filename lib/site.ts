@@ -7,16 +7,34 @@
  */
 export const site = {
   name: "Taamboolam",
-  /** The name set in Kannada, used beside the wordmark. */
-  nameKn: "ತಂಬೋಲಂ",
+  /**
+   * The name set in Kannada, used beside the wordmark.
+   *
+   * ತಾಂಬೂಲಂ — long aa on the first syllable, long uu on the third. The site
+   * previously carried ತಂಬೋಲಂ, which is a different word and not the house's
+   * name. Corrected by the owner.
+   */
+  nameKn: "ತಾಂಬೂಲಂ",
   url: "https://taamboolam.com",
 
   contact: {
-    /** PLACEHOLDER — replace with the real number. */
-    phone: "+91 98765 43210",
-    /** Digits only, for the wa.me link. The same number as above. */
-    whatsapp: "919876543210",
-    email: "stay@taamboolam.com",
+    /** The owner's number. Confirmed. */
+    phone: "+91 91082 40269",
+    /** Digits only with the country code, for the wa.me link. Same number. */
+    whatsapp: "919108240269",
+    /**
+     * Where enquiries land. Confirmed.
+     *
+     * This is also the default recipient — ENQUIRY_TO_EMAIL overrides it, but
+     * with nothing set the mailer falls back to here, so the address is right
+     * even if the hosting project is misconfigured.
+     *
+     * Note it is a Gmail address, which makes it a fine place to RECEIVE mail
+     * and an impossible place to SEND from: Resend will only send from a
+     * domain you have verified, and nobody can verify gmail.com. See the note
+     * on FROM in lib/mailer.ts.
+     */
+    email: "taamboolaminn@gmail.com",
     instagram: "https://www.instagram.com/taamboolam/",
   },
 
@@ -24,29 +42,41 @@ export const site = {
     addressLines: [
       "50-1, 46th Cross, Sarakki Main Road",
       "8th Block, Jayanagar",
-      "Bengaluru 560070",
+      "Bengaluru 560078",
     ],
     /**
-     * PLACEHOLDER — a plain address search, not the owner's own pin. Replace
-     * with the real Google Maps link once the pin is confirmed, and set
-     * mapLinkIsPlaceholder to false.
+     * The pin, derived rather than supplied — and corroborated before it was
+     * trusted.
+     *
+     * Geocoding the address alone had failed: nothing resolved, and the only
+     * thing that did was the centroid of Jayanagar 8th Block, 373m from the
+     * door. Searching the address *anchored near the landmark* resolves it
+     * properly, to "50, 46th Cross Rd, 8th Block, TMC Layout, 1st Phase,
+     * Jayanagar".
+     *
+     * What makes it believable is the cross-check, not the geocoder: the
+     * resolved point sits 63m from Sammprada Hospital, and the owner's own
+     * description of the place is "next to Sampradha Hospitals". Two
+     * independent facts agreeing is the difference between a pin and a guess.
+     *
+     * A coordinate query rather than a place link on purpose — a place id can
+     * be merged or retired by Google, a latitude and longitude cannot.
+     *
+     * Both of the things this note used to flag are settled. The postcode is
+     * 560078, confirmed by the owner against Google's own answer for the
+     * address — the site had been carrying 560070. And the landmark is
+     * "Sammprada Hospital", the name the business is registered under and
+     * therefore the one a guest searching for it will actually find.
      */
     mapLink:
-      "https://www.google.com/maps/search/?api=1&query=50-1+46th+Cross+Sarakki+Main+Road+8th+Block+Jayanagar+Bengaluru+560070",
-    mapLinkIsPlaceholder: true,
+      "https://www.google.com/maps/search/?api=1&query=12.9169526%2C77.5795849",
     /**
-     * The embedded map.
-     *
-     * This geocodes the confirmed address string — it does NOT assert a
-     * latitude and longitude we have not been given, so the panel cannot
-     * silently show a wrong pin. When the owner confirms the exact location,
-     * replace this with their own share link and set mapLinkIsPlaceholder to
-     * false; nothing else has to change.
-     *
-     * The frame is lazy-loaded and carries no cookies until it is scrolled to.
+     * The same point, for schema.org. Kept as numbers rather than parsed back
+     * out of the URL so there is one place to correct if the owner moves the
+     * pin.
      */
-    mapEmbed:
-      "https://www.google.com/maps?q=50-1,+46th+Cross,+Sarakki+Main+Road,+8th+Block,+Jayanagar,+Bengaluru+560070&output=embed",
+    coordinates: { lat: 12.9169526, lng: 77.5795849 },
+    mapLinkIsPlaceholder: false,
   },
 } as const;
 

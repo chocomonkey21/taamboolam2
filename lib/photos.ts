@@ -1,36 +1,47 @@
 /**
  * The photography registry.
  *
- * Every image on the site is referenced by its id, never by a raw path. When
- * the owner's real photographs arrive, drop a file in with the matching name
- * (or change `src` here) and the whole site updates — the aspect ratios,
- * gallery behaviour, captions and reveals are all defined against the id, not
- * against the file.
+ * Every image on the site is referenced by its id, never by a raw path. To
+ * replace one, drop a file in with the matching name (or change `src` here)
+ * and the whole site updates — aspect ratios, gallery behaviour, captions and
+ * reveals are all defined against the id, not against the file.
  *
- * EVERYTHING CURRENTLY LISTED IS TEMPORARY STOCK. See public/images/README.md.
+ * THESE ARE THE OWNER'S OWN PHOTOGRAPHS. The stock imagery this site shipped
+ * with is gone. Each file is built from one of the originals the owner sent by
+ * scripts/build-photos.mjs, which holds the source filename, the crop and the
+ * grade for every slot — that script is where an image is swapped, and running
+ * it again regenerates the whole set consistently. See public/images/README.md
+ * for what came from where and what is still missing.
+ *
  * Alt text and captions are translated and live in lib/content/en.ts and
  * lib/content/kn.ts, under `photos`.
+ *
+ * WHICH PHOTOGRAPH IS WHICH FLOOR IS AN ASSUMPTION. The originals arrived
+ * unlabelled. Three visually distinct floors are visible in them — one with
+ * a maroon-and-white floor, one finished in blue, one with patterned tiles
+ * throughout — and they are assigned to Floors 1, 2 and 3 in that order. If
+ * the owner says the blue floor is the third and not the second, the fix is
+ * to swap two `src` values here and two in the build script. Nothing else
+ * refers to a filename.
  */
 export type PhotoId =
   | "hero"
   | "intro"
-  | "stayingMorning"
-  | "stayingShared"
-  | "stayingBalcony"
+  | "planLiving"
+  | "planKitchen"
   | "floor1a"
   | "floor1b"
   | "floor2a"
   | "floor2b"
   | "floor3a"
   | "floor3b"
-  | "floor4a"
-  | "floor4b"
-  | "stair"
+  | "terraceOpen"
+  | "terraceSwing"
+  | "houseSection"
   | "craftTiles"
-  | "craftHands"
-  | "craftTextile"
-  | "foodTable"
-  | "foodDetail"
+  | "craftJoinery"
+  | "craftCane"
+  | "foodStill"
   | "valuesCorner"
   | "invitation"
   | "experienceOpening"
@@ -44,31 +55,45 @@ export type PhotoMeta = {
 };
 
 export const photos: Record<PhotoId, PhotoMeta> = {
-  hero: { src: "/images/hero.jpg", ratio: "3 / 4" },
-  intro: { src: "/images/intro.jpg", ratio: "4 / 5" },
-  stayingMorning: { src: "/images/staying-morning.jpg", ratio: "4 / 5" },
-  stayingShared: { src: "/images/staying-shared.jpg", ratio: "3 / 2" },
-  stayingBalcony: { src: "/images/staying-balcony.jpg", ratio: "4 / 5" },
+  hero: { src: "/images/hero.jpg", ratio: "3 / 2" },
+  intro: { src: "/images/intro.jpg", ratio: "21 / 9" },
+
+  planLiving: { src: "/images/plan-living.jpg", ratio: "3 / 2" },
+  planKitchen: { src: "/images/plan-kitchen.jpg", ratio: "4 / 3" },
+
   floor1a: { src: "/images/floor-1-a.jpg", ratio: "4 / 5" },
   floor1b: { src: "/images/floor-1-b.jpg", ratio: "3 / 2" },
   floor2a: { src: "/images/floor-2-a.jpg", ratio: "4 / 5" },
   floor2b: { src: "/images/floor-2-b.jpg", ratio: "3 / 2" },
   floor3a: { src: "/images/floor-3-a.jpg", ratio: "4 / 5" },
   floor3b: { src: "/images/floor-3-b.jpg", ratio: "3 / 2" },
-  floor4a: { src: "/images/floor-4-a.jpg", ratio: "4 / 5" },
-  floor4b: { src: "/images/floor-4-b.jpg", ratio: "3 / 2" },
-  stair: { src: "/images/stair.jpg", ratio: "3 / 4" },
+
+  /* A band, not a landscape frame. The only daylight photograph of the
+     terrace has eight identifiable people standing in the middle of it, so
+     this is the strip above them — pergola, hanging planters, sky. The shape
+     is the crop's own, and the layouts are built around it rather than the
+     other way round. */
+  terraceOpen: { src: "/images/terrace-open.jpg", ratio: "120 / 25.5" },
+  terraceSwing: { src: "/images/terrace-swing.jpg", ratio: "4 / 5" },
+
+  houseSection: { src: "/images/house-section.jpg", ratio: "3 / 4" },
+
   craftTiles: { src: "/images/craft-tiles.jpg", ratio: "1 / 1" },
-  craftHands: { src: "/images/craft-hands.jpg", ratio: "1 / 1" },
-  craftTextile: { src: "/images/craft-textile.jpg", ratio: "1 / 1" },
-  foodTable: { src: "/images/food-table.jpg", ratio: "3 / 2" },
-  foodDetail: { src: "/images/food-detail.jpg", ratio: "1 / 1" },
+  /* Wide, not square: this is the photograph that opens the craft section. */
+  craftJoinery: { src: "/images/craft-joinery.jpg", ratio: "16 / 9" },
+  craftCane: { src: "/images/craft-cane.jpg", ratio: "1 / 1" },
+
+  foodStill: { src: "/images/food-still.jpg", ratio: "4 / 5" },
+
   valuesCorner: { src: "/images/values-corner.jpg", ratio: "4 / 5" },
-  invitation: { src: "/images/invitation.jpg", ratio: "16 / 9" },
-  experienceOpening: { src: "/images/experience-opening.jpg", ratio: "16 / 9" },
-  experienceGathering: {
-    src: "/images/experience-gathering.jpg",
-    ratio: "3 / 2",
-  },
-  experienceClose: { src: "/images/experience-close.jpg", ratio: "16 / 9" },
+
+  /* One photograph, two places, two different jobs: the warm night band that
+     closes the home page, and the dark ground the Experience page sets its
+     last words on. They carry different alt text because they are doing
+     different things. */
+  invitation: { src: "/images/arrival-night.jpg", ratio: "21 / 9" },
+  experienceClose: { src: "/images/arrival-night.jpg", ratio: "21 / 9" },
+
+  experienceOpening: { src: "/images/experience-opening.jpg", ratio: "21 / 9" },
+  experienceGathering: { src: "/images/gathering-sky.jpg", ratio: "21 / 9" },
 };

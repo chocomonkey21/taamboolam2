@@ -22,12 +22,24 @@ export default function manifest(): MetadataRoute.Manifest {
     background_color: tokens.paper,
     theme_color: tokens.paper,
     lang: "en-IN",
+    /* 512 is what Android actually wants for a home-screen icon; the .ico
+       was being scaled up from 48 and came out blurred. "maskable" tells the
+       launcher it may crop to whatever shape the device uses — safe here,
+       because the mark sits well inside the frame with room all round. */
     icons: [
       {
-        src: "/favicon.ico",
-        sizes: "any",
-        type: "image/x-icon",
+        src: "/icon-512.png",
+        sizes: "512x512",
+        type: "image/png",
+        purpose: "any",
       },
+      {
+        src: "/icon-512.png",
+        sizes: "512x512",
+        type: "image/png",
+        purpose: "maskable",
+      },
+      { src: "/favicon.ico", sizes: "48x48", type: "image/x-icon" },
     ],
   };
 }

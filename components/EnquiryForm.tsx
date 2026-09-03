@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useEffect, useId, useRef, useState } from "react";
 import {
   emptyEnquiry,
@@ -7,6 +8,8 @@ import {
   resolveErrors,
   today,
   validateEnquiry,
+  whatsappEnquiry,
+  whatsappLink,
   type EnquiryFields,
   type FloorPreference,
   type VisitType,
@@ -329,6 +332,13 @@ export function EnquiryForm() {
               />
             )}
           </Field>
+
+          {/* The under-tens policy, at the one moment it is worth reading:
+              the reader has just been asked how many children are coming.
+              Spanning both columns inside this pair rather than sitting in
+              the Children field's own hint slot, which would push the two
+              number inputs out of vertical alignment with each other. */}
+          <p className="type-caption col-span-2">{t.form.childrenNote}</p>
         </div>
 
         {/* Only a stay actually needs dates. A gathering is usually being
@@ -388,11 +398,15 @@ export function EnquiryForm() {
               set("floorPreference", e.target.value as FloorPreference)
             }
           >
+            {/* Floors 1 to 3 and the terrace. There is no fourth floor here
+                and there must not be one — it is private and is not let. The
+                list is the same one the server validates against; see
+                FLOOR_PREFERENCES in lib/enquiry.ts. */}
             <option value="any">{t.form.floorAny}</option>
             <option value="floor1">{t.floors.floor1.label}</option>
             <option value="floor2">{t.floors.floor2.label}</option>
             <option value="floor3">{t.floors.floor3.label}</option>
-            <option value="floor4">{t.floors.floor4.label}</option>
+            <option value="terrace">{t.floors.terrace.label}</option>
           </select>
         )}
       </Field>
@@ -480,9 +494,19 @@ export function EnquiryForm() {
         {/* For a house in Bengaluru, WhatsApp is not a fallback — it is how a
             lot of people would rather open a conversation. Offered as a plain
             alternative next to the button rather than a floating bubble, so it
-            is available without competing with the form. */}
+            is available without competing with the form.
+
+            It carries what they have typed. This used to open an empty chat,
+            which meant a reader who had just filled in eight fields had to
+            type it all over again — the link looked like an alternative and
+            behaved like a punishment. Built on every keystroke rather than on
+            click, because a click handler that rewrites href before navigating
+            is exactly the thing a popup blocker stops. */}
         <a
-          href={`https://wa.me/${site.contact.whatsapp}`}
+          href={whatsappLink(
+            site.contact.whatsapp,
+            whatsappEnquiry({ ...values, locale }, t),
+          )}
           target="_blank"
           rel="noreferrer noopener"
           className="type-label inline-flex min-h-11 items-center text-ink-soft underline decoration-transparent decoration-1 underline-offset-4 transition-colors duration-200 hover:text-ink hover:decoration-current"
@@ -491,8 +515,19 @@ export function EnquiryForm() {
         </a>
       </div>
 
-      <div>
+      <div className="grid gap-2">
         <p className="type-caption measure">{t.form.noPrices}</p>
+        {/* Said at the point of typing, not only on a page nobody opens. One
+            sentence about where this goes, and a link for the rest. */}
+        <p className="type-caption measure">
+          {t.form.privacyNote}{" "}
+          <Link
+            href="/privacy"
+            className="underline decoration-transparent underline-offset-4 transition-colors hover:text-ink hover:decoration-current"
+          >
+            {t.form.privacyLink}
+          </Link>
+        </p>
       </div>
     </form>
   );

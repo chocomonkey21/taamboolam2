@@ -4,7 +4,7 @@
 # website, run by the family. What there is: a person who reads the address
 # below and will answer.
 
-Contact: mailto:stay@taamboolam.com
+Contact: mailto:taamboolaminn@gmail.com
 Preferred-Languages: en, kn
 
 # Refresh this date when it passes. A security.txt whose expiry has gone by

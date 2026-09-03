@@ -163,18 +163,27 @@ export function Footer() {
                   </Link>
                 </li>
               ))}
+              {/* Not in NAV_ITEMS: the privacy notice is not one of the three
+                  pages about the house, and putting it in the header nav would
+                  say it was. It belongs exactly here — findable, at the bottom,
+                  where a reader goes looking for it. */}
+              <li>
+                <Link
+                  href="/privacy"
+                  className="type-caption inline-flex min-h-11 items-center hover:text-ink"
+                >
+                  {t.footer.privacy}
+                </Link>
+              </li>
               <li>
                 <LanguageToggle tone="footer" />
               </li>
             </ul>
           </nav>
 
-          <div className="flex flex-col gap-1 md:items-end">
-            <p className="type-caption">
-              © {new Date().getFullYear()} {site.name}. {t.footer.rights}
-            </p>
-            <p className="type-caption">{t.footer.photographyNote}</p>
-          </div>
+          <p className="type-caption md:text-right">
+            © {new Date().getFullYear()} {site.name}. {t.footer.rights}
+          </p>
         </div>
       </div>
 

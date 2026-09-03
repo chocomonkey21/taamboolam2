@@ -11,10 +11,13 @@ import { site } from "@/lib/site";
  * not happen here.
  *
  * Everything below is already stated in the visible page. Nothing is asserted
- * that a reader cannot also see, and nothing unconfirmed is included at all —
- * there is no `geo` block, because the exact pin has not been confirmed and a
- * guessed latitude is exactly the kind of quiet lie the rest of the site
- * refuses to tell.
+ * that a reader cannot also see.
+ *
+ * The `geo` block was deliberately absent while the pin was a guess. It is
+ * here now because the pin stopped being one: the address resolves, and the
+ * point it resolves to sits 63m from the landmark the owner describes the
+ * house by. It is emitted from lib/site.ts rather than written out again, so
+ * correcting the pin corrects this too.
  */
 export function StructuredData({ locale }: { locale: Locale }) {
   const t = content[locale];
@@ -33,9 +36,22 @@ export function StructuredData({ locale }: { locale: Locale }) {
       streetAddress: "50-1, 46th Cross, Sarakki Main Road",
       addressLocality: "Jayanagar, Bengaluru",
       addressRegion: "Karnataka",
-      postalCode: "560070",
+      postalCode: "560078",
       addressCountry: "IN",
     },
+    /* Only when it is real. If somebody ever sets mapLinkIsPlaceholder back
+       to true, the coordinates stop being published rather than quietly
+       continuing to assert a location nobody stands behind. */
+    ...(site.location.mapLinkIsPlaceholder
+      ? {}
+      : {
+          geo: {
+            "@type": "GeoCoordinates",
+            latitude: site.location.coordinates.lat,
+            longitude: site.location.coordinates.lng,
+          },
+          hasMap: site.location.mapLink,
+        }),
     sameAs: [site.contact.instagram],
     availableLanguage: ["en", "kn"],
     /* The whole point of the site, said in the one vocabulary a crawler

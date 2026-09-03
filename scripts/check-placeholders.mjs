@@ -23,14 +23,17 @@ const root = path.dirname(path.dirname(fileURLToPath(import.meta.url)));
 const read = (p) => readFileSync(path.join(root, p), "utf8");
 
 const site = read("lib/site.ts");
-const config = read("lib/config.ts");
 
 const pending = [];
 
-if (site.includes("+91 98765 43210")) {
+/* The phone number and the enquiry address are confirmed. What is not is a
+   domain to SEND from: the owner's address is a Gmail one, which can receive
+   but can never be a verified sender. Until that exists the form cannot mail
+   anybody, and it says so rather than pretending. */
+if (!process.env.ENQUIRY_FROM_EMAIL) {
   pending.push([
-    "Phone / WhatsApp number is the placeholder +91 98765 43210",
-    "lib/site.ts → contact.phone, contact.whatsapp",
+    "No verified sending domain — the enquiry form cannot send mail",
+    "Set ENQUIRY_FROM_EMAIL to an address on a domain verified with Resend",
   ]);
 }
 
@@ -38,13 +41,6 @@ if (/mapLinkIsPlaceholder:\s*true/.test(site)) {
   pending.push([
     "Map pin is a geocoded address search, not the owner's own pin",
     "lib/site.ts → location.mapLink, then set mapLinkIsPlaceholder: false",
-  ]);
-}
-
-if (/bathrooms:\s*null/.test(config)) {
-  pending.push([
-    "Bathroom arrangement is unconfirmed — the site says so rather than guessing",
-    "lib/config.ts → provisional.bathrooms (both languages required)",
   ]);
 }
 

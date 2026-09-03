@@ -8,10 +8,15 @@ import { useSite } from "./SiteProvider";
 /**
  * The plan of a floor, stated once for the whole site.
  *
- * Every floor is the same arrangement, so it is described here and nowhere
- * else. Each of the four chapters used to carry its own identical list of the
- * same four facts, which read as padding and made the floors seem
- * interchangeable when the point is that only their atmosphere differs.
+ * Every guest floor is the same arrangement, so it is described here and
+ * nowhere else. Each chapter used to carry its own identical list of the same
+ * facts, which read as padding and made the floors seem interchangeable when
+ * the point is that only their atmosphere differs.
+ *
+ * Bed sizes are deliberately absent from the plan. What the owner has
+ * confirmed is the shape of a floor — two guest bedrooms sharing a bathroom,
+ * a master with a walk-in closet, an attached bathroom and a balcony — and
+ * that is the whole of what this states.
  *
  * Set as a numbered plan rather than a bulleted list: these are the parts of
  * one thing, not an unordered set of features. The numerals are set in the
@@ -95,7 +100,7 @@ export function Arrangement({ compact = false }: { compact?: boolean }) {
             overlap would only crowd. */}
         <div className="md:col-span-6 md:col-start-7">
           <Reveal variant="photo">
-            <Photo id="stayingShared" sizes="(min-width: 768px) 46vw, 92vw" />
+            <Photo id="planLiving" sizes="(min-width: 768px) 46vw, 92vw" />
           </Reveal>
           <Reveal
             variant="photo"
@@ -103,14 +108,18 @@ export function Arrangement({ compact = false }: { compact?: boolean }) {
             className="mt-6 w-[72%] md:-mt-20 md:-ml-16 md:w-[56%]"
           >
             <Photo
-              id="stayingBalcony"
+              id="planKitchen"
               ratio="4 / 3"
               sizes="(min-width: 768px) 26vw, 66vw"
               className="ring-8 ring-[var(--atmos-bg)]"
             />
           </Reveal>
+          {/* The kitchen caption is the one line on this page that stops a
+              guest expecting to cook. It stays beside the picture that proves
+              it — a counter with a kettle, a microwave and a fridge on it, and
+              no stove anywhere in the frame. */}
           <p className="type-caption mt-4 md:ml-[6%]">
-            {t.photos.stayingBalcony.caption}
+            {t.photos.planKitchen.caption}
           </p>
         </div>
       </div>

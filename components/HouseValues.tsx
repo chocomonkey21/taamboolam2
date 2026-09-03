@@ -8,10 +8,10 @@ import { useSite } from "./SiteProvider";
 /**
  * The house values, shared by the home page and the Experience page.
  *
- * Set as a plate of terms, not as a card grid. The three core values used to
- * be three equal boxes in a three-column tray with a hairline over each — the
- * default shape for "three things", and one that makes "no smoking" and "pets
- * and children are welcome" read as interchangeable product features. They are
+ * Set as a plate of terms, not as a card grid. The core values used to be
+ * equal boxes in a three-column tray with a hairline over each — the default
+ * shape for "three things", and one that makes "no smoking" and "children are
+ * welcome" read as interchangeable product features. They are
  * not interchangeable: they are the four or five sentences a person needs in
  * order to know whether this house suits them. So each one is now a row with
  * the statement set large on the left and the qualification hanging beside it,
@@ -19,17 +19,15 @@ import { useSite } from "./SiteProvider";
  * to a pricing table.
  *
  * What is disclosed and what is not is a deliberate line, not a space-saving
- * one. `t.values.core` — smoking, parties, children and pets — are the ones
+ * one. `t.values.core` — smoking, parties, children, pets — are the ones
  * somebody might actually turn back at, so they stay on the page whatever
- * happens. Everything else the house has to say about itself sits behind named
- * groups instead of one flat "more" dump, so a reader disclosing one knows
- * what they are about to get. The same rule governs the practical block: lift,
- * parking and the private fifth floor can be asked for, but how a room is
- * actually got is never folded away.
- *
- * The bathroom line only appears once the owner has confirmed what it should
- * say — see lib/config.ts. Until then the layout carries an honest note in its
- * place rather than an invented claim.
+ * happens. That now includes the pet policy, which is a refusal and therefore
+ * belongs where nobody has to open anything to find it. Everything else the
+ * house has to say about itself sits behind named groups instead of one flat
+ * "more" dump, so a reader disclosing one knows what they are about to get.
+ * The same rule governs the practical block: lift, parking and the private
+ * fourth floor can be asked for, but how a room is actually got is never
+ * folded away.
  */
 export function HouseValues({
   compact = false,
@@ -44,7 +42,6 @@ export function HouseValues({
   variant?: "section" | "embedded";
 }) {
   const { t, locale } = useSite();
-  const bathrooms = provisional.bathrooms?.[locale] ?? null;
   const occupancy = provisional.occupancyNote?.[locale] ?? null;
 
   const embedded = variant === "embedded";
@@ -89,20 +86,10 @@ export function HouseValues({
                   {line}
                 </li>
               ))}
-              {bathrooms ? (
-                <li className="type-body text-ink-soft">{bathrooms}</li>
-              ) : null}
               {occupancy ? (
                 <li className="type-body text-ink-soft">{occupancy}</li>
               ) : null}
             </ul>
-
-            {/* Nothing is claimed about bathrooms until the owner confirms it. */}
-            {!bathrooms ? (
-              <p className="type-caption measure mt-5">
-                {t.values.pendingBathrooms}
-              </p>
-            ) : null}
           </Disclosure>
         ) : null}
       </div>

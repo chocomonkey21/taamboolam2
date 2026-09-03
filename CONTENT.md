@@ -22,62 +22,65 @@ pin is still being confirmed." That line disappears on its own once you set
 
 **Already correct and confirmed** — no action needed:
 
-- Taamboolam / ತಂಬೋಲಂ
-- 50-1, 46th Cross, Sarakki Main Road, 8th Block, Jayanagar, Bengaluru 560070
+- Taamboolam / ತಾಂಬೂಲಂ  *(corrected — the site previously carried ತಂಬೋಲಂ)*
+- 50-1, 46th Cross, Sarakki Main Road, 8th Block, Jayanagar, Bengaluru 560078
 - Next to Sampradha Hospitals and Sangeetha Mobiles
-- stay@taamboolam.com
+- taamboolaminn@gmail.com
 - https://www.instagram.com/taamboolam/
 
 ---
 
-## 2. Bathrooms — deliberately not answered yet
+## 2. The floor plan, and what is confirmed
 
-The site currently says **nothing** about bathrooms, because nobody has
-confirmed the arrangement. It does not say "ensuite", it does not say "shared",
-and it does not imply either.
+Confirmed by the owner and now stated plainly on the site:
 
-In its place, the house-values section prints one honest line:
+- Three guest floors: **1, 2 and 3**. The fourth floor is private and is not
+  accessible to guests, and the site never offers it.
+- The **terrace** is open to everyone staying in the house.
+- Every guest floor is the same plan: two guest bedrooms sharing a common
+  bathroom; one master bedroom with a walk-in closet, an attached bathroom and
+  a balcony; and a living room, dining area and kitchen shared only by that
+  floor.
+- The kitchens hold a microwave, a bar fridge, a kettle, cutlery and crockery.
+  **No stove, no chimney, no cooking setup.** Food is sourced on request.
+- South Indian homemade organic food on request; North Indian on request too.
+  No fixed menu, no set price.
+- Children under 10 stay free when accompanied by a parent.
+- **Pets are not accommodated.**
 
-> "Bathroom arrangements are being confirmed with the owner. Ask in your
-> enquiry and you will get a straight answer rather than a guess."
-
-**To publish the real answer**, open `lib/config.ts` and replace the `null`:
-
-```ts
-export const provisional: Provisional = {
-  bathrooms: {
-    en: "Every room has its own bathroom.",   // ← your words
-    kn: "ಪ್ರತಿ ಕೊಠಡಿಗೂ ತನ್ನದೇ ಸ್ನಾನಗೃಹವಿದೆ.",  // ← the same, in Kannada
-  },
-  occupancyNote: null,
-};
-```
-
-The moment both languages are filled in, the holding line disappears and the
-real fact takes its place in the list. Layout is already built for it, so
-nothing moves.
-
-`occupancyNote` works the same way, and is there only if you want to add
-something beyond "a queen bed in each room, suitable for two adults" — which is
-already on the site and already confirmed.
+**Bed sizes are deliberately absent.** The site says how a floor is arranged,
+not what is in each room — that is answered in your reply to an enquiry. If you
+want a room's capacity published, `lib/config.ts` has an `occupancyNote` slot
+waiting for it, in both languages.
 
 ---
 
 ## 3. Photographs
 
-**Every photograph on the site today is temporary stock from Pexels.** It was
-chosen to match the *mood and composition* of a South Indian home — a
-tile-roofed exterior, a courtyard, Athangudi tiles, a verandah, a banana-leaf
-meal — so the layout can be judged with believable pictures in it. **None of it
-shows this house, and none of it can go live.**
+**Every photograph on the site is now yours.** The stock is gone. Twenty-one
+images, about 3 MB in total, built from the folder you sent.
 
-`public/images/README.md` lists all twenty-four slots, the exact filename each
-one needs, and what the shot should be. Drop a file in with the matching name
-and it replaces the stock immediately. Any name that is missing falls back to a
-designed placeholder describing the shot, so nothing breaks while you swap them
-in one at a time.
+`public/images/README.md` lists every slot, what it shows, and where it came
+from. `public/images/CREDITS.json` maps each file back to its original.
 
-Provenance for every current image is in `public/images/CREDITS.json`.
+Two things worth your attention:
+
+1. **Which floor is which is a guess.** Your photographs arrived unlabelled.
+   Three visually distinct floors are in them — a maroon-and-white one, a blue
+   one, a patterned-tile one — and they were assigned to Floors 1, 2 and 3 in
+   that order. Tell us if that is wrong; it is a two-line fix.
+
+2. **Four things have no photograph**: a walk-in closet, a bathroom, a balcony,
+   and the terrace in daylight. Nothing was substituted for them. The one
+   daylight terrace photograph has eight identifiable people in it and was not
+   published for that reason — only the band of pergola and sky above them. If
+   everyone in that frame is happy to appear, it is a much better picture and
+   we will use it.
+
+Three photographs you sent were deliberately left out: the one of you, the one
+of two staff members, and the bank receipt. The first two because nobody has
+recorded consent to publish them; the third because it is not a photograph and
+it shows account details.
 
 > **One catch:** Next.js caches resized images by filename. After replacing
 > photographs, delete the `.next` folder before the next build, or the old
@@ -87,15 +90,17 @@ Provenance for every current image is in `public/images/CREDITS.json`.
 
 ## 4. Kannada
 
-The Kannada on the site is a **written first draft that has not been reviewed by
-a native speaker.** It is real content, not machine translation at page load —
-the site never calls a translation service — but it needs a read-through.
+**Reviewed and approved by the owner on 2026-09-03**, including the corrected
+name (ತಾಂಬೂಲಂ) and the vocabulary written for the terrace, the floor plan, the
+kitchen and the FAQ.
 
 It is all in one file: `lib/content/kn.ts`. The keys are identical to the
-English file (`lib/content/en.ts`) and appear in the same order, so a reviewer
-can work straight down it with the English open beside it. Changing a line there
-changes it everywhere, including buttons, form labels, validation messages and
-error screens.
+English file (`lib/content/en.ts`) and appear in the same order, so it stays
+easy to re-read. Changing a line there changes it everywhere, including
+buttons, form labels, validation messages and error screens.
+
+Anything added to the English file from here on is an unreviewed draft in
+Kannada until somebody reads it.
 
 ---
 
@@ -134,3 +139,7 @@ conversation, not a bug:
 - No video, no autoplay
 - Events and gatherings are mentioned quietly, as a direct-enquiry
   possibility — never presented as a product
+- No bed sizes and no room capacities — the floor plan is stated, the contents
+  of a room are answered by you
+- The private fourth floor is named once, as not accessible, and is never
+  photographed or offered

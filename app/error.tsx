@@ -68,10 +68,10 @@ export default function Error({
 
           <p className="type-caption mt-8">
             <a
-              href="mailto:stay@taamboolam.com"
+              href="mailto:taamboolaminn@gmail.com"
               className="underline decoration-transparent underline-offset-4 transition-colors hover:text-ink hover:decoration-current"
             >
-              stay@taamboolam.com
+              taamboolaminn@gmail.com
             </a>
           </p>
         </div>

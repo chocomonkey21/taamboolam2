@@ -1,146 +1,92 @@
-[
-  {
-    "file": "hero.jpg",
-    "desc": "A contemporary house exterior at dusk, warm light in the windows, framed by a large tree",
-    "source": "Unsplash",
-    "url": "https://unsplash.com/photos/be6161a56a0c"
-  },
-  {
-    "file": "intro.jpg",
-    "desc": "A warm, lived-in interior with natural light and plants",
-    "source": "Unsplash",
-    "url": "https://unsplash.com/photos/caeb344f6df2"
-  },
-  {
-    "file": "staying-morning.jpg",
-    "desc": "Morning light falling across a bed through a window",
-    "source": "Pexels",
-    "url": "https://www.pexels.com/photo/13009039/"
-  },
-  {
-    "file": "staying-shared.jpg",
-    "desc": "A shaded verandah lined with potted plants and chairs",
-    "source": "Pexels",
-    "url": "https://www.pexels.com/photo/16926307/"
-  },
-  {
-    "file": "staying-balcony.jpg",
-    "desc": "Potted plants against a warm yellow wall",
-    "source": "Pexels",
-    "url": "https://www.pexels.com/photo/7245621/"
-  },
-  {
-    "file": "floor-1-a.jpg",
-    "desc": "A calm, uncluttered room with daylight from a single window",
-    "source": "Pexels",
-    "url": "https://www.pexels.com/photo/36195703/"
-  },
-  {
-    "file": "floor-1-b.jpg",
-    "desc": "A warm sitting room with terracotta walls and a low sofa",
-    "source": "Pexels",
-    "url": "https://www.pexels.com/photo/34946066/"
-  },
-  {
-    "file": "floor-2-a.jpg",
-    "desc": "A simple bedroom with a wooden headboard and a bedside lamp",
-    "source": "Pexels",
-    "url": "https://www.pexels.com/photo/545012/"
-  },
-  {
-    "file": "floor-2-b.jpg",
-    "desc": "A domestic kitchen with painted cabinets and a window",
-    "source": "Pexels",
-    "url": "https://www.pexels.com/photo/31925627/"
-  },
-  {
-    "file": "floor-3-a.jpg",
-    "desc": "Handmade patterned floor tiles in ochre, blue and white",
-    "source": "Pexels",
-    "url": "https://www.pexels.com/photo/32021732/"
-  },
-  {
-    "file": "floor-3-b.jpg",
-    "desc": "A dim room with a patterned tiled floor catching the light",
-    "source": "Pexels",
-    "url": "https://www.pexels.com/photo/12238322/"
-  },
-  {
-    "file": "floor-4-a.jpg",
-    "desc": "A geometric tiled floor in oxide red, black and white",
-    "source": "Pexels",
-    "url": "https://www.pexels.com/photo/15703818/"
-  },
-  {
-    "file": "floor-4-b.jpg",
-    "desc": "A doorway framed in blue and white pattern, with steps leading up",
-    "source": "Pexels",
-    "url": "https://www.pexels.com/photo/8332102/"
-  },
-  {
-    "file": "stair.jpg",
-    "desc": "A wooden staircase rising between floors",
-    "source": "Pexels",
-    "url": "https://www.pexels.com/photo/36927763/"
-  },
-  {
-    "file": "craft-tiles.jpg",
-    "desc": "A close detail of a handmade tile border",
-    "source": "Pexels",
-    "url": "https://www.pexels.com/photo/36593308/"
-  },
-  {
-    "file": "craft-hands.jpg",
-    "desc": "Hands shaping wet clay on a potter's wheel",
-    "source": "Pexels",
-    "url": "https://www.pexels.com/photo/20362430/"
-  },
-  {
-    "file": "craft-textile.jpg",
-    "desc": "A weaver working at a hand loom",
-    "source": "Pexels",
-    "url": "https://www.pexels.com/photo/31508152/"
-  },
-  {
-    "file": "food-table.jpg",
-    "desc": "A South Indian meal served on a banana leaf",
-    "source": "Pexels",
-    "url": "https://www.pexels.com/photo/5410418/"
-  },
-  {
-    "file": "food-detail.jpg",
-    "desc": "A dosa served on a banana leaf",
-    "source": "Pexels",
-    "url": "https://www.pexels.com/photo/32229637/"
-  },
-  {
-    "file": "values-corner.jpg",
-    "desc": "Green plants growing against a window grille",
-    "source": "Pexels",
-    "url": "https://www.pexels.com/photo/33800826/"
-  },
-  {
-    "file": "invitation.jpg",
-    "desc": "A canopy of trees seen from below",
-    "source": "Pexels",
-    "url": "https://www.pexels.com/photo/29374606/"
-  },
-  {
-    "file": "experience-opening.jpg",
-    "desc": "The tiled courtyard of a traditional house",
-    "source": "Pexels",
-    "url": "https://www.pexels.com/photo/36394963/"
-  },
-  {
-    "file": "experience-gathering.jpg",
-    "desc": "A long communal wooden table under a high roof",
-    "source": "Pexels",
-    "url": "https://www.pexels.com/photo/15945660/"
-  },
-  {
-    "file": "experience-close.jpg",
-    "desc": "A tile-roofed house half hidden among trees",
-    "source": "Pexels",
-    "url": "https://www.pexels.com/photo/32520271/"
-  }
-]
+{
+  "_note": "Provenance for every photograph on the site. All of them are the owner's own; none is stock. Built by scripts/build-photos.mjs, which is the authoritative source-to-slot mapping.",
+  "_sourceFolder": "Supplied by the owner as \"Taamboolam webdesign photos videos\" (Google Drive export, 2026-09-02). Read-only: nothing in it was modified.",
+  "_licence": "Owner’s own photography. All rights reserved. Not licensed for reuse.",
+  "_processing": "Cropped to slot, one shared colour grade (warm tilt, ~5% contrast, light saturation and sharpen), mozjpeg q82, EXIF stripped. No retouching, no compositing.",
+  "images": [
+    {
+      "file": "hero.jpg",
+      "source": "IMG-20260902-WA0002.jpg"
+    },
+    {
+      "file": "intro.jpg",
+      "source": "IMG-20260902-WA0004.jpg"
+    },
+    {
+      "file": "arrival-night.jpg",
+      "source": "IMG-20260902-WA0014.jpg"
+    },
+    {
+      "file": "plan-living.jpg",
+      "source": "IMG-20260902-WA0012.jpg"
+    },
+    {
+      "file": "plan-kitchen.jpg",
+      "source": "IMG-20260902-WA0013.jpg"
+    },
+    {
+      "file": "floor-1-a.jpg",
+      "source": "IMG-20260902-WA0007.jpg"
+    },
+    {
+      "file": "floor-1-b.jpg",
+      "source": "IMG-20260902-WA0003.jpg"
+    },
+    {
+      "file": "floor-2-a.jpg",
+      "source": "IMG-20260902-WA0016.jpg"
+    },
+    {
+      "file": "floor-2-b.jpg",
+      "source": "IMG-20260902-WA0009.jpg"
+    },
+    {
+      "file": "floor-3-a.jpg",
+      "source": "IMG-20260902-WA0017.jpg"
+    },
+    {
+      "file": "floor-3-b.jpg",
+      "source": "IMG-20260902-WA0018.jpg"
+    },
+    {
+      "file": "terrace-open.jpg",
+      "source": "IMG-20260901-WA0003.jpg (crop: band above the people)"
+    },
+    {
+      "file": "terrace-swing.jpg",
+      "source": "VID-20260902-WA0024.mp4 (frame at ~00:34)"
+    },
+    {
+      "file": "gathering-sky.jpg",
+      "source": "IMG-20260902-WA0029.jpg"
+    },
+    {
+      "file": "house-section.jpg",
+      "source": "IMG-20260902-WA0019.jpg"
+    },
+    {
+      "file": "craft-tiles.jpg",
+      "source": "IMG-20260902-WA0021.jpg (crop)"
+    },
+    {
+      "file": "craft-joinery.jpg",
+      "source": "IMG-20260902-WA0018.jpg (crop)"
+    },
+    {
+      "file": "craft-cane.jpg",
+      "source": "IMG-20260902-WA0002.jpg (crop)"
+    },
+    {
+      "file": "values-corner.jpg",
+      "source": "IMG-20260902-WA0022.jpg"
+    },
+    {
+      "file": "food-still.jpg",
+      "source": "VID-20260902-WA0025.mp4 (frame at ~00:13)"
+    },
+    {
+      "file": "experience-opening.jpg",
+      "source": "IMG-20260902-WA0005.jpg"
+    }
+  ]
+}

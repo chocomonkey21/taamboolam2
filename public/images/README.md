@@ -1,67 +1,106 @@
-# Photography
+# The photographs
 
-**Everything in this folder is a temporary stock placeholder.** It is here so
-the layout can be reviewed with believable photographs in it — not so it can
-ship. All of it gets replaced by the owner's photographs.
+Every image on this site is the owner's own. The stock photography the site was
+built against is gone.
 
-The current images are from [Pexels](https://www.pexels.com), whose licence
-permits commercial use without attribution. They were chosen to match the mood
-of a South Indian home, but **none of them shows this house**. Provenance and
-links for every file are in `CREDITS.json`.
+Each file here was produced from one of the originals in the owner's folder by
+`scripts/build-photos.mjs`, which holds the source filename, the crop, the
+grade and the output size for every slot. **That script is where a photograph
+is changed.** Run it again and the whole set is rebuilt consistently:
 
-## Replacing one
+```bash
+node scripts/build-photos.mjs
+```
 
-Drop a file in with the same name. That is the whole process.
+It reads the source folder and only writes into this directory. It never
+modifies, renames or deletes anything in the source folder.
 
-Any name that is missing falls back to a designed placeholder of exactly the
-same shape, describing the shot that belongs there — so the site never breaks
-and never shifts while you swap them in one at a time.
+---
 
-The aspect ratios below are fixed in `lib/photos.ts`, not in the page layouts.
-Supply roughly the right shape and the crop will take care of itself; supply
-something wildly different and it will be centre-cropped, not squashed.
+## What was done to them
 
-> **After replacing photographs, delete the `.next` folder before rebuilding.**
-> Next.js caches resized images by filename, so a same-named replacement will
-> otherwise keep serving the old picture. A fresh deploy handles this for you.
+One grade, applied to all of them, so photographs taken on different days under
+different light read as one house: a small warm tilt, about 5% more contrast
+pivoted at mid-grey, a light saturation lift, and a light sharpen. Nothing is
+retouched, nothing is composited, and nothing is added to a room that was not
+in it.
+
+Two files come from the owner's videos rather than from a still, and are 760px
+wide rather than 1500. The layouts hold them at sizes that resolution can
+actually carry — see the notes in `HomeScreen.tsx` and `ExperienceScreen.tsx`.
+
+Total: 21 files, about 3 MB. The stock set it replaced was 24 files and 27 MB.
+
+---
 
 ## The slots
 
-| File | Where it appears | The shot | Shape |
-|---|---|---|---|
-| `hero.jpg` | Home — hero | The house from the street. Wide, natural light. This is the largest image on the site — supply it at 2560px on the long edge. | 3:4 (fills the screen) |
-| `intro.jpg` | Home — introduction | The heart of the house: a courtyard, a stairwell, or whatever a visitor sees first on coming in. | 4:5 portrait |
-| `staying-morning.jpg` | Home — what staying means | Morning light in a room. Unstaged. | 4:5 portrait |
-| `staying-shared.jpg` | Home — what staying means | A shared hall on any floor, with somewhere to sit. | 3:2 landscape |
-| `staying-balcony.jpg` | Home — what staying means | A balcony, with its plants in frame. | 4:5 portrait |
-| `floor-1-a.jpg` | Home preview + Experience, Floor 1 | A guest room on Floor 1. Made bed, window in frame. | 4:5 portrait |
-| `floor-1-b.jpg` | Experience — Floor 1 | The shared hall on Floor 1. | 3:2 landscape |
-| `floor-2-a.jpg` | Home preview + Experience, Floor 2 | A guest room on Floor 2. | 4:5 portrait |
-| `floor-2-b.jpg` | Experience — Floor 2 | The kitchen on Floor 2. | 3:2 landscape |
-| `floor-3-a.jpg` | Home preview + Experience, Floor 3 | The Athangudi tiles on Floor 3, shot close and square-on. | 4:5 portrait |
-| `floor-3-b.jpg` | Experience — Floor 3 | A room on Floor 3 where the colour and material show. | 3:2 landscape |
-| `floor-4-a.jpg` | Home preview + Experience, Floor 4 | The Athangudi tiles on Floor 4. | 4:5 portrait |
-| `floor-4-b.jpg` | Experience — Floor 4 | A room on Floor 4. The best light in the house. | 3:2 landscape |
-| `stair.jpg` | Experience — opening | The stairwell, or the lift landing. | 3:4 portrait |
-| `craft-tiles.jpg` | Home — how it is made | A close detail of a made surface: tile, lime, wood or stone. | 1:1 square |
-| `craft-hands.jpg` | Home — how it is made | Hands making something, if any of the artisans will let you photograph them. | 1:1 square |
-| `craft-textile.jpg` | Home — how it is made | A textile, a woven thing, or another handmade object in the house. | 1:1 square |
-| `food-table.jpg` | Home — eating here | A meal as it is actually served here. | 3:2 landscape |
-| `food-detail.jpg` | Experience — food | One dish, close. | 1:1 square |
-| `values-corner.jpg` | Home — house values | A quiet corner. Plants, a chair, one strong shadow. | 4:5 portrait |
-| `invitation.jpg` | Home — closing invitation | Something wide and calm: the street's trees, or the view up from the terrace. Text sits over the left of this one, so keep the left side simple. | 16:9 wide |
-| `experience-opening.jpg` | Experience — opening | The widest, most complete view of the house you have. | 16:9 wide |
-| `experience-gathering.jpg` | Experience — gatherings | A room set up for a group, or a gathering that has actually happened here. | 3:2 landscape |
-| `experience-close.jpg` | Experience — closing | The house from outside, at the end of the day. Text sits over the left. | 16:9 wide |
+| File | Where it appears | What it shows |
+|---|---|---|
+| `hero.jpg` | Home — full screen | The cane living room |
+| `intro.jpg` | Home — wide band | Kitchen and dining, patterned floor |
+| `values-corner.jpg` | Home — About | The bamboo water bowl |
+| `plan-living.jpg` | Home — the plan | A floor's shared living room |
+| `plan-kitchen.jpg` | Home — the plan | The kitchen: kettle, microwave, fridge, **no stove** |
+| `craft-tiles.jpg` | Home — how it is made | Painted tile border on red oxide |
+| `craft-joinery.jpg` | Home — how it is made | Cabinets and woven pendant shades |
+| `craft-cane.jpg` | Home — how it is made | The lattice back of a cane chair |
+| `food-still.jpg` | Home + Experience | A flatbread on a clay griddle *(from video)* |
+| `arrival-night.jpg` | Home — closing band, and Experience — closing band | The covered ground floor at night |
+| `floor-1-a.jpg` | Home ledger + Experience | Floor 1 — a bedroom |
+| `floor-1-b.jpg` | Experience — Floor 1 | Floor 1 — the living room |
+| `floor-2-a.jpg` | Home ledger + Experience | Floor 2 — a bedroom |
+| `floor-2-b.jpg` | Experience — Floor 2 | Floor 2 — kitchen and dining |
+| `floor-3-a.jpg` | Home ledger + Experience | Floor 3 — a bedroom on the patterned floor |
+| `floor-3-b.jpg` | Experience — Floor 3 | Floor 3 — kitchen and dining |
+| `terrace-open.jpg` | Home ledger + Experience | The terrace: pergola, planters, sky |
+| `terrace-swing.jpg` | Experience — the terrace | The wooden swing at night *(from video)* |
+| `house-section.jpg` | Experience — opening | Panelled wall, shelf, tile border |
+| `experience-opening.jpg` | Experience — wide band | Living room on the red tiled floor |
+| `gathering-sky.jpg` | Experience — gatherings | Sunset from the terrace |
 
-## Before you drop files in
+---
 
-- **Natural light.** No flash, nothing staged, no empty show-home rooms.
-- **Grade them together** — warm and slightly muted, so twenty-four photographs
-  read as one house rather than as twenty-four separate rooms.
-- **Supply large.** Next.js resizes down and serves AVIF/WebP; it cannot invent
-  detail. 2560px on the long edge is a good target.
-- **`.jpg` is what the code expects.** If you supply `.png` or `.webp`, change
-  the matching `src` in `lib/photos.ts`.
-- **People are welcome, faces need permission.** Hands, backs and figures at a
-  distance carry warmth without needing a release.
+## Two things the owner should know
+
+**Which photograph is which floor is an assumption.** The originals arrived
+unlabelled. Three visually distinct floors are visible in them — one with a
+maroon-and-white floor, one finished in blue, one with patterned tiles
+throughout — and they were assigned to Floors 1, 2 and 3 in that order, to
+match copy that already said the materials get louder as you climb. **If that
+is wrong, it is a two-line fix:** swap the `src` values in `lib/photos.ts` and
+the matching entries in `scripts/build-photos.mjs`. Nothing else in the site
+refers to a filename.
+
+**Four things in the brief have no photograph.** Nothing has been substituted
+for them, because a wardrobe captioned as a walk-in closet is worse than no
+photograph at all:
+
+- a walk-in closet
+- any bathroom
+- a balcony
+- the terrace in daylight with anything happening on it
+
+The one daylight photograph of the terrace has eight identifiable people
+standing in the middle of it, and is not published for that reason. What is
+published is the band above them — the pergola, the hanging planters and the
+sky. If the owner has consent from everyone in that frame, the full photograph
+is a much better image and can be swapped in.
+
+---
+
+## Not used, and why
+
+From the folder as supplied: the ChatGPT screenshots and the bank receipt
+(not photographs, and the receipt carries account details); the paint-colour
+swatches (reference, not imagery); the photograph of the owner and the one of
+two staff members (people, no consent on file); the car porch and three weaker
+bedroom frames (kept in reserve — usable if a slot needs re-shooting).
+
+---
+
+## After replacing a photograph
+
+Next.js caches resized images by filename. Delete the `.next` folder before the
+next local build, or the old picture keeps appearing. A fresh deploy does this
+for you.

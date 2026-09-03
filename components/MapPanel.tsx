@@ -112,7 +112,7 @@ export function MapPanel({ className = "" }: { className?: string }) {
             fontSize="13.5"
             fontFamily="var(--font-sans)"
           >
-            Sampradha
+            Sammprada
           </text>
           <text
             x="195"
@@ -165,9 +165,9 @@ export function MapPanel({ className = "" }: { className?: string }) {
           </text>
         </g>
 
-        {/* The house. Drawn as a stack of five, because that is what it is —
-            four guest floors and the private fifth on top — and marked with
-            the tile motif on the two floors that carry the tiles. */}
+        {/* The house. Drawn as a stack, because that is what it is — three
+            guest floors, a private fourth, and the terrace over the top —
+            and marked with the tile motif on the floor that carries them. */}
         <g transform="translate(322 216)">
           <rect
             x="0"

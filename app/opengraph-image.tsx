@@ -49,7 +49,7 @@ export default async function OpengraphImage() {
 
         <div style={{ display: "flex", flexDirection: "column" }}>
           <div style={{ fontSize: 66, lineHeight: 1.15, maxWidth: 900 }}>
-            {content.en.home.intro.heading}
+            {content.en.about.heading}
           </div>
           <div
             style={{

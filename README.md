@@ -87,7 +87,9 @@ Components reference them by name (`bg-paper`, `text-ink-soft`, `.type-h2`).
 **Atmospheres** are the one idea worth knowing. A `data-atmosphere` attribute on
 a section shifts four tokens — ground, tint, hairline, accent — so the page's
 temperature changes as you climb the house. Floors 1 and 2 stay close to the
-default warm white; Floors 3 and 4 pick up the Athangudi tiles.
+default warm white; Floor 3 picks up the Athangudi tiles; and the terrace
+breaks the sequence by going cool and open, which is how a reader is told it is
+not a fourth floor before reading a word.
 
 Note the pair `--atmos-accent` and `--atmos-accent-ink`. The first is a **fill**
 (tile fields, rules, glyphs) and is not always dark enough to set type in; the
@@ -105,7 +107,10 @@ the shot that belongs there.
 
 Alt text and captions are translated, and live with the rest of the copy.
 
-See `public/images/README.md` for all twenty-four slots.
+Every photograph is the owner's own. `scripts/build-photos.mjs` holds the
+source file, crop, grade and size for each of the twenty-one slots and rebuilds
+the whole set; `public/images/README.md` lists what each one shows and what has
+no photograph yet.
 
 ### Motion
 
@@ -117,7 +122,7 @@ no cursor effect.
 - A brief opening wordmark, once per session, non-blocking and never focusable
 - The header fades from transparent over the hero to a warm translucent ground
 - Photographs settle from a slightly larger crop as they come into view
-- A two-pixel reading indicator on The Experience, tinted by the four floors
+- A two-pixel reading indicator on The Experience, tinted by each level in turn
 - 420ms page transitions that never stand between a reader and the content
 
 ### The enquiry
@@ -139,6 +144,8 @@ arrives in the inbox and that replying reaches the guest.
 
 ## What is still outstanding
 
-See **`CONTENT.md`**. In short: every photograph is temporary stock, the phone
-number and the map pin are placeholders, the bathroom arrangement is
-deliberately unstated until confirmed, and the Kannada needs a native read.
+See **`CONTENT.md`**. In short: the phone number and the map pin are still
+placeholders, the Kannada needs a native read, which photograph belongs to
+which floor is an assumption waiting on the owner, and four things named in the
+copy — a walk-in closet, a bathroom, a balcony, and the terrace in daylight —
+have no photograph and have not been substituted for.
