@@ -40,7 +40,30 @@ export type MailMessage = {
   replyTo?: string;
 };
 
+/**
+ * Where an enquiry lands. Falls back to the address printed on the site, so a
+ * misconfigured hosting project still delivers to a real inbox.
+ */
 const TO = process.env.ENQUIRY_TO_EMAIL ?? site.contact.email;
+
+/**
+ * Who it comes FROM, and the one piece of this that cannot be defaulted.
+ *
+ * Resend — like every transactional provider — will only send from a domain
+ * whose DNS you control and have verified. The owner's address is a Gmail
+ * one, and gmail.com cannot be verified by anybody but Google, so it works
+ * perfectly as a destination and not at all as a sender.
+ *
+ * Until a domain exists and is verified, ENQUIRY_FROM_EMAIL has nothing valid
+ * to be set to, the send is refused by the provider, and the guest is told
+ * plainly to write directly instead. That is the correct behaviour: the one
+ * thing this form must never do is show a thank-you for a message that went
+ * nowhere.
+ *
+ * The default below is a placeholder for the domain that does not exist yet.
+ * It is deliberately NOT the owner's Gmail address — pointing FROM at Gmail
+ * would look configured and fail at the provider, which is the worst of both.
+ */
 const FROM =
   process.env.ENQUIRY_FROM_EMAIL ?? `Taamboolam <enquiries@taamboolam.com>`;
 

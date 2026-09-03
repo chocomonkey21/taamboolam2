@@ -26,10 +26,14 @@ const site = read("lib/site.ts");
 
 const pending = [];
 
-if (site.includes("+91 98765 43210")) {
+/* The phone number and the enquiry address are confirmed. What is not is a
+   domain to SEND from: the owner's address is a Gmail one, which can receive
+   but can never be a verified sender. Until that exists the form cannot mail
+   anybody, and it says so rather than pretending. */
+if (!process.env.ENQUIRY_FROM_EMAIL) {
   pending.push([
-    "Phone / WhatsApp number is the placeholder +91 98765 43210",
-    "lib/site.ts → contact.phone, contact.whatsapp",
+    "No verified sending domain — the enquiry form cannot send mail",
+    "Set ENQUIRY_FROM_EMAIL to an address on a domain verified with Resend",
   ]);
 }
 

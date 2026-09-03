@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useEffect, useId, useRef, useState } from "react";
 import {
   emptyEnquiry,
@@ -483,8 +484,19 @@ export function EnquiryForm() {
         </a>
       </div>
 
-      <div>
+      <div className="grid gap-2">
         <p className="type-caption measure">{t.form.noPrices}</p>
+        {/* Said at the point of typing, not only on a page nobody opens. One
+            sentence about where this goes, and a link for the rest. */}
+        <p className="type-caption measure">
+          {t.form.privacyNote}{" "}
+          <Link
+            href="/privacy"
+            className="underline decoration-transparent underline-offset-4 transition-colors hover:text-ink hover:decoration-current"
+          >
+            {t.form.privacyLink}
+          </Link>
+        </p>
       </div>
     </form>
   );

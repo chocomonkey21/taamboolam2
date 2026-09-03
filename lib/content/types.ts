@@ -55,6 +55,8 @@ export type Content = {
     experienceDescription: string;
     enquireTitle: string;
     enquireDescription: string;
+    privacyTitle: string;
+    privacyDescription: string;
   };
 
   nav: {
@@ -200,6 +202,26 @@ export type Content = {
   /** The page that exists only when a reader has arrived somewhere wrong. */
   notFound: { eyebrow: string; heading: string; body: string };
 
+  /**
+   * What the site does with what a guest types into it.
+   *
+   * Every claim in here is checkable against the code, and must stay that
+   * way: if the site ever gains a database, an analytics script or a second
+   * cookie, this page is wrong until it is rewritten. It is deliberately
+   * short — a page nobody can read is not a disclosure.
+   */
+  privacy: {
+    eyebrow: string;
+    heading: string;
+    intro: string;
+    updated: string;
+    /** Each section: a heading, and one or more plain paragraphs. */
+    sections: { title: string; body: string[] }[];
+    /** The last line: how to ask for it to be deleted. */
+    contactHeading: string;
+    contactBody: string;
+  };
+
   footer: {
     findUs: string;
     heading: string;
@@ -217,6 +239,7 @@ export type Content = {
     email: string;
     instagram: string;
     pages: string;
+    privacy: string;
     gatherings: string;
     rights: string;
   };
@@ -225,6 +248,9 @@ export type Content = {
     heading: string;
     intro: string[];
     noPrices: string;
+    /** Sits under the submit button, linking to the privacy notice. */
+    privacyNote: string;
+    privacyLink: string;
     name: string;
     email: string;
     phone: string;

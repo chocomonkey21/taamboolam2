@@ -25,7 +25,7 @@ pin is still being confirmed." That line disappears on its own once you set
 - Taamboolam / ತಾಂಬೂಲಂ  *(corrected — the site previously carried ತಂಬೋಲಂ)*
 - 50-1, 46th Cross, Sarakki Main Road, 8th Block, Jayanagar, Bengaluru 560070
 - Next to Sampradha Hospitals and Sangeetha Mobiles
-- stay@taamboolam.com
+- taamboolaminn@gmail.com
 - https://www.instagram.com/taamboolam/
 
 ---
@@ -90,20 +90,17 @@ it shows account details.
 
 ## 4. Kannada
 
-The Kannada on the site is a **written draft that has not been reviewed by a
-native speaker.** It is real content, not machine translation at page load —
-the site never calls a translation service — but it needs a read-through.
-
-**Two things to check first.** The name is now spelled ತಾಂಬೂಲಂ everywhere;
-it was previously ತಂಬೋಲಂ, which is a different word. And the vocabulary
-for the terrace, the floor plan, the kitchen and the new FAQ was written for
-this pass and has never been read by a Kannada speaker.
+**Reviewed and approved by the owner on 2026-09-03**, including the corrected
+name (ತಾಂಬೂಲಂ) and the vocabulary written for the terrace, the floor plan, the
+kitchen and the FAQ.
 
 It is all in one file: `lib/content/kn.ts`. The keys are identical to the
-English file (`lib/content/en.ts`) and appear in the same order, so a reviewer
-can work straight down it with the English open beside it. Changing a line there
-changes it everywhere, including buttons, form labels, validation messages and
-error screens.
+English file (`lib/content/en.ts`) and appear in the same order, so it stays
+easy to re-read. Changing a line there changes it everywhere, including
+buttons, form labels, validation messages and error screens.
+
+Anything added to the English file from here on is an unreviewed draft in
+Kannada until somebody reads it.
 
 ---
 

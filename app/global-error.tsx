@@ -96,10 +96,10 @@ export default function GlobalError({
               Try again
             </button>
             <a
-              href="mailto:stay@taamboolam.com"
+              href="mailto:taamboolaminn@gmail.com"
               style={{ color: "#883418", fontSize: "0.9375rem" }}
             >
-              stay@taamboolam.com
+              taamboolaminn@gmail.com
             </a>
           </div>
         </main>

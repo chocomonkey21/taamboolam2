@@ -10,7 +10,7 @@ tested and what was left.
 
 ## Reporting a problem
 
-`stay@taamboolam.com`. There is no bug bounty — this is a homestay's website,
+`taamboolaminn@gmail.com`. There is no bug bounty — this is a homestay's website,
 run by the family — but the address is read by a person who will answer. Also
 published at `/.well-known/security.txt`.
 

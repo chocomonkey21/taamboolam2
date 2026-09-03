@@ -18,11 +18,23 @@ export const site = {
   url: "https://taamboolam.com",
 
   contact: {
-    /** PLACEHOLDER — replace with the real number. */
-    phone: "+91 98765 43210",
-    /** Digits only, for the wa.me link. The same number as above. */
-    whatsapp: "919876543210",
-    email: "stay@taamboolam.com",
+    /** The owner's number. Confirmed. */
+    phone: "+91 91082 40269",
+    /** Digits only with the country code, for the wa.me link. Same number. */
+    whatsapp: "919108240269",
+    /**
+     * Where enquiries land. Confirmed.
+     *
+     * This is also the default recipient — ENQUIRY_TO_EMAIL overrides it, but
+     * with nothing set the mailer falls back to here, so the address is right
+     * even if the hosting project is misconfigured.
+     *
+     * Note it is a Gmail address, which makes it a fine place to RECEIVE mail
+     * and an impossible place to SEND from: Resend will only send from a
+     * domain you have verified, and nobody can verify gmail.com. See the note
+     * on FROM in lib/mailer.ts.
+     */
+    email: "taamboolaminn@gmail.com",
     instagram: "https://www.instagram.com/taamboolam/",
   },
 
@@ -33,12 +45,26 @@ export const site = {
       "Bengaluru 560070",
     ],
     /**
-     * PLACEHOLDER — a plain address search, not the owner's own pin. Replace
-     * with the real Google Maps link once the pin is confirmed, and set
-     * mapLinkIsPlaceholder to false.
+     * STILL A SEARCH, NOT A PIN.
+     *
+     * The address was put through a geocoder and does not resolve: neither
+     * "46th Cross, Sarakki Main Road" nor the landmark returns a result, and
+     * the only thing that does is the centroid of Jayanagar 8th Block — a
+     * point some hundreds of metres from the door. Dropping that on the map
+     * would be a pin that is confidently wrong, which for somebody arriving
+     * after dark is worse than no pin at all.
+     *
+     * So this stays a search, with the landmark folded into the query because
+     * Sampradha Hospitals is a far stronger local signal than a cross number
+     * and materially improves what Google lands on.
+     *
+     * To replace it with the real thing: open Google Maps on the phone,
+     * long-press the house, Share, Copy link, and paste it here — then set
+     * mapLinkIsPlaceholder to false and the "still being confirmed" line
+     * disappears from the footer on its own.
      */
     mapLink:
-      "https://www.google.com/maps/search/?api=1&query=50-1+46th+Cross+Sarakki+Main+Road+8th+Block+Jayanagar+Bengaluru+560070",
+      "https://www.google.com/maps/search/?api=1&query=Sampradha+Hospitals+46th+Cross+Sarakki+Main+Road+8th+Block+Jayanagar+Bengaluru+560070",
     mapLinkIsPlaceholder: true,
     /**
      * The embedded map.

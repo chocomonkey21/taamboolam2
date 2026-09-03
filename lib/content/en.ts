@@ -15,6 +15,9 @@ export const en: Content = {
     enquireTitle: "Enquire",
     enquireDescription:
       "Ask about staying at Taamboolam, or about a small gathering. There is no instant booking. The owner reads every enquiry.",
+    privacyTitle: "Privacy",
+    privacyDescription:
+      "What the enquiry form collects, where it goes, and what is kept. No analytics, no tracking, and nothing stored on this site.",
   },
 
   nav: {
@@ -272,7 +275,7 @@ export const en: Content = {
       eyebrow: "Gatherings",
       heading: "Occasionally, the house holds more than guests",
       body: [
-        "Sometimes the house is used for something other than a stay — a workshop, a small singing evening, a family occasion. Roughly twenty to twenty-five people is the size it takes well, and the terrace is usually where it happens. These are never listed and never bookable: they happen because somebody wrote and asked, and the fit was right for both sides.",
+        "Sometimes the house is used for something other than a stay — a workshop, a singing evening, a family occasion. The terrace is where it happens, and it takes about fifty people seated at tables, or a hundred standing. These are never listed and never bookable: they happen because somebody wrote and asked, and the fit was right for both sides.",
       ],
       note: "If you have something in mind, say so in your enquiry and describe it. Parties are the one thing the house does not do.",
     },
@@ -404,7 +407,54 @@ export const en: Content = {
   notFound: {
     eyebrow: "Not found",
     heading: "There is no page here",
-    body: "The house has three pages, and this is not one of them. The link may be old, or slightly mistyped.",
+    body: "This is a small site and that is not one of its pages. The link may be old, or slightly mistyped.",
+  },
+
+  privacy: {
+    eyebrow: "Privacy",
+    heading: "What happens to what you type",
+    intro:
+      "This site has one form on it. This page says what that form collects, where it goes and what is kept — in the same plain terms as the rest of the site, and short enough to actually read.",
+    updated: "Last updated 3 September 2026.",
+    sections: [
+      {
+        title: "What the form asks for",
+        body: [
+          "Your name, an email address, and — if you are asking about a stay — a phone number and the dates you have in mind. Then how many adults and children are coming, which floor you would prefer if you have a preference, and whatever you write in the message box.",
+          "There is also a checkbox for whether we may reply on WhatsApp, and the site records which language you filled the form in, so we answer in that one.",
+        ],
+      },
+      {
+        title: "Where it goes",
+        body: [
+          "Into one email, sent to the owner at taamboolaminn@gmail.com, with the reply address set to yours so that hitting reply writes back to you. You get a copy of the same message.",
+          "The email is delivered by Resend, a transactional email provider, which handles it in transit. Nobody else sees it.",
+        ],
+      },
+      {
+        title: "What is stored here",
+        body: [
+          "Nothing. This site has no database, no accounts and no file storage. Once the email is sent there is no copy left on the server — what exists afterwards is the email in the owner's inbox and the copy in yours.",
+          "So that one person cannot flood the form, the server briefly remembers that an address has written in. It keeps a one-way fingerprint rather than the address itself, in memory only, and it expires within the hour.",
+        ],
+      },
+      {
+        title: "Cookies, and the lack of them",
+        body: [
+          "One cookie, which remembers whether you are reading in English or Kannada. That is the entire list.",
+          "There is no analytics, no tracking pixel, no advertising tag and no third-party script of any kind. Nobody is counting you, and no other company learns that you visited.",
+        ],
+      },
+      {
+        title: "What the server writes down",
+        body: [
+          "That an enquiry came in, what kind it was and which language it was written in. Never a name, an address, a phone number or anything you typed into the message box.",
+        ],
+      },
+    ],
+    contactHeading: "Changing your mind",
+    contactBody:
+      "Write to taamboolaminn@gmail.com and ask us to delete your enquiry, and we will delete the email. There is nothing else of yours to delete, because there is nothing else being kept.",
   },
 
   footer: {
@@ -422,8 +472,9 @@ export const en: Content = {
     email: "Email",
     instagram: "Instagram",
     pages: "Pages",
+    privacy: "Privacy",
     gatherings:
-      "Small gatherings of about twenty to twenty-five people are possible, by direct enquiry only.",
+      "Gatherings on the terrace are possible — about fifty seated at tables, or a hundred standing — by direct enquiry only.",
     rights: "All rights reserved.",
   },
 
@@ -435,6 +486,9 @@ export const en: Content = {
     ],
     noPrices:
       "This form does not show prices, does not check availability and does not confirm anything. It starts a conversation.",
+    privacyNote:
+      "What you write here becomes one email to the owner and a copy to you. Nothing is stored on this site.",
+    privacyLink: "How we handle it",
     name: "Your name",
     email: "Email",
     phone: "Phone number",
@@ -472,7 +526,7 @@ export const en: Content = {
     errorConfigured:
       "The enquiry form cannot send mail right now. Please write to us directly and we will answer.",
     errorTooMany:
-      "That is several enquiries in a short time. Please wait a few minutes, or write to us directly at stay@taamboolam.com.",
+      "That is several enquiries in a short time. Please wait a few minutes, or write to us directly at taamboolaminn@gmail.com.",
     errorCheckFields: "Please check the fields marked below.",
     devNote:
       "Development mode: no mail service is configured, so this enquiry was logged to the server terminal instead of being sent.",
