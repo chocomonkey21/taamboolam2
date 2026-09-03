@@ -33,16 +33,10 @@ const FLOORS: {
   { id: "floor1", photo: "floor1b", atmosphere: "floor-1" },
   { id: "floor2", photo: "floor2b", atmosphere: "floor-2" },
   { id: "floor3", photo: "floor3b", atmosphere: "floor-3" },
-  /* The terrace band is already a 3.5:1 crop of a taller frame. Squeezing
-     it into 21:9 takes the middle, which is corrugated pergola roof and
-     reads as a carport. Biting low puts the planters, the sky and the
-     rooftops in the strip instead. */
-  {
-    id: "terrace",
-    photo: "terraceOpen",
-    atmosphere: "terrace",
-    objectPosition: "center 88%",
-  },
+  /* The terrace photograph is 16:9 now and has people in the middle of it,
+     so a 21:9 row wants its centre rather than the low bite that used to be
+     needed to avoid the pergola roof. */
+  { id: "terrace", photo: "terraceOpen", atmosphere: "terrace" },
 ];
 
 /**

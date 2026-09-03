@@ -27,6 +27,7 @@ export const en: Content = {
     skipToContent: "Skip to content",
     mainLabel: "Main",
     mobileEnquire: "Enquire about a stay",
+    whatsappOpener: "Hello — I would like to ask about staying at Taamboolam.",
   },
 
   wordmarkContext: "A homestay in Jayanagar, Bengaluru",
@@ -79,7 +80,7 @@ export const en: Content = {
     },
 
     terraceOpen: {
-      alt: "A pergola roof over the terrace, with planters hanging along it against the sky.",
+      alt: "A group standing together on the terrace under the pergola, with planters hanging above them and the city beyond.",
       caption: "The terrace, open to everyone staying in the house.",
     },
     terraceSwing: {
@@ -406,6 +407,7 @@ export const en: Content = {
     practical: [
       "Floors 1, 2 and 3 are the guest floors. The fourth floor is private and is not accessible to guests.",
       "The terrace is open to everyone staying in the house.",
+      "There is Wi-Fi, air conditioning and hot water.",
       "There is a lift, and there are stairs.",
       "Parking is available on the ground floor for small to medium vehicles, scooters and bikes.",
     ],

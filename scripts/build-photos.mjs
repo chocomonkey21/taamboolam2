@@ -60,20 +60,28 @@ const jobs = [
   // The only daylight photograph of the terrace has eight identifiable
   // people in it. This takes the band above them: the pergola, the hanging
   // planters and the sky. Nobody in the frame, and nothing invented.
-  // A 3.5:1 band was still a third corrugated roof, and the roof is the
-  // least interesting thing up here. Starting the crop lower gives the
-  // planters, the sky and the rooftops the frame instead.
+  // The terrace, in use.
   //
-  // The sky also needed pulling back: a phone camera under a white roof
-  // rendered it electric cyan, which was the one colour on the site that
-  // belonged to no part of the palette. Desaturated to sit beside the warm
-  // grounds rather than shout over them.
+  // This was a thin band cropped from above the heads of eight people,
+  // because nobody had recorded their permission to publish it. The owner has
+  // since confirmed it. So the crop drops to include them, and the terrace
+  // stops being a photograph of an empty pergola roof and becomes what the
+  // chapter beside it actually claims: the place people end up.
+  //
+  // 16:9 from y330 keeps the group whole, head to feet, with the planters
+  // above them and the terracotta floor below. A wider band cut them off at
+  // the calf; a taller one was mostly floor.
+  //
+  // Saturation is pulled back a little rather than a lot: the phone rendered
+  // the sky electric cyan under a white roof, but there is far less sky in
+  // this crop and plenty of warm terracotta to balance it.
   {
     out: "terrace-open.jpg",
     src: "IMG-20260901-WA0003.jpg",
-    crop: { left: 0, top: 130, width: 1200, height: 255 },
+    crop: { left: 0, top: 330, width: 1200, height: 675 },
     w: 1200,
-    tone: (p) => p.linear([1.02, 1.01, 0.94], [0, 0, 6]).modulate({ saturation: 0.72 }),
+    tone: (p) =>
+      p.linear([1.05, 1.03, 0.99], [-5, -4, -1]).modulate({ saturation: 0.95 }),
   },
   {
     out: "terrace-swing.jpg",
