@@ -126,6 +126,16 @@ export type Content = {
     eyebrow: string;
     heading: string;
     body: string[];
+    /**
+     * Where the name comes from.
+     *
+     * The site is named after a ritual and never said so, which is a strange
+     * silence for a house whose whole argument is hospitality — and stranger
+     * still now that the site's own icon is a betel leaf. Kept to two short
+     * paragraphs: this is an origin, not an encyclopaedia entry.
+     */
+    nameHeading: string;
+    nameBody: string[];
     note: string;
   };
 

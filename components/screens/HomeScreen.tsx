@@ -216,6 +216,30 @@ export function HomeScreen() {
             </Reveal>
           </div>
 
+          {/* Where the name comes from.
+
+              A different register from the paragraphs above — those describe a
+              house, this explains a word — so it gets its own column rather
+              than another paragraph in the same measure. The site is named
+              after a gesture of hospitality and said so nowhere, which was a
+              strange silence on a page about hospitality, and stranger still
+              once the site's own icon became a betel leaf. */}
+          <div className="rule-atmos mt-14 grid gap-x-8 gap-y-5 border-t pt-8 md:mt-16 md:grid-cols-12">
+            <h3 className="type-h3 text-atmos-ink md:col-span-3">
+              {t.about.nameHeading}
+            </h3>
+            <div className="md:col-span-7 md:col-start-5">
+              {t.about.nameBody.map((paragraph, i) => (
+                <p
+                  key={i}
+                  className={`type-body text-ink-soft ${i ? "mt-4" : ""}`}
+                >
+                  {paragraph}
+                </p>
+              ))}
+            </div>
+          </div>
+
           {/* The one line that says who this suits, set apart on a hairline
               rather than folded into the paragraph above it. */}
           <p className="type-annotation rule-atmos mt-12 border-t pt-5 md:mt-14">

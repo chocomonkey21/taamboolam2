@@ -153,6 +153,11 @@ export const en: Content = {
       "Taamboolam is a family home in Jayanagar that was built slowly and is still cared for by the people who built it. The tiles, the joinery, the cane and the small things on the shelves were chosen one at a time rather than specified in a schedule, and none of it was bought to look like anything in particular.",
       "It is not a hotel and it does not behave like one: no front desk, no key card, no menu card. What it asks in return is that you treat it as a house — one that other people are also living in while you are here.",
     ],
+    nameHeading: "Where the name comes from",
+    nameBody: [
+      "Taamboolam is the tray offered to a guest at the end of a visit in South India — betel leaves and areca nut, usually with a coconut, some fruit, turmeric and kumkum. Each part carries something: the leaf freshness and respect, the nut firmness, the coconut and fruit abundance.",
+      "What matters is the gesture rather than the objects. Somebody came, they were received, and they do not leave empty-handed. The house is named after that, and tries to behave like it.",
+    ],
     note: "Best suited to guests who would rather stay in a home than in a room.",
   },
 
