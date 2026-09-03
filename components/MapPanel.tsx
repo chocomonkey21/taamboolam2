@@ -112,7 +112,7 @@ export function MapPanel({ className = "" }: { className?: string }) {
             fontSize="13.5"
             fontFamily="var(--font-sans)"
           >
-            Sampradha
+            Sammprada
           </text>
           <text
             x="195"

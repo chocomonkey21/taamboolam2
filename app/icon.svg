@@ -1,0 +1,28 @@
+<!--
+  Taamboolam's mark: the roofline of a house, and a betel leaf under it.
+
+  Redrawn from the owner's own badge, which is the right logo and the wrong
+  icon — it carries the Kannada name, the Latin name and a three-line tagline,
+  and all three turn to mud below about 96px. This keeps the two elements that
+  survive a 16px browser tab and drops everything that does not, which is what
+  a badge logo's favicon is supposed to do.
+
+  The leaf is not decoration: taamboolam IS the betel offering, so the mark
+  says the name without spelling it. Colours are the site's own clay and leaf
+  tokens on paper — see app/globals.css.
+
+  Everything else in the icon set is generated from this file:
+  node scripts/build-icons.mjs
+-->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Taamboolam">
+  <rect width="64" height="64" rx="14" fill="#F7F2E8"/>
+  <path d="M11 32.5 L32 13.5 L53 32.5" fill="none" stroke="#A8492A" stroke-width="6.2"
+        stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M32 53.5
+           C 22 46.5 17.5 39.5 21 34.2
+           C 24.6 29.4 29.4 31.6 32 36.4
+           C 34.6 31.6 39.4 29.4 43 34.2
+           C 46.5 39.5 42 46.5 32 53.5 Z"
+        fill="#3F5940"/>
+  <path d="M32 51 L32 37.4" stroke="#F7F2E8" stroke-width="1.1" stroke-linecap="round" opacity="0.85"/>
+</svg>

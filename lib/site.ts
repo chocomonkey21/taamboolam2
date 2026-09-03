@@ -66,9 +66,10 @@ export const site = {
      *   - Google returns 560078 for this address; addressLines below say
      *     560070. One of them is wrong and it is not this file's place to
      *     decide which.
-     *   - The hospital's registered name is "Sammprada Hospital"
-     *     (sammprada.com). The landmark copy says "Sampradha Hospitals". A
-     *     guest searching the second spelling may not find the first.
+     *   - The postcode. (The landmark spelling was the other one, and is
+     *     fixed: the copy now says "Sammprada Hospital", which is the name
+     *     the business is actually registered under and therefore the one a
+     *     guest searching for it will find.)
      */
     mapLink:
       "https://www.google.com/maps/search/?api=1&query=12.9169526%2C77.5795849",

@@ -8,6 +8,8 @@ import {
   resolveErrors,
   today,
   validateEnquiry,
+  whatsappEnquiry,
+  whatsappLink,
   type EnquiryFields,
   type FloorPreference,
   type VisitType,
@@ -473,9 +475,19 @@ export function EnquiryForm() {
         {/* For a house in Bengaluru, WhatsApp is not a fallback — it is how a
             lot of people would rather open a conversation. Offered as a plain
             alternative next to the button rather than a floating bubble, so it
-            is available without competing with the form. */}
+            is available without competing with the form.
+
+            It carries what they have typed. This used to open an empty chat,
+            which meant a reader who had just filled in eight fields had to
+            type it all over again — the link looked like an alternative and
+            behaved like a punishment. Built on every keystroke rather than on
+            click, because a click handler that rewrites href before navigating
+            is exactly the thing a popup blocker stops. */}
         <a
-          href={`https://wa.me/${site.contact.whatsapp}`}
+          href={whatsappLink(
+            site.contact.whatsapp,
+            whatsappEnquiry({ ...values, locale }, t),
+          )}
           target="_blank"
           rel="noreferrer noopener"
           className="type-label inline-flex min-h-11 items-center text-ink-soft underline decoration-transparent decoration-1 underline-offset-4 transition-colors duration-200 hover:text-ink hover:decoration-current"

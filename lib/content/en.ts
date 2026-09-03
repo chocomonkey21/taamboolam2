@@ -184,7 +184,7 @@ export const en: Content = {
       {
         q: "How is food arranged?",
         a: [
-          "South Indian homemade organic food is available on request. North Indian food can be arranged too, if you ask for it.",
+          "South Indian homemade organic food is available on request. North Indian food can be arranged too, if you ask for it. All of it vegetarian — the house is pure veg.",
           "It is sourced when you ask, not served on a schedule. There is no fixed menu and no set price — say what you would like and we will tell you what is possible.",
         ],
       },
@@ -237,7 +237,7 @@ export const en: Content = {
       eyebrow: "Eating here",
       heading: "Food, if you ask for it",
       body: [
-        "South Indian home cooking, made fresh and organic, arranged on request. North Indian food can be arranged too if that is what you would rather eat.",
+        "South Indian home cooking, made fresh and organic, arranged on request. North Indian food can be arranged too if that is what you would rather eat. All of it vegetarian, like the house.",
       ],
       note: "Sourced on request. No fixed menu, no set price, no timings.",
     },
@@ -266,7 +266,7 @@ export const en: Content = {
       eyebrow: "Food",
       heading: "A quiet extension of the house",
       body: [
-        "Meals are not a service here, they are an offer. South Indian homemade organic food can be arranged on request, and North Indian food too if that is what you would rather eat.",
+        "Meals are not a service here, they are an offer. South Indian homemade organic food can be arranged on request, and North Indian food too if that is what you would rather eat. The house is pure vegetarian, so all of it is.",
         "Nothing runs to a timetable and nothing is priced on this site. Say what you would like when you enquire, or once you are here, and it is sourced for you. The kitchen on your floor will keep it and warm it; it will not cook it.",
       ],
     },
@@ -275,7 +275,7 @@ export const en: Content = {
       eyebrow: "Gatherings",
       heading: "Occasionally, the house holds more than guests",
       body: [
-        "Sometimes the house is used for something other than a stay — a workshop, a singing evening, a family occasion. The terrace is where it happens, and it takes about fifty people seated at tables, or a hundred standing. These are never listed and never bookable: they happen because somebody wrote and asked, and the fit was right for both sides.",
+        "Sometimes the house is used for something other than a stay — a yoga morning, a music or art session, a workshop, a family occasion. The terrace is where it happens, and it takes about fifty people seated at tables, or a hundred standing. These are never listed and never bookable: they happen because somebody wrote and asked, and the fit was right for both sides.",
       ],
       note: "If you have something in mind, say so in your enquiry and describe it. Parties are the one thing the house does not do.",
     },
@@ -350,6 +350,10 @@ export const en: Content = {
       {
         title: "Children are welcome",
         body: "Children under 10 stay free when accompanied by a parent. Tell us how many are coming so we can suggest the right floor.",
+      },
+      {
+        title: "The house is pure vegetarian",
+        body: "No meat, fish or eggs, in the kitchens or anywhere else in the house. The food arranged for guests is vegetarian too.",
       },
       {
         title: "Pets are not accommodated",
@@ -427,7 +431,7 @@ export const en: Content = {
       {
         title: "Where it goes",
         body: [
-          "Into one email, sent to the owner at taamboolaminn@gmail.com, with the reply address set to yours so that hitting reply writes back to you. You get a copy of the same message.",
+          "Into one email, sent to the owner at taamboolaminn@gmail.com, with the reply address set to yours so that hitting reply writes back to you. A copy of the same message is sent to you as well.",
           "The email is delivered by Resend, a transactional email provider, which handles it in transit. Nobody else sees it.",
         ],
       },
@@ -460,7 +464,7 @@ export const en: Content = {
   footer: {
     findUs: "Find us",
     heading: "Taamboolam",
-    landmark: "Next to Sampradha Hospitals and Sangeetha Mobiles.",
+    landmark: "Next to Sammprada Hospital and Sangeetha Mobiles.",
     mapLink: "Directions",
     mapPending: "The exact pin is still being confirmed.",
     mapSchematic:

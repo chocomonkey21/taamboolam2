@@ -207,6 +207,92 @@ export function formatDate(value: string): string {
   });
 }
 
+/**
+ * The same enquiry, written out for WhatsApp.
+ *
+ * Why this exists: for a homestay in Bengaluru, WhatsApp is not a fallback for
+ * people who cannot use a form — it is how a lot of guests would rather open a
+ * conversation in the first place. The link beside the submit button used to
+ * open an empty chat, which meant a reader who had just filled in eight fields
+ * had to type it all again. Now it carries what they wrote.
+ *
+ * Deliberately NOT an API integration. Sending WhatsApp messages from a server
+ * needs a Meta or Twilio business account, a registered sender and template
+ * approval, and it would put the house's messages behind a vendor. A wa.me
+ * link opens the guest's own WhatsApp with the text ready and them in control
+ * of sending it — no account, no key, no third party in the middle, and it
+ * works on a phone and in a desktop browser alike.
+ *
+ * Only fields the guest actually filled in are included: a message listing six
+ * blank labels reads like a form, and the point is that it reads like a person
+ * wrote it. The free text is capped because a wa.me URL is still a URL.
+ */
+export function whatsappEnquiry(values: EnquiryFields, t: Content): string {
+  const lines: string[] = [];
+  const push = (value: string) => {
+    if (value && value.trim()) lines.push(value.trim());
+  };
+
+  const visit = {
+    stay: t.form.visitStay,
+    gathering: t.form.visitGathering,
+    other: t.form.visitOther,
+  }[values.visitType];
+
+  /* Written the way a person writes a message, not the way a form prints
+     itself. Labels only where a bare value would be ambiguous: a name and a
+     visit type explain themselves, an email address in a list of dates does
+     not. "Your name: Tanishk" is what a form says; a person just says their
+     name. */
+  push(`${t.form.heading} · Taamboolam`);
+  lines.push("");
+  push(values.name);
+  push(visit);
+
+  if (values.arrival || values.departure) {
+    const span = [
+      values.arrival && `${t.form.arrival} ${formatDate(values.arrival)}`,
+      values.departure && `${t.form.departure} ${formatDate(values.departure)}`,
+    ]
+      .filter(Boolean)
+      .join(" · ");
+    push(span);
+  }
+
+  const people = [
+    values.adults && `${values.adults} ${t.form.adults.toLowerCase()}`,
+    values.children &&
+      values.children !== "0" &&
+      `${values.children} ${t.form.children.toLowerCase()}`,
+  ]
+    .filter(Boolean)
+    .join(", ");
+  push(people);
+
+  if (values.floorPreference !== "any") {
+    push(`${t.form.floorPreference}: ${t.floors[values.floorPreference].label}`);
+  }
+
+  push(values.email);
+
+  const free =
+    values.visitType === "gathering" ? values.gatheringDetails : values.message;
+  if (free.trim()) {
+    lines.push("");
+    /* Capped because a wa.me link is still a URL, and a guest who pastes an
+       essay should get a message that opens rather than one that is silently
+       truncated by the browser. */
+    push(free.slice(0, 700));
+  }
+
+  return lines.join("\n").replace(/\n{3,}/g, "\n\n");
+}
+
+/** The wa.me link that opens that message in the guest's own WhatsApp. */
+export function whatsappLink(number: string, text: string): string {
+  return `https://wa.me/${number}?text=${encodeURIComponent(text)}`;
+}
+
 /** Today, as a yyyy-mm-dd string, for the date inputs' `min`. */
 export function today(): string {
   const now = new Date();
