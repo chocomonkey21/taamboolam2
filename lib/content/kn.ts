@@ -14,6 +14,12 @@ import type { Content } from "./types";
  * word) and the vocabulary written for the terrace, the floor plan, the
  * kitchen and the FAQ.
  *
+ * ONE STRING ADDED SINCE THAT REVIEW, and not yet read by a Kannada speaker:
+ * the landmark in `footer.landmark`. The hospital next door is registered as
+ * "Sammprada Hospital", not the "Sampradha Hospitals" the site used to say,
+ * and the Kannada here is a transliteration of the registered spelling rather
+ * than of the old one. Worth a second pair of eyes.
+ *
  * The keys are identical to en.ts and appear in the same order, so a future
  * reviewer can work straight down this file with the English open beside it.
  * Anything added to en.ts from here on is a fresh draft until somebody has
@@ -484,7 +490,7 @@ export const kn: Content = {
   footer: {
     findUs: "ನಮ್ಮನ್ನು ತಲುಪಿ",
     heading: "ತಾಂಬೂಲಂ",
-    landmark: "ಸಂಪ್ರದಾ ಹಾಸ್ಪಿಟಲ್ಸ್ ಮತ್ತು ಸಂಗೀತಾ ಮೊಬೈಲ್ಸ್ ಪಕ್ಕದಲ್ಲಿ.",
+    landmark: "ಸಮ್ಮಪ್ರದ ಹಾಸ್ಪಿಟಲ್ ಮತ್ತು ಸಂಗೀತಾ ಮೊಬೈಲ್ಸ್ ಪಕ್ಕದಲ್ಲಿ.",
     mapLink: "ದಾರಿ",
     mapPending: "ನಿಖರವಾದ ಸ್ಥಳ ಗುರುತನ್ನು ಇನ್ನೂ ಖಚಿತಪಡಿಸಲಾಗುತ್ತಿದೆ.",
     mapSchematic:

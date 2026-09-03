@@ -42,7 +42,7 @@ export const site = {
     addressLines: [
       "50-1, 46th Cross, Sarakki Main Road",
       "8th Block, Jayanagar",
-      "Bengaluru 560070",
+      "Bengaluru 560078",
     ],
     /**
      * The pin, derived rather than supplied — and corroborated before it was
@@ -62,14 +62,11 @@ export const site = {
      * A coordinate query rather than a place link on purpose — a place id can
      * be merged or retired by Google, a latitude and longitude cannot.
      *
-     * TWO THINGS THE OWNER SHOULD CHECK, both left as the owner wrote them:
-     *   - Google returns 560078 for this address; addressLines below say
-     *     560070. One of them is wrong and it is not this file's place to
-     *     decide which.
-     *   - The postcode. (The landmark spelling was the other one, and is
-     *     fixed: the copy now says "Sammprada Hospital", which is the name
-     *     the business is actually registered under and therefore the one a
-     *     guest searching for it will find.)
+     * Both of the things this note used to flag are settled. The postcode is
+     * 560078, confirmed by the owner against Google's own answer for the
+     * address — the site had been carrying 560070. And the landmark is
+     * "Sammprada Hospital", the name the business is registered under and
+     * therefore the one a guest searching for it will actually find.
      */
     mapLink:
       "https://www.google.com/maps/search/?api=1&query=12.9169526%2C77.5795849",
@@ -80,19 +77,6 @@ export const site = {
      */
     coordinates: { lat: 12.9169526, lng: 77.5795849 },
     mapLinkIsPlaceholder: false,
-    /**
-     * The embedded map.
-     *
-     * This geocodes the confirmed address string — it does NOT assert a
-     * latitude and longitude we have not been given, so the panel cannot
-     * silently show a wrong pin. When the owner confirms the exact location,
-     * replace this with their own share link and set mapLinkIsPlaceholder to
-     * false; nothing else has to change.
-     *
-     * The frame is lazy-loaded and carries no cookies until it is scrolled to.
-     */
-    mapEmbed:
-      "https://www.google.com/maps?q=50-1,+46th+Cross,+Sarakki+Main+Road,+8th+Block,+Jayanagar,+Bengaluru+560070&output=embed",
   },
 } as const;
 

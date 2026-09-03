@@ -23,7 +23,7 @@ pin is still being confirmed." That line disappears on its own once you set
 **Already correct and confirmed** — no action needed:
 
 - Taamboolam / ತಾಂಬೂಲಂ  *(corrected — the site previously carried ತಂಬೋಲಂ)*
-- 50-1, 46th Cross, Sarakki Main Road, 8th Block, Jayanagar, Bengaluru 560070
+- 50-1, 46th Cross, Sarakki Main Road, 8th Block, Jayanagar, Bengaluru 560078
 - Next to Sampradha Hospitals and Sangeetha Mobiles
 - taamboolaminn@gmail.com
 - https://www.instagram.com/taamboolam/

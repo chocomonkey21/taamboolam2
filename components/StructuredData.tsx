@@ -36,7 +36,7 @@ export function StructuredData({ locale }: { locale: Locale }) {
       streetAddress: "50-1, 46th Cross, Sarakki Main Road",
       addressLocality: "Jayanagar, Bengaluru",
       addressRegion: "Karnataka",
-      postalCode: "560070",
+      postalCode: "560078",
       addressCountry: "IN",
     },
     /* Only when it is real. If somebody ever sets mapLinkIsPlaceholder back
