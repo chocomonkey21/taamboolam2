@@ -181,9 +181,26 @@ export function Footer() {
             </ul>
           </nav>
 
-          <p className="type-caption md:text-right">
-            © {new Date().getFullYear()} {site.name}. {t.footer.rights}
-          </p>
+          {/* Ownership, then authorship. Two lines rather than one: the
+              copyright belongs to the house and the credit does not, and
+              running them together would blur whose footer this is. The link
+              takes the same min-h-11 target as every other control here. */}
+          <div className="flex flex-col md:items-end md:text-right">
+            <p className="type-caption">
+              © {new Date().getFullYear()} {site.name}. {t.footer.rights}
+            </p>
+            <p className="type-caption">
+              {t.footer.designedBy}{" "}
+              <a
+                href={site.credit.url}
+                target="_blank"
+                rel="noreferrer noopener"
+                className="inline-flex min-h-11 items-center underline decoration-current/30 decoration-1 underline-offset-4 transition-colors duration-200 hover:text-ink hover:decoration-current"
+              >
+                {site.credit.studio}
+              </a>
+            </p>
+          </div>
         </div>
       </div>
 

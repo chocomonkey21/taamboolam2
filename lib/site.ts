@@ -38,6 +38,16 @@ export const site = {
     instagram: "https://www.instagram.com/taamboolam/",
   },
 
+  /**
+   * Who built the site. Not a fact about the house, but a changeable fact
+   * about this site, and it belongs here rather than as a literal inside the
+   * footer — same reason every other address in this file does.
+   */
+  credit: {
+    studio: "Fluxion Studios",
+    url: "https://fluxionstudios-omega.vercel.app/",
+  },
+
   location: {
     addressLines: [
       "50-1, 46th Cross, Sarakki Main Road",

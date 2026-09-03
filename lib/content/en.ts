@@ -485,6 +485,7 @@ export const en: Content = {
     gatherings:
       "Gatherings on the terrace are possible — about fifty seated at tables, or a hundred standing — by direct enquiry only.",
     rights: "All rights reserved.",
+    designedBy: "Designed by",
   },
 
   form: {

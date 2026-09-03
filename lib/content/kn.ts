@@ -511,6 +511,10 @@ export const kn: Content = {
     gatherings:
       "ತಾರಸಿಯಲ್ಲಿ ಸಮಾರಂಭಗಳು ಸಾಧ್ಯ — ಮೇಜುಗಳೊಂದಿಗೆ ಸುಮಾರು ಐದು, ನಿಂತುಕೊಂಡರೆ ನೂರು ಜನ — ನೇರ ವಿಚಾರಣೆಯ ಮೂಲಕ ಮಾತ್ರ.",
     rights: "ಎಲ್ಲ ಹಕ್ಕುಗಳನ್ನು ಕಾಯ್ದಿರಿಸಲಾಗಿದೆ.",
+    // "ವಿನ್ಯಾಸ: Fluxion Studios" — the colon form, because Kannada puts the
+    // agent after the noun and "ವಿನ್ಯಾಸ Fluxion Studios" would not read as a
+    // credit. Awaiting the same native review as the rest of this file.
+    designedBy: "ವಿನ್ಯಾಸ:",
   },
 
   form: {

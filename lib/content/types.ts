@@ -252,6 +252,13 @@ export type Content = {
     privacy: string;
     gatherings: string;
     rights: string;
+    /**
+     * Label before the studio's name in the credit line. Carries its own
+     * separator, because the two languages do not join it the same way:
+     * English reads "Designed by Fluxion Studios", Kannada takes the
+     * colon form that a credit normally uses there.
+     */
+    designedBy: string;
   };
 
   form: {
