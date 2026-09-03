@@ -45,27 +45,40 @@ export const site = {
       "Bengaluru 560070",
     ],
     /**
-     * STILL A SEARCH, NOT A PIN.
+     * The pin, derived rather than supplied — and corroborated before it was
+     * trusted.
      *
-     * The address was put through a geocoder and does not resolve: neither
-     * "46th Cross, Sarakki Main Road" nor the landmark returns a result, and
-     * the only thing that does is the centroid of Jayanagar 8th Block — a
-     * point some hundreds of metres from the door. Dropping that on the map
-     * would be a pin that is confidently wrong, which for somebody arriving
-     * after dark is worse than no pin at all.
+     * Geocoding the address alone had failed: nothing resolved, and the only
+     * thing that did was the centroid of Jayanagar 8th Block, 373m from the
+     * door. Searching the address *anchored near the landmark* resolves it
+     * properly, to "50, 46th Cross Rd, 8th Block, TMC Layout, 1st Phase,
+     * Jayanagar".
      *
-     * So this stays a search, with the landmark folded into the query because
-     * Sampradha Hospitals is a far stronger local signal than a cross number
-     * and materially improves what Google lands on.
+     * What makes it believable is the cross-check, not the geocoder: the
+     * resolved point sits 63m from Sammprada Hospital, and the owner's own
+     * description of the place is "next to Sampradha Hospitals". Two
+     * independent facts agreeing is the difference between a pin and a guess.
      *
-     * To replace it with the real thing: open Google Maps on the phone,
-     * long-press the house, Share, Copy link, and paste it here — then set
-     * mapLinkIsPlaceholder to false and the "still being confirmed" line
-     * disappears from the footer on its own.
+     * A coordinate query rather than a place link on purpose — a place id can
+     * be merged or retired by Google, a latitude and longitude cannot.
+     *
+     * TWO THINGS THE OWNER SHOULD CHECK, both left as the owner wrote them:
+     *   - Google returns 560078 for this address; addressLines below say
+     *     560070. One of them is wrong and it is not this file's place to
+     *     decide which.
+     *   - The hospital's registered name is "Sammprada Hospital"
+     *     (sammprada.com). The landmark copy says "Sampradha Hospitals". A
+     *     guest searching the second spelling may not find the first.
      */
     mapLink:
-      "https://www.google.com/maps/search/?api=1&query=Sampradha+Hospitals+46th+Cross+Sarakki+Main+Road+8th+Block+Jayanagar+Bengaluru+560070",
-    mapLinkIsPlaceholder: true,
+      "https://www.google.com/maps/search/?api=1&query=12.9169526%2C77.5795849",
+    /**
+     * The same point, for schema.org. Kept as numbers rather than parsed back
+     * out of the URL so there is one place to correct if the owner moves the
+     * pin.
+     */
+    coordinates: { lat: 12.9169526, lng: 77.5795849 },
+    mapLinkIsPlaceholder: false,
     /**
      * The embedded map.
      *
