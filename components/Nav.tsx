@@ -145,7 +145,19 @@ export function Nav() {
               })}
             </ul>
 
-            {/* On small screens the one page a reader might be looking for.
+            {/* The two pages a reader might be looking for on a phone. The
+                third, Enquire, is the button fixed to the bottom of the
+                viewport, and Home is the nameplate.
+
+                About is NOT here, and that is measured rather than forgotten.
+                At 390 the nameplate is 193px and this plate 191px, which with
+                the gap already exceeds the padded container by about 46px:
+                adding "About" clipped "The Experience" mid-word, and Kannada
+                is wider still. Two text links and the wordmark do not fit on a
+                phone. About is reachable from the footer, which carries the
+                full NAV_ITEMS list. Closing that properly means a compact menu
+                or freeing the bottom bar, not squeezing this plate.
+
                 whitespace-nowrap is load-bearing: the plate is sized by its
                 contents, and at 390px "The Experience" wrapped to two lines,
                 which turned a small object on the wall into a tall lozenge

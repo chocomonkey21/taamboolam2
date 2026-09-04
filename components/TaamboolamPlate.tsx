@@ -177,7 +177,14 @@ export function TaamboolamPlate({ className = "" }: { className?: string }) {
            the viewport it falls back to the section's own height so the ratio
            stays finite and the tray still assembles. */
         const travel = Math.max(rect.height - window.innerHeight, rect.height * 0.6);
-        const raw = Math.min(Math.max(-rect.top / travel, 0), 1);
+        /* Finished at 0.78 of the way through rather than at the very end.
+           Watched on the running page: mapped to the full travel, the last
+           piece landed at the same moment the sticky column released, so the
+           completed offering slid out of frame on the beat it was completed
+           and was never once seen whole and still. Ending early leaves the
+           final quarter of the section showing the finished tray, which is
+           the thing the section is about. */
+        const raw = Math.min(Math.max(-rect.top / (travel * 0.78), 0), 1);
 
         /* A high-water mark: the tray only ever gains pieces. Two reasons,
            and the second matters more. Scrolling back up to re-read a line
