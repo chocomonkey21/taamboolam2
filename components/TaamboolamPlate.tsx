@@ -141,14 +141,19 @@ export function TaamboolamPlate({ className = "" }: { className?: string }) {
    * on desktop: its own rectangle stops moving once it pins, so it cannot be
    * its own clock.
    *
-   * ── Nothing is hidden before it can be shown ──
+   * ── Where the empty dish comes from ──
    *
-   * `--p` defaults to 1 in the stylesheet, which is the finished tray. It is
-   * only ever driven down from there by this effect, and this effect does not
-   * run at all under reduced motion or with scripting off. Server HTML, every
-   * pre-hydration paint, a browser with no JS, and a reader who has asked for
-   * less motion all get the assembled tray outright — the same contract
-   * Reveal.tsx keeps, reached the same way.
+   * Not from here. The stylesheet starts --p at 0 behind
+   * @media (scripting: enabled), so the dish is empty in the very first
+   * frame and the only thing that ever happens to it is assembly. This
+   * effect used to set that itself and it was wrong to: an effect runs after
+   * the first paint, so the finished tray rendered, vanished, and rebuilt —
+   * which reads as a glitch rather than as an entrance.
+   *
+   * The bare rule leaves --p at 1, the finished tray, and the reduced-motion
+   * block puts it back to 1. So a browser with no scripting and a reader who
+   * has asked for less motion both get the completed arrangement outright,
+   * and this effect never runs for either of them.
    */
   useEffect(() => {
     const node = ref.current;

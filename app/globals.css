@@ -807,7 +807,27 @@
   .plate-stage {
     --dish-face: #fdf6e6;
     --dish-rim: #d8b46c;
+    /* No scripting: the finished tray, always. */
     --p: 1;
+  }
+
+  /* With scripting, the tray starts empty and is laid by the scroll.
+
+     This is set HERE rather than written by the effect, and that is the whole
+     point of it. The effect runs after the first paint, so setting it there
+     meant the completed tray rendered, vanished a frame later, and then
+     rebuilt itself — which reads as a glitch rather than as an entrance, and
+     was the first thing anyone noticed about it. A media query is evaluated
+     before the first paint, so with this the dish is empty from the very
+     first frame and the only thing that ever happens to it is assembly.
+
+     scripting: enabled is the same gate the reveals use, and it is chosen for
+     the same reason: it needs no inline script mutating the document and so
+     cannot cause a hydration mismatch. */
+  @media (scripting: enabled) {
+    .plate-stage {
+      --p: 0;
+    }
   }
 
   /* Each piece opens at its own point along --p and takes 0.26 of it to
@@ -835,6 +855,10 @@
   @media (prefers-reduced-motion: reduce) {
     /* Belt as well as braces: the effect already declines to run, and this
        makes certain that nothing here can animate even if --p is somehow set. */
+    .plate-stage {
+      --p: 1;
+    }
+
     .plate-piece {
       --local: 1;
       transition: none;
