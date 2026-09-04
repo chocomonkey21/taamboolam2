@@ -241,7 +241,7 @@ export const en: Content = {
     floors: {
       eyebrow: "The floors",
       heading: "Three floors, and the terrace above them",
-      body: "Floors 1, 2 and 3 are the same plan in three different tempers — the light, the height and the materials change, the layout does not. Above them the terrace belongs to nobody in particular, which is why everybody ends up there.",
+      body: "Floors 1, 2 and 3 are the same plan in three different tempers — the light, the height and the materials change, the layout does not. Above them, past two private floors, the terrace belongs to nobody in particular, which is why everybody ends up there.",
       link: "Walk through the house",
     },
 
@@ -342,7 +342,7 @@ export const en: Content = {
     },
     terrace: {
       label: "Terrace",
-      lead: "Above the third floor, and shared by everybody.",
+      lead: "At the top of the house, above the private floors, and shared by everybody.",
       body: [
         "At the top the house stops being floors and becomes sky. Part of the terrace is under a pergola and part of it is open, with planters hung along the beams. The whole neighbourhood is laid out below it.",
       ],
@@ -419,7 +419,7 @@ export const en: Content = {
     practicalHeading: "Practical things",
     practicalLabel: "The practical details",
     practical: [
-      "Floors 1, 2 and 3 are the guest floors. The fourth floor is private and is not accessible to guests.",
+      "Floors 1, 2 and 3 are the guest floors. The fourth and fifth floors are private and are not accessible to guests. The terrace is above them, at the top of the house.",
       "The terrace is open to everyone staying in the house.",
       "There is Wi-Fi, air conditioning and hot water.",
       "There is a lift, and there are stairs.",
