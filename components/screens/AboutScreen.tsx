@@ -63,48 +63,51 @@ export function AboutScreen() {
         aria-labelledby="name-origin"
       >
         <div className="container-content section-rhythm">
-          <div className="grid items-center gap-12 md:grid-cols-12 md:gap-10">
-            {/* Text left, tray right, on the twelve-column grid the rest of
-                the site uses. One column below md, text first. */}
-            <div className="md:col-span-5">
-              <p className="type-eyebrow text-atmos-accent">{t.about.nameEyebrow}</p>
-              <h2 id="name-origin" className="type-h2 mt-5 text-atmos-ink">
-                {t.about.nameHeading}
-              </h2>
-              {t.about.nameBody.map((paragraph, i) => (
-                <p
-                  key={i}
-                  className={`type-body measure text-atmos-ink/80 ${i ? "mt-4" : "mt-6"}`}
-                >
-                  {paragraph}
-                </p>
-              ))}
-            </div>
+          {/* Text left, tray right. The tray pins on desktop and the writing
+            goes past it, so the six lines below and the six things on the
+            dish are the same list read at the same speed: by the time a
+            reader reaches "Kumkum", the kumkum is on the tray. Below md it
+            unpins and simply stacks, text first. */}
+        <div className="grid gap-12 md:grid-cols-12 md:items-start md:gap-10">
+          <div className="md:col-span-5">
+            <p className="type-eyebrow text-atmos-accent">{t.about.nameEyebrow}</p>
+            <h2 id="name-origin" className="type-h2 mt-5 text-atmos-ink">
+              {t.about.nameHeading}
+            </h2>
+            {t.about.nameBody.map((paragraph, i) => (
+              <p
+                key={i}
+                className={`type-body measure text-atmos-ink/80 ${i ? "mt-4" : "mt-6"}`}
+              >
+                {paragraph}
+              </p>
+            ))}
 
-            {/* Capped hard below md. A tray that fills a phone's width pushes
-                the paragraph a screen and a half down and turns a short
-                explanation into a scroll. */}
-            <div className="md:col-span-6 md:col-start-7">
-              <TaamboolamPlate className="mx-auto w-full max-w-[20rem] sm:max-w-[24rem] md:max-w-none" />
-            </div>
+            {/* The gloss. Not new material — the paragraph above already says
+                it in a sentence. Set out one to a line it becomes a key to
+                the drawing, and gives the pinned tray the distance it needs
+                to be laid one piece at a time. */}
+            <ul className="rule-atmos mt-12 border-t">
+              {t.about.elements.map((element) => (
+                <li
+                  key={element.name}
+                  className="rule-atmos border-b py-6 md:py-9"
+                >
+                  <h3 className="type-label text-atmos-accent">{element.name}</h3>
+                  <p className="type-body measure mt-2 text-atmos-ink/75">
+                    {element.carries}
+                  </p>
+                </li>
+              ))}
+            </ul>
           </div>
 
-          {/* ── What each part carries ──────────────────────────────────
-              The paragraph above already says this in a sentence: "the leaf
-              freshness and respect, the nut firmness, the coconut and fruit
-              abundance". Set out as a list it becomes a key to the drawing
-              beside it — the reader can look from a word to the thing. Kept
-              to one line each; this is a gloss, not a glossary. */}
-          <ul className="rule-atmos mt-14 grid gap-x-10 gap-y-6 border-t pt-8 sm:grid-cols-2 lg:grid-cols-3">
-            {t.about.elements.map((element) => (
-              <li key={element.name}>
-                <h3 className="type-label text-atmos-accent">{element.name}</h3>
-                <p className="type-caption mt-1.5 text-atmos-ink/75">
-                  {element.carries}
-                </p>
-              </li>
-            ))}
-          </ul>
+          {/* Sticky needs the column to sit at the start of the row rather
+              than be centred in it, or there is no travel to stick through. */}
+          <div className="md:col-span-6 md:col-start-7 md:sticky md:top-[16vh] md:self-start">
+            <TaamboolamPlate className="mx-auto w-full max-w-[20rem] sm:max-w-[24rem] md:max-w-none" />
+          </div>
+        </div>
 
           <p className="type-annotation mt-10">{t.about.gestureNote}</p>
         </div>

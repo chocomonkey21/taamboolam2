@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { useSite } from "./SiteProvider";
 
 /**
@@ -123,59 +123,113 @@ function Leaf({ tone, sheen, vein }: { tone: string; sheen: string; vein: string
 export function TaamboolamPlate({ className = "" }: { className?: string }) {
   const { t } = useSite();
   const ref = useRef<HTMLDivElement>(null);
-  const [armed, setArmed] = useState(false);
-  const [shown, setShown] = useState(false);
 
-  /* The same contract as Reveal.tsx: the hidden state is applied only by this
-     effect, and only to something that is off screen at the time. Server HTML,
-     pre-hydration paint, scripting off, reduced motion, and "the reader is
-     already looking at it" all render the finished tray outright. */
+  /**
+   * The tray is laid by the reader, not by a timer.
+   *
+   * This writes one number — `--p`, from 0 to 1 — onto the stage as the
+   * section scrolls through the viewport, and the CSS does the rest: each
+   * piece has a start point along that number and fades, slides and turns
+   * into place across its own slice of it, so the offering is laid a piece at
+   * a time at whatever pace the reader reads.
+   *
+   * The number only ever goes up. Scrolling back to re-read a line does not
+   * unmake the tray in the corner of the eye, and once it is laid the effect
+   * stops listening.
+   *
+   * The section rather than the tray is measured, because the tray is sticky
+   * on desktop: its own rectangle stops moving once it pins, so it cannot be
+   * its own clock.
+   *
+   * ── Nothing is hidden before it can be shown ──
+   *
+   * `--p` defaults to 1 in the stylesheet, which is the finished tray. It is
+   * only ever driven down from there by this effect, and this effect does not
+   * run at all under reduced motion or with scripting off. Server HTML, every
+   * pre-hydration paint, a browser with no JS, and a reader who has asked for
+   * less motion all get the assembled tray outright — the same contract
+   * Reveal.tsx keeps, reached the same way.
+   */
   useEffect(() => {
     const node = ref.current;
     if (!node) return;
 
-    if (
-      window.matchMedia("(prefers-reduced-motion: reduce)").matches ||
-      typeof IntersectionObserver === "undefined"
-    ) {
-      return;
-    }
+    const motion = window.matchMedia("(prefers-reduced-motion: reduce)");
 
-    const rect = node.getBoundingClientRect();
-    if (rect.top < window.innerHeight && rect.bottom > 0) return;
+    let frame = 0;
+    let reached = 0;
+    let detach: (() => void) | null = null;
 
-    setArmed(true);
+    const start = () => {
+      const section = node.closest("section");
+      if (!section) return;
 
-    // Armed before the observer exists, so every failure path still ends with
-    // an assembled tray rather than an empty dish.
-    const failsafe = window.setTimeout(() => setShown(true), 2200);
+      const measure = () => {
+        frame = 0;
+        const rect = section.getBoundingClientRect();
+        /* How far the section has travelled through the viewport, 0 to 1. The
+           denominator is its scrollable overshoot; on a section shorter than
+           the viewport it falls back to the section's own height so the ratio
+           stays finite and the tray still assembles. */
+        const travel = Math.max(rect.height - window.innerHeight, rect.height * 0.6);
+        const raw = Math.min(Math.max(-rect.top / travel, 0), 1);
 
-    const observer = new IntersectionObserver(
-      (entries) => {
-        for (const entry of entries) {
-          if (entry.isIntersecting) {
-            setShown(true);
-            observer.disconnect();
-          }
-        }
-      },
-      { threshold: 0.02, rootMargin: "0px 0px 35% 0px" },
-    );
+        /* A high-water mark: the tray only ever gains pieces. Two reasons,
+           and the second matters more. Scrolling back up to re-read a line
+           should not take the offering apart in the corner of the reader's
+           eye — the finished arrangement is the point of it. And it means no
+           glitch, no missed event, no throttled frame and no resize mid-scroll
+           can leave the dish emptier than it already was: the worst any
+           failure can do is stop it early rather than undo it. */
+        if (raw <= reached) return;
+        reached = raw;
+        node.style.setProperty("--p", raw.toFixed(4));
 
-    observer.observe(node);
+        // Laid. Nothing left to compute, so stop listening.
+        if (raw >= 1) detach?.();
+      };
+
+      const onScroll = () => {
+        /* Cancel and re-request rather than bailing out while one is pending.
+           An earlier version returned early if a frame was already booked,
+           which deadlocks the moment requestAnimationFrame stops firing — a
+           backgrounded tab, a throttled renderer — because the flag is then
+           never cleared and every later scroll returns early for good. */
+        if (frame) window.cancelAnimationFrame(frame);
+        frame = window.requestAnimationFrame(measure);
+      };
+
+      measure();
+      window.addEventListener("scroll", onScroll, { passive: true });
+      window.addEventListener("resize", onScroll, { passive: true });
+      detach = () => {
+        window.removeEventListener("scroll", onScroll);
+        window.removeEventListener("resize", onScroll);
+        if (frame) window.cancelAnimationFrame(frame);
+      };
+    };
+
+    const sync = () => {
+      detach?.();
+      detach = null;
+      if (motion.matches) {
+        // Hand the finished tray back and stop listening.
+        node.style.removeProperty("--p");
+        return;
+      }
+      start();
+    };
+
+    sync();
+    motion.addEventListener("change", sync);
     return () => {
-      observer.disconnect();
-      window.clearTimeout(failsafe);
+      motion.removeEventListener("change", sync);
+      detach?.();
     };
   }, []);
 
   return (
-    <div
-      ref={ref}
-      data-anim={armed ? "true" : undefined}
-      data-shown={shown ? "true" : "false"}
-      className={`plate-stage ${className}`}
-    >
+    <div ref={ref} className={`plate-stage ${className}`}>
       <svg
         viewBox="0 0 440 460"
         role="img"
