@@ -67,37 +67,40 @@ export const site = {
       "Bengaluru 560078",
     ],
     /**
-     * The pin, derived rather than supplied — and corroborated before it was
-     * trusted.
+     * The pin, supplied by the owner from the house's own Google Maps record
+     * — not derived. It replaced a geocoded guess that had sat 23m off.
      *
-     * Geocoding the address alone had failed: nothing resolved, and the only
-     * thing that did was the centroid of Jayanagar 8th Block, 373m from the
-     * door. Searching the address *anchored near the landmark* resolves it
-     * properly, to "50, 46th Cross Rd, 8th Block, TMC Layout, 1st Phase,
-     * Jayanagar".
+     * Google files the same point under "TMC Layout, 1st Phase, J. P. Nagar",
+     * where the site says "8th Block, Jayanagar" throughout. Both describe the
+     * spot; the address above is the one the owner uses, so it stays.
      *
-     * What makes it believable is the cross-check, not the geocoder: the
-     * resolved point sits 63m from Sammprada Hospital, and the owner's own
-     * description of the place is "next to Sampradha Hospitals". Two
-     * independent facts agreeing is the difference between a pin and a guess.
-     *
-     * A coordinate query rather than a place link on purpose — a place id can
-     * be merged or retired by Google, a latitude and longitude cannot.
-     *
-     * Both of the things this note used to flag are settled. The postcode is
-     * 560078, confirmed by the owner against Google's own answer for the
-     * address — the site had been carrying 560070. And the landmark is
-     * "Sammprada Hospital", the name the business is registered under and
-     * therefore the one a guest searching for it will actually find.
+     * The landmark is "Sammprada Hospital", the name the business is
+     * registered under and therefore the one a guest searching will find. The
+     * postcode is 560078, confirmed by the owner.
+     */
+    /**
+     * "Directions", not "search". A dir/ link opens Google's routing straight
+     * to the door instead of dropping the reader on a results page they then
+     * have to act on themselves.
      */
     mapLink:
-      "https://www.google.com/maps/search/?api=1&query=12.9169526%2C77.5795849",
+      "https://www.google.com/maps/dir/?api=1&destination=12.9167449%2C77.5796137",
+    /**
+     * The footer map. `output=embed` is Google's keyless embed — no API key to
+     * hold, expire or leak, and nothing to bill.
+     *
+     * A coordinate query rather than a place id on purpose: a place record can
+     * be merged, renamed or retired by Google, and a latitude and longitude
+     * cannot. Moving the pin means changing this and `coordinates` together.
+     */
+    mapEmbed:
+      "https://www.google.com/maps?q=12.9167449,77.5796137&z=17&hl=en&output=embed",
     /**
      * The same point, for schema.org. Kept as numbers rather than parsed back
-     * out of the URL so there is one place to correct if the owner moves the
+     * out of a URL so there is one place to correct if the owner moves the
      * pin.
      */
-    coordinates: { lat: 12.9169526, lng: 77.5795849 },
+    coordinates: { lat: 12.9167449, lng: 77.5796137 },
     mapLinkIsPlaceholder: false,
   },
 } as const;

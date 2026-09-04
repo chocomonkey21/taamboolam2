@@ -36,7 +36,6 @@ export type PhotoId =
   | "floor3a"
   | "floor3b"
   | "terraceOpen"
-  | "terraceSwing"
   | "houseSection"
   | "craftTiles"
   | "craftJoinery"
@@ -73,7 +72,6 @@ export const photos: Record<PhotoId, PhotoMeta> = {
      since confirmed it, so the frame drops to include them and the terrace
      stops looking like an empty roof. */
   terraceOpen: { src: "/images/terrace-open.jpg", ratio: "16 / 9" },
-  terraceSwing: { src: "/images/terrace-swing.jpg", ratio: "4 / 5" },
 
   houseSection: { src: "/images/house-section.jpg", ratio: "3 / 4" },
 

@@ -34,12 +34,16 @@ import { TileCourse } from "./TileMotif";
  */
 type FloorLayout = "settle" | "landing" | "surface" | "open";
 
+/* Two photographs per chapter, except the terrace, which has one. The count
+   is tied to the layout rather than left optional, so `open` cannot silently
+   grow a second slot and the other three cannot lose theirs. */
 export type FloorChapterSpec = {
   id: FloorId;
   atmosphere: string;
-  photos: [PhotoId, PhotoId];
-  layout: FloorLayout;
-};
+} & (
+  | { layout: Exclude<FloorLayout, "open">; photos: [PhotoId, PhotoId] }
+  | { layout: "open"; photos: [PhotoId] }
+);
 
 export const FLOOR_CHAPTERS: FloorChapterSpec[] = [
   {
@@ -61,12 +65,13 @@ export const FLOOR_CHAPTERS: FloorChapterSpec[] = [
     layout: "surface",
   },
   /* The terrace closes the sequence without joining it. Its atmosphere goes
-     cool where the three floors warmed, and its two photographs are the only
-     pair on the page that are not two views of an interior. */
+     cool where the three floors warmed, and it is the one chapter with a
+     single photograph: the carved swing that used to sit beside this text is
+     on the fourth floor portico, which guests do not have. */
   {
     id: "terrace",
     atmosphere: "terrace",
-    photos: ["terraceOpen", "terraceSwing"],
+    photos: ["terraceOpen"],
     layout: "open",
   },
 ];
@@ -94,11 +99,12 @@ export function FloorChapter({
 }) {
   const { t } = useSite();
   const copy = t.floors[spec.id];
-  /* Two photographs per chapter. What shape each one is depends on the
-     layout, which is why they are named by position rather than by
-     orientation: `settle`, `landing` and `surface` take a room and a wide
-     shot, and `open` takes the sky band and the swing. */
-  const [first, second] = spec.photos;
+  /* The lead photograph of every chapter. Its shape depends on the layout,
+     which is why it is named by position rather than by orientation:
+     `settle`, `landing` and `surface` open on a room, `open` on the sky
+     band. The second photograph, where there is one, is read off `spec`
+     inside each layout so the union above can narrow it. */
+  const first = spec.photos[0];
 
   /* The numeral is the chapter's anchor, hung in the margin at the scale of a
      drawing rather than set as a label above the heading. */
@@ -221,7 +227,7 @@ export function FloorChapter({
               className="md:col-span-6 md:col-start-7 md:mt-20"
             >
               <Photo
-                id={second}
+                id={spec.photos[1]}
                 sizes="(min-width: 768px) 46vw, 92vw"
                 caption="below"
                 zoomable
@@ -245,7 +251,7 @@ export function FloorChapter({
 
           <Reveal variant="photo" className="mt-10 md:mt-12">
             <Photo
-              id={second}
+              id={spec.photos[1]}
               ratio="21 / 9"
               sizes="(min-width: 768px) 92vw, 92vw"
               caption="below"
@@ -302,7 +308,7 @@ export function FloorChapter({
                 className="md:col-span-6 md:col-start-7 md:mt-10"
               >
                 <Photo
-                  id={second}
+                  id={spec.photos[1]}
                   sizes="(min-width: 768px) 46vw, 92vw"
                   zoomable
                 />
@@ -325,8 +331,9 @@ export function FloorChapter({
           grid here would make the terrace look like a fourth floor with a
           missing photograph.
 
-          The swing comes last and small, off to one side: the terrace's one
-          object, at night, after the daylight band. */}
+          There is no second photograph. The prose keeps the centred measure
+          the heading sits in rather than shifting left to leave a gap where
+          one used to be. */}
       {spec.layout === "open" ? (
         <div className="relative">
           <Reveal variant="photo" className="pt-[clamp(3rem,5vw,4.5rem)]">
@@ -341,21 +348,7 @@ export function FloorChapter({
           <div className="container-content pt-10 pb-[clamp(3.75rem,7vw,6.5rem)] md:pt-14">
             <div className="mx-auto max-w-[46rem] text-center">{heading}</div>
 
-            <div className="mt-10 grid gap-10 md:mt-12 md:grid-cols-12 md:items-start md:gap-8">
-              <div className="md:col-span-7 md:col-start-2">{prose}</div>
-
-              <Reveal
-                variant="photo"
-                delay={90}
-                className="w-[62%] md:col-span-3 md:col-start-10 md:w-full"
-              >
-                <Photo
-                  id={second}
-                  sizes="(min-width: 768px) 24vw, 62vw"
-                  zoomable
-                />
-              </Reveal>
-            </div>
+            <div className="mx-auto mt-10 max-w-[46rem] md:mt-12">{prose}</div>
           </div>
         </div>
       ) : null}

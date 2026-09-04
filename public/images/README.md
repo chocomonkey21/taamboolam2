@@ -54,7 +54,6 @@ Total: 21 files, about 3 MB. The stock set it replaced was 24 files and 27 MB.
 | `floor-3-a.jpg` | Home ledger + Experience | Floor 3 — a bedroom on the patterned floor |
 | `floor-3-b.jpg` | Experience — Floor 3 | Floor 3 — kitchen and dining |
 | `terrace-open.jpg` | Home ledger + Experience | The terrace: pergola, planters, sky |
-| `terrace-swing.jpg` | Experience — the terrace | The wooden swing at night *(from video)* |
 | `house-section.jpg` | Experience — opening | Panelled wall, shelf, tile border |
 | `experience-opening.jpg` | Experience — wide band | Living room on the red tiled floor |
 | `gathering-sky.jpg` | Experience — gatherings | Sunset from the terrace |

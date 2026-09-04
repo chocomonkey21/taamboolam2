@@ -9,7 +9,9 @@ import { useSite } from "./SiteProvider";
 /**
  * The three guest floors, and then the terrace.
  *
- * The fourth row is not a fourth floor and must not read as one. It carries
+ * The fourth row is not a fourth floor and must not read as one — and it is
+ * not the floor above the third either: two private floors sit between them.
+ * It carries
  * the terrace's own atmosphere — the one that goes cool where the three below
  * it went warm — and its numeral is a mark rather than "04", because
  * numbering it would put it back in the sequence the copy spends a paragraph

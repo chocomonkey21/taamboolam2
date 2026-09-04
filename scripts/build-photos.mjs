@@ -83,14 +83,9 @@ const jobs = [
     tone: (p) =>
       p.linear([1.05, 1.03, 0.99], [-5, -4, -1]).modulate({ saturation: 0.95 }),
   },
-  {
-    out: "terrace-swing.jpg",
-    frame: "sw_17.jpg",
-    w: 760,
-    ar: 4 / 5,
-    tone: night,
-    upscale: true,
-  },
+  // No swing frame. The carved swing in the owner's video is on the fourth
+  // floor portico, which is the family's and not open to guests, so it is not
+  // on the site at all.
   // "south": the sun and the treeline sit low in the frame, and a centred
   // 21:9 band cut both out and left an abstract orange field.
   { out: "gathering-sky.jpg", src: "IMG-20260902-WA0029.jpg", w: 1200, ar: 21 / 9, position: "south" },

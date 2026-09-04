@@ -6,8 +6,9 @@ export type VisitType = (typeof VISIT_TYPES)[number];
 /**
  * What a guest may ask for.
  *
- * "floor4" is deliberately absent: the fourth floor is private and is not let
- * to guests, so it must never appear as a preference anywhere. "terrace" is
+ * "floor4" and "floor5" are deliberately absent: the house has five floors and
+ * only the first three are let, so the private two must never appear as a
+ * preference anywhere. The terrace sits above them all. "terrace" is
  * here because guests do ask for it — it is shared by everyone staying, and
  * saying so in an enquiry tells the owner something useful.
  *

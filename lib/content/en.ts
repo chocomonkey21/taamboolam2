@@ -87,9 +87,6 @@ export const en: Content = {
       alt: "A group standing together on the terrace under the pergola, with planters hanging above them and the city beyond.",
       caption: "The terrace, open to everyone staying in the house.",
     },
-    terraceSwing: {
-      alt: "A carved wooden swing hanging on brass chains on the terrace at night, with the city beyond.",
-    },
 
     houseSection: {
       alt: "A panelled wooden wall with a small shelf, standing on a tiled floor with a painted border.",
@@ -227,7 +224,7 @@ export const en: Content = {
       {
         q: "What should we know about the terrace?",
         a: [
-          "It is open to everyone staying in the house, at any hour. Part of it is covered and part of it is not, and there is a swing at one end.",
+          "It is open to everyone staying in the house, at any hour. Part of it is covered by a pergola and part of it is open to the sky.",
           "It is not a room and it cannot be booked. It belongs to no single floor, which is why people end up there.",
         ],
       },
@@ -244,7 +241,7 @@ export const en: Content = {
     floors: {
       eyebrow: "The floors",
       heading: "Three floors, and the terrace above them",
-      body: "Floors 1, 2 and 3 are the same plan in three different tempers — the light, the height and the materials change, the layout does not. Above them the terrace belongs to nobody in particular, which is why everybody ends up there.",
+      body: "Floors 1, 2 and 3 are the same plan in three different tempers — the light, the height and the materials change, the layout does not. Above them, past two private floors, the terrace belongs to nobody in particular, which is why everybody ends up there.",
       link: "Walk through the house",
     },
 
@@ -298,7 +295,7 @@ export const en: Content = {
       eyebrow: "Gatherings",
       heading: "Occasionally, the house holds more than guests",
       body: [
-        "Sometimes the house is used for something other than a stay — a yoga morning, a music or art session, a workshop, a family occasion. The terrace is where it happens, and it takes about fifty people seated at tables, or a hundred standing. These are never listed and never bookable: they happen because somebody wrote and asked, and the fit was right for both sides.",
+        "Sometimes the house is used for something other than a stay — a yoga morning, a music or art session, a workshop, a family occasion. The terrace is where it happens, and it holds about fifty with tables, or a hundred with chairs alone. These are never listed and never bookable: they happen because somebody wrote and asked, and the fit was right for both sides.",
       ],
       note: "If you have something in mind, say so in your enquiry and describe it. Parties are the one thing the house does not do.",
     },
@@ -345,9 +342,9 @@ export const en: Content = {
     },
     terrace: {
       label: "Terrace",
-      lead: "Above the third floor, and shared by everybody.",
+      lead: "At the top of the house, above the private floors, and shared by everybody.",
       body: [
-        "At the top the house stops being floors and becomes sky. Part of the terrace is under a pergola and part of it is open, there are planters hung along the beams, and a carved wooden swing at one end. The whole neighbourhood is laid out below it.",
+        "At the top the house stops being floors and becomes sky. Part of the terrace is under a pergola and part of it is open, with planters hung along the beams. The whole neighbourhood is laid out below it.",
       ],
       more: [
         "It belongs to no single floor, which is exactly why it is where people end up — usually late, after the heat has gone out of the day and the city has put its lights on. Nothing up here is scheduled and nothing up here is booked.",
@@ -422,7 +419,7 @@ export const en: Content = {
     practicalHeading: "Practical things",
     practicalLabel: "The practical details",
     practical: [
-      "Floors 1, 2 and 3 are the guest floors. The fourth floor is private and is not accessible to guests.",
+      "Floors 1, 2 and 3 are the guest floors. The fourth and fifth floors are private and are not accessible to guests. The terrace is above them, at the top of the house.",
       "The terrace is open to everyone staying in the house.",
       "There is Wi-Fi, air conditioning and hot water.",
       "There is a lift, and there are stairs.",
@@ -470,7 +467,7 @@ export const en: Content = {
         title: "Cookies, and the lack of them",
         body: [
           "One cookie, which remembers whether you are reading in English or Kannada. That is the entire list.",
-          "There is no analytics, no tracking pixel, no advertising tag and no third-party script of any kind. Nobody is counting you, and no other company learns that you visited.",
+          "There is no analytics, no tracking pixel and no advertising tag. Nobody is counting you. The one thing here that belongs to another company is the map in the footer, which is Google’s: loading a page it appears on tells Google you did, the same as opening Google Maps would. Nothing else on the site is theirs.",
         ],
       },
       {
@@ -492,7 +489,7 @@ export const en: Content = {
     mapLink: "Directions",
     mapPending: "The exact pin is still being confirmed.",
     mapSchematic:
-      "A drawing of the block, not a survey. Use Directions for the route.",
+      "The map is Google’s, and the only thing on this site that is. Use Directions for the route.",
     mapTitle: "Map of the neighbourhood around Taamboolam",
     address: "The address",
     reachUs: "Reach us",
@@ -502,7 +499,7 @@ export const en: Content = {
     pages: "Pages",
     privacy: "Privacy",
     gatherings:
-      "Gatherings on the terrace are possible — about fifty seated at tables, or a hundred standing — by direct enquiry only.",
+      "Gatherings on the terrace are possible — about fifty with tables, or a hundred with chairs alone — by direct enquiry only.",
     rights: "All rights reserved.",
     designedBy: "Designed by",
   },
