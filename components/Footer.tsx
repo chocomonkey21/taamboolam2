@@ -22,9 +22,11 @@ import { Wordmark } from "./Wordmark";
  * `frame-src` in middleware.ts and a rewritten paragraph on the privacy page.
  * See MapPanel.
  *
- * The panel is no longer a bordered box dropped into a column. The drawing sits
- * directly on the footer's own ground with the address ruled underneath it, so
- * it is part of the composition rather than a window cut into it.
+ * The panel carries the page's own hairline and radius, and the address is
+ * ruled underneath it in the same column, so the map reads as part of the
+ * composition rather than as a window cut through it. That framing matters
+ * more now than it did when the panel was a drawing: it is Google's artwork
+ * inside it, and the border is what keeps it from looking pasted on.
  *
  * And the left half is no longer three quarters empty. It used to hold a
  * wordmark, one line and a button in a column six units wide, which left a
