@@ -57,7 +57,7 @@ export const site = {
    */
   credit: {
     studio: "Fluxion Studios",
-    url: "https://fluxionstudios-omega.vercel.app/",
+    url: "https://fluxion-studios.vercel.app/#top",
   },
 
   location: {
