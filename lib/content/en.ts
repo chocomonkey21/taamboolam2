@@ -15,6 +15,9 @@ export const en: Content = {
     enquireTitle: "Enquire",
     enquireDescription:
       "Ask about staying at Taamboolam, or about a small gathering. There is no instant booking. The owner reads every enquiry.",
+    aboutTitle: "About",
+    aboutDescription:
+      "A family home in Jayanagar kept as a homestay, and the offering it is named after.",
     privacyTitle: "Privacy",
     privacyDescription:
       "What the enquiry form collects, where it goes, and what is kept. No analytics, no tracking, and nothing stored on this site.",
@@ -22,6 +25,7 @@ export const en: Content = {
 
   nav: {
     home: "Home",
+    about: "About",
     experience: "The Experience",
     enquire: "Enquire",
     skipToContent: "Skip to content",
@@ -161,6 +165,16 @@ export const en: Content = {
       "Taamboolam is the tray offered to a guest at the end of a visit in South India — betel leaves and areca nut, usually with a coconut, some fruit, turmeric and kumkum. Each part carries something: the leaf freshness and respect, the nut firmness, the coconut and fruit abundance.",
       "What matters is the gesture rather than the objects. Somebody came, they were received, and they do not leave empty-handed. The house is named after that, and tries to behave like it.",
     ],
+    elements: [
+      { name: "Betel leaf", carries: "Freshness, and respect for the person leaving." },
+      { name: "Areca nut", carries: "Firmness — a thing that keeps." },
+      { name: "Coconut", carries: "Abundance, and what a household can spare." },
+      { name: "Banana", carries: "Plenty, and the ordinary sweetness of a house." },
+      { name: "Turmeric", carries: "Auspiciousness, and a blessing on the road." },
+      { name: "Kumkum", carries: "Welcome, marked rather than spoken." },
+    ],
+    gestureNote:
+      "None of it is worth much. That is the point of it: what is given is the gesture, not the goods.",
     note: "Best suited to guests who would rather stay in a home than in a room.",
   },
 

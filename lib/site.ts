@@ -92,6 +92,7 @@ export const site = {
 
 export const NAV_ITEMS = [
   { href: "/", key: "home" },
+  { href: "/about", key: "about" },
   { href: "/experience", key: "experience" },
   { href: "/enquire", key: "enquire" },
 ] as const;

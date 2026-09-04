@@ -80,6 +80,7 @@ export function Nav() {
 
   const labels: Record<string, string> = {
     home: t.nav.home,
+    about: t.nav.about,
     experience: t.nav.experience,
     enquire: t.nav.enquire,
   };

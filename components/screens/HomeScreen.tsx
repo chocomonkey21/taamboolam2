@@ -3,7 +3,6 @@
 import { Arrangement } from "../Arrangement";
 import { ButtonLink, TextLink } from "../Button";
 import { Datum } from "../Datum";
-import { NameOrigin } from "../NameOrigin";
 import { FloorLedger } from "../FloorLedger";
 import { HouseValues } from "../HouseValues";
 import { Parallax } from "../Parallax";
@@ -222,7 +221,7 @@ export function HomeScreen() {
               different register — those describe a house, this explains a
               word — and giving it no different treatment made it read as an
               afterthought stapled to a section about something else. It is
-              now its own band directly below: see components/NameOrigin.tsx.
+              now on its own page: see components/screens/AboutScreen.tsx.
               The copy moved unchanged. */}
 
           {/* The one line that says who this suits, set apart on a hairline
@@ -258,11 +257,6 @@ export function HomeScreen() {
         </div>
       </section>
 
-      {/* ── The name ─────────────────────────────────────────────────────
-          Placed here rather than earlier because the reader has just been
-          told what the house is and shown it. The word is the last thing
-          explained before the page turns to how the house is arranged. */}
-      <NameOrigin />
 
       {/* ── 3 · The plan, and the levels ─────────────────────────────────
           One section, because they are one idea: every guest floor is the

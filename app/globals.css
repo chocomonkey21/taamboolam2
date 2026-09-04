@@ -797,38 +797,45 @@
      The face and rim are named here rather than inline in the SVG so the
      drawing has no colour of its own: it is lit by whatever ground it is put
      on, exactly like every other mark on this site. */
+  /* ── The taamboolam tray ───────────────────────────────────────────
+     The dish's own colours are named here rather than inline in the SVG, so
+     the drawing carries no colour of its own and is lit by whatever ground it
+     is put on — the same rule every other mark on this site follows. */
   .plate-stage {
-    --plate-face: #fbf3e0;
-    --plate-rim: #c9a55f;
+    --dish-face: #fdf6e6;
+    --dish-rim: #d8b46c;
   }
 
   @media (scripting: enabled) {
-    /* Pieces arrive onto the tray and settle. Transform and opacity only, so
-       the whole assembly stays on the compositor.
+    /* The tray assembles: the dish settles first, then the bed of leaves,
+       then each thing is put down on it in turn. Transform and opacity only,
+       so the whole sequence stays on the compositor.
 
-       The resting state is the SVG's own coordinates and carries no transform
-       at all — the offset below is what is added, and only while armed. That
-       is what makes the final frame identical whether the animation ran,
-       was interrupted, or never started, which is the only way "every piece
-       sits on the plate" is a guarantee rather than a hope. */
-    .plate-stage[data-anim="true"] .plate-piece {
+       2D translate, not translate3d: a 3D transform function on an SVG
+       element asks for a rendering context it cannot have, and the whole
+       declaration is dropped — which left an earlier version fading in
+       without ever moving.
+
+       transform-origin is per piece, so each one turns about its own centre
+       rather than swinging around the middle of the dish.
+
+       The resting state carries no transform at all. Everything below is the
+       offset that is ADDED while armed, which is what makes the final frame
+       identical whether the motion ran, was interrupted, or never started. */
+    .plate-stage[data-anim='true'] .plate-piece {
       opacity: 0;
-      /* 2D translate, not translate3d. An SVG element takes CSS transforms,
-         but a 3D function asks for a 3D rendering context it cannot have, and
-         the whole declaration is dropped — which left the pieces fading in
-         without ever moving. Verified from the computed style, where the
-         hidden state reported transform: none while opacity animated fine. */
-      transform: translate(var(--fx, 0), var(--fy, 0)) scale(0.94);
+      transform: translate(var(--fx, 0), var(--fy, 0)) rotate(var(--fr, 0deg))
+        scale(0.965);
+      transform-origin: var(--ox, 220px) var(--oy, 220px);
       transition:
-        opacity 420ms var(--ease-material),
-        transform 620ms var(--ease-soft);
-      transition-delay: calc(var(--i, 0) * 85ms);
-      transform-origin: 200px 190px;
+        opacity 460ms var(--ease-material),
+        transform 720ms var(--ease-soft);
+      transition-delay: calc(var(--i, 0) * 110ms);
     }
 
-    .plate-stage[data-anim="true"][data-shown="true"] .plate-piece {
+    .plate-stage[data-anim='true'][data-shown='true'] .plate-piece {
       opacity: 1;
-      transform: translate(0, 0) scale(1);
+      transform: translate(0, 0) rotate(0deg) scale(1);
     }
   }
 

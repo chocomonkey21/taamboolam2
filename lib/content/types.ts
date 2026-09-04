@@ -57,10 +57,13 @@ export type Content = {
     enquireDescription: string;
     privacyTitle: string;
     privacyDescription: string;
+    aboutTitle: string;
+    aboutDescription: string;
   };
 
   nav: {
     home: string;
+    about: string;
     experience: string;
     enquire: string;
     skipToContent: string;
@@ -143,6 +146,15 @@ export type Content = {
      *  in it, because a reader who cannot see it gets the paragraph and this
      *  and nothing else. */
     plateLabel: string;
+    /**
+     * What each part of the tray carries. Not new material: the paragraph
+     * above already says it in a sentence, and this sets the same thing out
+     * as a key to the drawing beside it, so a reader can look from a word to
+     * the thing. One line each — a gloss, not a glossary.
+     */
+    elements: { name: string; carries: string }[];
+    /** The point the list must not be allowed to bury. */
+    gestureNote: string;
     note: string;
   };
 

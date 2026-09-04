@@ -6,75 +6,118 @@ import { useSite } from "./SiteProvider";
 /**
  * The tray the house is named after, drawn rather than photographed.
  *
- * There is no photograph of a taamboolam tray in this house's image bank, and
- * a stock one would be the only stock image left on the site. So it is drawn —
- * in the same flat line-and-fill language as the tile glyph and the site's own
- * icon, from the site's own palette, with no gradient, no shadow and no
- * perspective. It is a diagram of a gesture, not a picture of an object.
+ * There is no photograph of a taamboolam tray in this house's image bank and a
+ * stock one would be the only stock image left on the site, so it is drawn: in
+ * the site's own palette, in the same family as the icon's betel leaf, and
+ * with only as much shading as it takes to say that these are objects lying on
+ * a dish rather than shapes printed on one.
  *
- * Every piece in it is named in the copy beside it: betel leaves, areca nut,
- * a coconut, fruit, turmeric and kumkum. Nothing is here that the paragraph
- * does not mention, and nothing the paragraph mentions is missing.
+ * Every piece is named in the copy beside it — betel leaves, areca nut, a
+ * coconut, fruit, turmeric, kumkum. Nothing is drawn that the page does not
+ * mention, and nothing it mentions is missing.
+ *
+ * ── Silhouette first ──
+ *
+ * An earlier version drew each ingredient as a filled circle in roughly the
+ * right colour, and it read as six coloured blobs: nothing was identifiable
+ * without the caption underneath it. So each piece here is built from its own
+ * silhouette and given the two or three marks that actually distinguish it —
+ * the veins and notched base of a betel leaf, the marbled cross-section of a
+ * split areca nut, the fibre of a coconut husk, the ridge and black tip of a
+ * banana, the knuckled fingers of a turmeric rhizome, the lip of the little
+ * pot the kumkum sits in. The detail is spent on identification rather than
+ * on decoration, which is why there is no texture anywhere that is not doing
+ * that job.
  *
  * ── Why the parts are laid out from one table ──
  *
- * Each piece carries an index and a resting position, and the animation only
- * ever moves it from a small offset back to that position. Nothing is
- * positioned by the animation itself, so the final frame is the same whether
- * the motion ran, was interrupted, or never started — which is the only way
- * "every element visibly sits on the plate" can be guaranteed rather than
- * hoped for. The offsets are all small and inward: pieces arrive onto the
- * tray, they do not fly in from off-screen.
+ * Each piece carries a resting position and the offset and rotation it
+ * travels FROM. The animation only ever moves a piece from that offset back
+ * to its resting place, so the final frame is identical whether the motion
+ * ran, was interrupted, or never started. That is the only way "every object
+ * sits on the plate" is a guarantee rather than a hope.
  *
- * The geometry is checked against the plate: the plate is a circle of r=148
- * about (200, 190), and every piece's resting centre is inside r=90 of it.
+ * Geometry is checked against the dish: the inner surface is r=176 about
+ * (220, 220), and every piece rests inside it with room to spare.
  */
 
-/** Where each piece rests, and where it comes from. dx/dy are the offset it
- *  travels FROM — small, and pointing outward from the tray's centre. */
 type Piece = {
-  id: string;
-  /** Order of arrival. The tray first, then the bed of leaves, then the rest. */
+  /** Order of arrival: the dish, then the bed of leaves, then the rest. */
   i: number;
+  /** Where it comes in from, in user units. Small, and outward. */
   from: [number, number];
+  /** How far off true it arrives, in degrees. It turns into place. */
+  spin: number;
+  /** Its own centre, so it turns about itself rather than about the dish. */
+  origin: [number, number];
 };
 
-const PIECES: Record<string, Piece> = {
-  plate: { id: "plate", i: 0, from: [0, 10] },
-  leafLeft: { id: "leafLeft", i: 1, from: [-14, 10] },
-  leafRight: { id: "leafRight", i: 2, from: [14, 10] },
-  coconut: { id: "coconut", i: 3, from: [0, -14] },
-  banana: { id: "banana", i: 4, from: [-16, 4] },
-  areca: { id: "areca", i: 5, from: [16, 4] },
-  turmeric: { id: "turmeric", i: 6, from: [-8, 12] },
-  kumkum: { id: "kumkum", i: 7, from: [8, 12] },
-};
+const PIECES = {
+  dish: { i: 0, from: [0, 14], spin: 0, origin: [220, 220] },
+  leafBack: { i: 1, from: [0, 16], spin: -7, origin: [220, 250] },
+  leafLeft: { i: 2, from: [-18, 12], spin: -9, origin: [190, 250] },
+  leafRight: { i: 3, from: [18, 12], spin: 9, origin: [250, 250] },
+  coconut: { i: 4, from: [0, -20], spin: -6, origin: [216, 264] },
+  banana: { i: 5, from: [-24, 6], spin: -8, origin: [130, 250] },
+  areca: { i: 6, from: [24, 6], spin: 8, origin: [312, 244] },
+  turmeric: { i: 7, from: [-12, 20], spin: -10, origin: [160, 320] },
+  kumkum: { i: 8, from: [12, 20], spin: 9, origin: [280, 320] },
+} satisfies Record<string, Piece>;
 
-/**
- * One betel leaf, drawn once and placed three times.
- *
- * Local coordinates: the stem sits at the origin and the tip points up, so a
- * leaf is positioned by translating to where its stem goes and rotating by how
- * far out it fans. Cordate — a notched base and a point — which is the shape
- * of the leaf in the site's own icon at a larger size.
- */
-const LEAF =
-  "M0 -112 C 18 -84 34 -54 34 -30 C 34 -6 18 4 3 -4 L0 2 L-3 -4 C -18 4 -34 -6 -34 -30 C -34 -54 -18 -84 0 -112 Z";
-const MIDRIB = "M0 -3 L0 -98";
-
-/** One banana. Horizontal crescent, thick enough to read as fruit. */
-const BANANA =
-  "M-29 -3 C -14 -16 14 -16 29 -1 C 27 6 22 8 17 6 C 6 -3 -9 -3 -22 4 C -27 6 -29 3 -29 -3 Z";
-
-function pieceProps(p: Piece) {
+function piece(p: Piece) {
   return {
     className: "plate-piece",
     style: {
       "--i": p.i,
       "--fx": `${p.from[0]}px`,
       "--fy": `${p.from[1]}px`,
+      "--fr": `${p.spin}deg`,
+      "--ox": `${p.origin[0]}px`,
+      "--oy": `${p.origin[1]}px`,
     } as React.CSSProperties,
   };
+}
+
+/**
+ * One betel leaf, drawn once and placed three times.
+ *
+ * Stem at the origin and tip up, so a leaf is placed by translating to where
+ * its stem goes and rotating by how far it fans out. Cordate — a notched
+ * base, drawn shoulders, a long point — which is the site icon's leaf at size.
+ */
+const LEAF_BLADE =
+  "M0 -150 C 14 -122 30 -96 40 -68 C 50 -40 46 -14 28 -3 C 16 4 6 0 0 -8 C -6 0 -16 4 -28 -3 C -46 -14 -50 -40 -40 -68 C -30 -96 -14 -122 0 -150 Z";
+
+/** A midrib and three pairs of veins sweeping up towards the tip. */
+const LEAF_VEINS =
+  "M0 -6 L0 -138 M0 -30 C -14 -44 -24 -58 -30 -74 M0 -30 C 14 -44 24 -58 30 -74 M0 -62 C -10 -74 -18 -86 -22 -100 M0 -62 C 10 -74 18 -86 22 -100 M0 -94 C -7 -103 -12 -112 -14 -122 M0 -94 C 7 -103 12 -112 14 -122";
+
+function Leaf({ tone, sheen, vein }: { tone: string; sheen: string; vein: string }) {
+  return (
+    <>
+      <path
+        d={LEAF_BLADE}
+        fill={tone}
+        stroke="var(--dish-face)"
+        strokeWidth="2.6"
+        strokeLinejoin="round"
+      />
+      {/* One lit half. A flat leaf and a folded one share a silhouette; the
+          tonal panel down one side is what says the blade has a fold in it. */}
+      <path
+        d="M0 -150 C 14 -122 30 -96 40 -68 C 50 -40 46 -14 28 -3 C 16 4 6 0 0 -8 Z"
+        fill={sheen}
+      />
+      <path
+        d={LEAF_VEINS}
+        fill="none"
+        stroke={vein}
+        strokeWidth="1.6"
+        strokeLinecap="round"
+        opacity="0.5"
+      />
+    </>
+  );
 }
 
 export function TaamboolamPlate({ className = "" }: { className?: string }) {
@@ -83,11 +126,10 @@ export function TaamboolamPlate({ className = "" }: { className?: string }) {
   const [armed, setArmed] = useState(false);
   const [shown, setShown] = useState(false);
 
-  /* The same contract as Reveal.tsx, and for the same reasons: the hidden
-     state is only ever applied by this effect, and only to something that is
-     off screen at the time. Server HTML, pre-hydration paint, scripting off,
-     reduced motion and "the reader is already looking at it" all render the
-     finished tray outright. */
+  /* The same contract as Reveal.tsx: the hidden state is applied only by this
+     effect, and only to something that is off screen at the time. Server HTML,
+     pre-hydration paint, scripting off, reduced motion, and "the reader is
+     already looking at it" all render the finished tray outright. */
   useEffect(() => {
     const node = ref.current;
     if (!node) return;
@@ -105,8 +147,8 @@ export function TaamboolamPlate({ className = "" }: { className?: string }) {
     setArmed(true);
 
     // Armed before the observer exists, so every failure path still ends with
-    // a fully assembled tray. See Reveal.tsx.
-    const failsafe = window.setTimeout(() => setShown(true), 1600);
+    // an assembled tray rather than an empty dish.
+    const failsafe = window.setTimeout(() => setShown(true), 2200);
 
     const observer = new IntersectionObserver(
       (entries) => {
@@ -117,7 +159,7 @@ export function TaamboolamPlate({ className = "" }: { className?: string }) {
           }
         }
       },
-      { threshold: 0.02, rootMargin: "0px 0px 40% 0px" },
+      { threshold: 0.02, rootMargin: "0px 0px 35% 0px" },
     );
 
     observer.observe(node);
@@ -135,105 +177,173 @@ export function TaamboolamPlate({ className = "" }: { className?: string }) {
       className={`plate-stage ${className}`}
     >
       <svg
-        viewBox="0 0 400 380"
+        viewBox="0 0 440 460"
         role="img"
         aria-label={t.about.plateLabel}
         className="h-auto w-full"
       >
-        {/* ── The tray ────────────────────────────────────────────────────
-            Seen from directly above, which is how a taamboolam is actually
-            photographed and the only view in which "everything is on the
-            plate" is a fact rather than an illusion of overlap. An earlier
-            version drew it in three-quarter view: the leaves read as wings,
-            the coconut sat in front of its own bed, and half the arrangement
-            had to be argued into place with draw order. Flat on, laid out
-            radially, none of that arises.
-
-            Two rings, because a plate has a rim, and the rim is what makes a
-            circle read as something you could pick up. */}
-        <g {...pieceProps(PIECES.plate)}>
-          <circle cx="200" cy="190" r="148" fill="var(--plate-face)" />
-          <circle cx="200" cy="190" r="148" fill="none" stroke="var(--plate-rim)" strokeWidth="2.4" />
-          <circle cx="200" cy="190" r="131" fill="none" stroke="var(--plate-rim)" strokeWidth="1.2" opacity="0.55" />
+        {/* ── The dish ────────────────────────────────────────────────────
+            A shadow, a rim, an inner surface, one engraved line. The shadow
+            is an offset ellipse rather than a blur filter: it survives being
+            scaled down to a phone without going muddy and costs nothing to
+            composite. Light falls from the upper left throughout the drawing,
+            which is why the rim is lit on its far side. */}
+        <g {...piece(PIECES.dish)}>
+          <ellipse cx="220" cy="238" rx="196" ry="192" fill="#8a6a2e" opacity="0.16" />
+          <circle cx="220" cy="220" r="196" fill="var(--dish-rim)" />
+          <path d="M220 24 A 196 196 0 0 1 416 220 A 176 176 0 0 0 220 44 Z" fill="#e9cd92" opacity="0.55" />
+          <circle cx="220" cy="220" r="196" fill="none" stroke="#9d7b34" strokeWidth="1.6" opacity="0.4" />
+          <circle cx="220" cy="220" r="176" fill="var(--dish-face)" />
+          <circle cx="220" cy="220" r="163" fill="none" stroke="#c9a55f" strokeWidth="1.1" opacity="0.38" />
         </g>
 
-        {/* Everything ON the tray, scaled about the tray's centre. The parts
-            were laid out conservatively and left a wide empty rim, which read
-            as a small arrangement lost on a big plate. Scaling here rather
-            than re-typing twenty coordinates keeps every piece in exactly the
-            same relation to every other. */}
-        <g transform="translate(200 190) scale(1.16) translate(-200 -190)">
         {/* ── The bed of betel leaves ─────────────────────────────────────
-            Two leaves laid across the tray, stems meeting at the middle and
-            tips out to either side. This is the bed: everything else is put
-            down on top of it, and because the view is flat, "on top of" is
-            simply what the draw order already says.
-
-            The shape is the site icon's leaf at size — cordate, notched base,
-            a point — so the mark and this drawing are the same leaf. That is
-            the entire reason the mark is a leaf. LEAF is written once and
-            placed twice, so the two halves of the bed cannot disagree. */}
-        <g {...pieceProps(PIECES.leafLeft)}>
-          <g transform="translate(200 233) rotate(-34)">
-            <path d={LEAF} fill="var(--color-leaf)" stroke="var(--plate-face)" strokeWidth="3" strokeLinejoin="round" />
-            <path d={MIDRIB} stroke="var(--plate-face)" strokeWidth="1.6" strokeLinecap="round" opacity="0.5" fill="none" />
+            Three, laid back to front so the fan has depth: the back leaf is
+            darkest and least of it shows, the front pair are lighter and
+            overlap it. Everything else is put down on this. */}
+        <g {...piece(PIECES.leafBack)}>
+          <g transform="translate(226 284) rotate(-5)">
+            <Leaf tone="#2f4229" sheen="#374d2f" vein="#88a06f" />
           </g>
         </g>
-        <g {...pieceProps(PIECES.leafRight)}>
-          <g transform="translate(200 233) rotate(34)">
-            <path d={LEAF} fill="#35492f" stroke="var(--plate-face)" strokeWidth="3" strokeLinejoin="round" />
-            <path d={MIDRIB} stroke="var(--plate-face)" strokeWidth="1.6" strokeLinecap="round" opacity="0.45" fill="none" />
+        <g {...piece(PIECES.leafLeft)}>
+          <g transform="translate(196 296) rotate(-47) scale(0.96)">
+            <Leaf tone="#3a5136" sheen="#456043" vein="#9ab183" />
+          </g>
+        </g>
+        <g {...piece(PIECES.leafRight)}>
+          <g transform="translate(252 294) rotate(47) scale(0.96)">
+            <Leaf tone="var(--color-leaf)" sheen="#4a6849" vein="#a3b98d" />
           </g>
         </g>
 
         {/* ── The coconut ─────────────────────────────────────────────────
-            Dead centre, on the leaves. No germination pores: they are
-            anatomically right and they turned a brown circle above a green fan
-            into a face, which is the one thing this drawing cannot look like.
-            The husk seam is the only marking, and it is off-centre so the
-            circle has a direction. */}
-        <g {...pieceProps(PIECES.coconut)}>
-          <circle cx="200" cy="188" r="34" fill="var(--color-wood)" />
-          <path
-            d="M200 154 A 34 34 0 0 1 229 171 A 30 30 0 0 0 200 158 Z"
-            fill="#7d5836"
-          />
+            Husked and brown, with the fibre running the way it grows and a
+            tuft at the crown. No germination pores: they are anatomically
+            correct, and three dots on a brown circle read as a face, which is
+            the one thing this drawing cannot be allowed to look like. */}
+        <g {...piece(PIECES.coconut)}>
+          <ellipse cx="216" cy="308" rx="41" ry="9" fill="#6b5a34" opacity="0.22" />
+          <path d="M203 226 C 206 213 210 206 216 200 C 222 206 226 213 229 226 Z" fill="#5b3e26" />
+          <circle cx="216" cy="264" r="42" fill="var(--color-wood)" />
+          <path d="M216 222 A 42 42 0 0 1 254 244 A 37 37 0 0 0 216 227 Z" fill="#8a6140" opacity="0.85" />
+          <path d="M216 306 A 42 42 0 0 1 178 284 A 37 37 0 0 0 216 301 Z" fill="#54381f" opacity="0.5" />
+          <g stroke="#4e3620" strokeWidth="1.5" strokeLinecap="round" opacity="0.42" fill="none">
+            <path d="M194 224 C 188 244 188 270 196 290" />
+            <path d="M210 216 C 205 240 205 274 211 298" />
+            <path d="M226 216 C 231 240 231 274 225 298" />
+            <path d="M242 224 C 248 244 248 270 240 290" />
+          </g>
         </g>
 
         {/* ── The fruit ───────────────────────────────────────────────────
-            A hand of three bananas lying on the left leaf. Drawn with real
-            thickness: the first pass was three hairlines and read as brush
-            marks rather than fruit. */}
-        <g {...pieceProps(PIECES.banana)}>
-          <g transform="translate(126 182) rotate(4)">
-            <path d={BANANA} fill="#c98a2e" transform="translate(0 -13)" />
-            <path d={BANANA} fill="var(--color-ochre)" />
-            <path d={BANANA} fill="#a9701f" transform="translate(-3 13)" />
+            A hand of four bananas, each with its ridge and its dark tip. Drawn
+            as a hand rather than as loose crescents: loose ones read as brush
+            strokes, which is exactly what the first attempt looked like. */}
+        <g {...piece(PIECES.banana)}>
+          <ellipse cx="132" cy="288" rx="48" ry="8" fill="#6b5a34" opacity="0.2" />
+          <g transform="translate(130 250) rotate(-12)">
+            {[
+              { y: -21, f: "#d9a03c", s: "#b98426" },
+              { y: -7, f: "#cf9430", s: "#ad7a20" },
+              { y: 7, f: "#c68a2a", s: "#a1701c" },
+              { y: 21, f: "#b87d24", s: "#8f6318" },
+            ].map((b) => (
+              <g key={b.y} transform={`translate(0 ${b.y})`}>
+                <path
+                  d="M-46 4 C -34 -16 -2 -24 22 -16 C 36 -11 44 -4 47 3 C 44 8 37 9 30 6 C 8 -3 -18 0 -38 12 C -44 15 -47 11 -46 4 Z"
+                  fill={b.f}
+                  stroke="var(--dish-face)"
+                  strokeWidth="1.8"
+                  strokeLinejoin="round"
+                />
+                <path
+                  d="M-38 5 C -22 -6 2 -10 24 -6"
+                  fill="none"
+                  stroke={b.s}
+                  strokeWidth="1.4"
+                  strokeLinecap="round"
+                  opacity="0.7"
+                />
+                <path d="M45 2 C 49 1 51 3 50 6 C 48 8 45 7 44 5 Z" fill="#5e4318" />
+              </g>
+            ))}
           </g>
         </g>
 
         {/* ── The areca nut ───────────────────────────────────────────────
-            Three, heaped on the right leaf the way they are actually put
-            down rather than set out in a row. */}
-        <g {...pieceProps(PIECES.areca)}>
-          <ellipse cx="262" cy="166" rx="17" ry="15" fill="#7a5233" transform="rotate(-12 262 166)" />
-          <ellipse cx="286" cy="180" rx="17" ry="15" fill="#8a5f3c" transform="rotate(14 286 180)" />
-          <ellipse cx="268" cy="192" rx="17" ry="15" fill="#6d4b2f" transform="rotate(-4 268 192)" />
+            Two whole and one split. The split one is what makes it areca and
+            not a pebble: the marbled cross-section — pale flesh veined brown —
+            is the thing anyone who has seen supari recognises immediately. */}
+        <g {...piece(PIECES.areca)}>
+          <ellipse cx="312" cy="274" rx="42" ry="8" fill="#6b5a34" opacity="0.2" />
+          <g transform="translate(312 244)">
+            <g transform="translate(-16 -14) rotate(-14)">
+              <ellipse cx="0" cy="0" rx="20" ry="17" fill="#8a5f3c" stroke="var(--dish-face)" strokeWidth="1.8" />
+              <path d="M-20 -2 A 20 17 0 0 1 -2 -17" fill="none" stroke="#ac7f55" strokeWidth="2.4" strokeLinecap="round" opacity="0.8" />
+              <path d="M14 8 A 20 17 0 0 1 -6 16" fill="none" stroke="#5e3d24" strokeWidth="2" strokeLinecap="round" opacity="0.45" />
+            </g>
+            <g transform="translate(18 -4) rotate(12)">
+              <ellipse cx="0" cy="0" rx="19" ry="16" fill="#7a5233" stroke="var(--dish-face)" strokeWidth="1.8" />
+              <path d="M-19 -1 A 19 16 0 0 1 -3 -16" fill="none" stroke="#9c7049" strokeWidth="2.2" strokeLinecap="round" opacity="0.75" />
+            </g>
+            <g transform="translate(-2 20) rotate(-6)">
+              <ellipse cx="0" cy="0" rx="21" ry="18" fill="#6d4b2f" stroke="var(--dish-face)" strokeWidth="1.8" />
+              <ellipse cx="0" cy="0" rx="15" ry="12.5" fill="#d8c3a2" />
+              <g stroke="#8a5f3c" strokeWidth="1.5" strokeLinecap="round" opacity="0.8" fill="none">
+                <path d="M0 0 L-11 -6" />
+                <path d="M0 0 L-4 -11" />
+                <path d="M0 0 L6 -10" />
+                <path d="M0 0 L13 -3" />
+                <path d="M0 0 L9 8" />
+                <path d="M0 0 L-2 12" />
+                <path d="M0 0 L-12 6" />
+              </g>
+            </g>
+          </g>
         </g>
 
-        {/* ── Turmeric and kumkum ─────────────────────────────────────────
-            Two small heaps at the near edge — the last things placed, and the
-            first things a guest is actually given. Seen from above a heap of
-            powder is a disc with a denser middle, so that is what they are:
-            a ring of the colour with a darker core, rather than a flat dot. */}
-        <g {...pieceProps(PIECES.turmeric)}>
-          <circle cx="160" cy="250" r="19" fill="var(--color-ochre)" />
-          <circle cx="160" cy="250" r="10" fill="#a9701f" />
+        {/* ── Turmeric ────────────────────────────────────────────────────
+            The rhizome, not the powder: a knuckled root with two fingers off
+            it and the ring marks it actually carries. A yellow disc would say
+            nothing at all — this is the shape that says turmeric. */}
+        <g {...piece(PIECES.turmeric)}>
+          <ellipse cx="160" cy="342" rx="40" ry="7" fill="#6b5a34" opacity="0.2" />
+          <g transform="translate(160 320) rotate(-8)">
+            <path
+              d="M-40 6 C -44 -6 -34 -16 -20 -16 C -6 -16 4 -12 16 -14 C 30 -17 42 -10 42 2 C 42 13 31 19 18 17 C 6 15 -4 12 -16 14 C -30 17 -37 15 -40 6 Z"
+              fill="#c98a2e"
+              stroke="var(--dish-face)"
+              strokeWidth="2"
+              strokeLinejoin="round"
+            />
+            <path d="M-6 -13 C -2 -26 8 -32 18 -28 C 26 -24 26 -14 18 -12" fill="#d29a3d" stroke="var(--dish-face)" strokeWidth="1.8" strokeLinejoin="round" />
+            <path d="M-24 12 C -30 24 -22 32 -12 30 C -5 28 -3 20 -8 14" fill="#bd7f26" stroke="var(--dish-face)" strokeWidth="1.8" strokeLinejoin="round" />
+            <g stroke="#8f5f16" strokeWidth="1.4" strokeLinecap="round" opacity="0.5" fill="none">
+              <path d="M-24 -12 C -22 -2 -22 6 -25 13" />
+              <path d="M-8 -14 C -6 -3 -6 5 -9 14" />
+              <path d="M10 -14 C 12 -4 12 6 9 16" />
+              <path d="M26 -12 C 28 -3 28 6 25 15" />
+            </g>
+            <path d="M-30 -8 C -20 -12 -6 -12 4 -9" fill="none" stroke="#e6b76a" strokeWidth="2" strokeLinecap="round" opacity="0.55" />
+          </g>
         </g>
-        <g {...pieceProps(PIECES.kumkum)}>
-          <circle cx="240" cy="250" r="19" fill="var(--color-clay)" />
-          <circle cx="240" cy="250" r="10" fill="#8c3a20" />
-        </g>
+
+        {/* ── Kumkum ──────────────────────────────────────────────────────
+            In its little pot, because loose red powder on a dish is a red
+            circle and nothing else. The pot gives it a lip, a shadow inside
+            the rim, and a heap that stands proud of it — which is what says
+            powder rather than paint. */}
+        <g {...piece(PIECES.kumkum)}>
+          <ellipse cx="280" cy="344" rx="34" ry="7" fill="#6b5a34" opacity="0.2" />
+          <g transform="translate(280 320)">
+            <path d="M-27 -4 C -27 16 -18 24 0 24 C 18 24 27 16 27 -4 Z" fill="#a9832f" />
+            <path d="M-27 -4 C -27 16 -18 24 0 24 C 8 24 14 22 19 18 C 6 18 -6 10 -10 -4 Z" fill="#8a6a24" opacity="0.55" />
+            <ellipse cx="0" cy="-4" rx="27" ry="11" fill="#c39a3e" />
+            <ellipse cx="0" cy="-4" rx="21" ry="8" fill="#6f5218" />
+            <path d="M-21 -5 C -16 -19 16 -19 21 -5 C 12 -1 -12 -1 -21 -5 Z" fill="var(--color-clay)" />
+            <path d="M-14 -9 C -9 -15 4 -16 10 -11 C 2 -9 -7 -8 -14 -9 Z" fill="#c25931" opacity="0.85" />
+          </g>
         </g>
       </svg>
     </div>
