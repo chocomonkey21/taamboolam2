@@ -788,8 +788,11 @@
       transition-delay: var(--reveal-delay, 0ms);
     }
 
-    .wipe[data-anim="true"][data-shown="true"] {
-      --wipe: 135%;
+    /* Asserted, rather than assumed. --wipe rests at 135% — the finished
+       sweep — so this is the only thing that hides the heading, and it only
+       applies while the reveal is armed AND has not yet been shown. */
+    .wipe[data-anim="true"][data-shown="false"] {
+      --wipe: 0%;
     }
   }
 
@@ -1235,13 +1238,24 @@
 /* The wipe interpolates a custom property, which only animates once the
    property has been registered with a type. Declared outside every layer,
    because @property is not a style rule and cascade layers do not carry it.
-   Where the registration is unsupported the property never leaves its initial
-   value, so the guard below shows the heading outright rather than masking it
-   away to nothing. */
+
+   The initial value is the FINISHED wipe, and that direction is the whole
+   point of it. It used to be 0%, which is a fully transparent mask — so
+   every way this could fail failed by erasing the heading. A registration
+   the browser does not support, a transition that never runs because the tab
+   was in the background when the observer fired, a frame dropped mid-sweep:
+   each of those left --wipe at 0% and a display heading masked away to
+   nothing, or worse, frozen with the mask edge standing in the middle of a
+   word so that one word was permanently half-drawn.
+
+   Inverted, the hidden state is the thing that has to be asserted, and every
+   failure resolves to the heading being readable. Observed before the change:
+   data-shown was "true" while --wipe still computed 0%, and the heading was
+   an invisible 600x191 hole in the page. */
 @property --wipe {
   syntax: "<percentage>";
   inherits: false;
-  initial-value: 0%;
+  initial-value: 135%;
 }
 
 @supports not (background: linear-gradient(in oklab, red, blue)) {

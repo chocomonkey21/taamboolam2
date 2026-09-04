@@ -115,6 +115,26 @@ export function Reveal({
     };
   }, [amount]);
 
+  /**
+   * Take the mask off once the sweep is over.
+   *
+   * A masked element is composited on its own layer and its text is drawn with
+   * grey antialiasing instead of subpixel, which on a sixty-pixel display face
+   * is visible as slightly thin, slightly smeared letters. There is no reason
+   * to pay that for the whole life of the page when the mask has a job lasting
+   * three quarters of a second: at rest --wipe is 135% and the mask is doing
+   * nothing but degrading the type it covers.
+   *
+   * Disarming is safe in a way it would not be the other way round: --wipe
+   * rests at the finished sweep, so the frame in which the mask disappears is
+   * identical to the frame before it.
+   */
+  useEffect(() => {
+    if (variant !== "wipe" || !armed || !shown) return;
+    const done = window.setTimeout(() => setArmed(false), 760 + delay + 60);
+    return () => window.clearTimeout(done);
+  }, [variant, armed, shown, delay]);
+
   return (
     <Tag
       ref={ref}
