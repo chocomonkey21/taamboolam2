@@ -50,6 +50,10 @@ function contentSecurityPolicy(nonce: string): string {
     "base-uri 'self'",
     // The enquiry form posts to this origin and nowhere else.
     "form-action 'self'",
+    // The footer map, and the only off-origin resource on the site. Narrowed
+    // to the one host: without this line `default-src 'self'` blocks the frame
+    // silently and the panel renders blank.
+    "frame-src https://www.google.com",
     // The modern half of X-Frame-Options. Both are sent; older browsers read
     // only the header, newer ones prefer this.
     "frame-ancestors 'none'",

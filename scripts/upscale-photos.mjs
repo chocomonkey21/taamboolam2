@@ -53,7 +53,6 @@ const TARGETS = {
   "floor-2-b.jpg": FULL_BLEED,
   "floor-3-b.jpg": FULL_BLEED,
   "food-still.jpg": COLUMN,
-  "terrace-swing.jpg": COLUMN,
 };
 
 /**

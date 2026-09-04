@@ -79,7 +79,9 @@ the framework own correlation id rather than anything a guest typed.
   has written in.
 - One cookie exists: the language preference. `SameSite=Lax`, and `Secure` once
   the page is on HTTPS.
-- No analytics, no tracking, no third-party scripts. Deliberate, and it should
+- No analytics and no tracking. The footer's Google Maps frame is the only
+  off-origin resource, and `frame-src` in `middleware.ts` is scoped to that one
+  host. Deliberate, and it should
   stay that way.
 
 ### Headers

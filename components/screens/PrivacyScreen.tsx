@@ -15,7 +15,7 @@ import { MaterialStrip } from "../TileMotif";
  *
  * It is short enough to read in a minute, which is the only property of a
  * privacy notice that actually protects anybody. Every claim in it is
- * checkable against the code: no database, one cookie, no third-party script,
+ * checkable against the code: no database, one cookie, one third-party frame,
  * logs that carry the visit type and the language and nothing else. If any of
  * that changes, this page is wrong until somebody rewrites it — see the note
  * on `privacy` in lib/content/types.ts.

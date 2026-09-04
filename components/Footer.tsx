@@ -15,11 +15,12 @@ import { Wordmark } from "./Wordmark";
  *
  * Three things changed here.
  *
- * The map is drawn now instead of embedded. A Google iframe put that
- * company's blue links, orange restaurant pins and grey road fills into the
- * middle of a limewash page — the loudest colours anywhere on the site — while
- * loading a third-party frame onto a site whose whole position is that it runs
- * nothing of the sort. See MapPanel.
+ * The map was a drawing for most of this project, because the pin was a
+ * geocoded guess and a schematic could not overstate a precision nobody had
+ * confirmed. The owner has since given the house's own Google Maps record, so
+ * it is the real map — the one third-party thing on the site, which cost a
+ * `frame-src` in middleware.ts and a rewritten paragraph on the privacy page.
+ * See MapPanel.
  *
  * The panel is no longer a bordered box dropped into a column. The drawing sits
  * directly on the footer's own ground with the address ruled underneath it, so
