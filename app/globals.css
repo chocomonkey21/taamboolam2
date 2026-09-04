@@ -95,6 +95,22 @@
   --atmos-pattern: 0.1;
 }
 
+/* The one strongly coloured ground on the site, and it is used exactly once.
+   Turmeric is one of the six things named in the paragraph it sits behind, so
+   the colour IS the subject there. Anywhere else it would be a theme; in that
+   one band it is a fact. The accent ink is floor 3's, which already clears AA
+   on grounds this warm, and the pattern is dialled down because this band is
+   about a tray and not about the tiles. */
+[data-atmosphere="taamboolam"] {
+  --atmos-bg: #f2ddab;
+  --atmos-tint: #e9d094;
+  --atmos-rule: #d3b877;
+  --atmos-accent: var(--color-ochre);
+  --atmos-accent-ink: #6b4a11;
+  --atmos-ink: #2b2416;
+  --atmos-pattern: 0.06;
+}
+
 [data-atmosphere="floor-1"] {
   --atmos-bg: #f8f4ec;
   --atmos-tint: #ece4d5;
@@ -774,6 +790,45 @@
 
     .wipe[data-anim="true"][data-shown="true"] {
       --wipe: 135%;
+    }
+  }
+
+  /* ── The taamboolam tray ───────────────────────────────────────────
+     The face and rim are named here rather than inline in the SVG so the
+     drawing has no colour of its own: it is lit by whatever ground it is put
+     on, exactly like every other mark on this site. */
+  .plate-stage {
+    --plate-face: #fbf3e0;
+    --plate-rim: #c9a55f;
+  }
+
+  @media (scripting: enabled) {
+    /* Pieces arrive onto the tray and settle. Transform and opacity only, so
+       the whole assembly stays on the compositor.
+
+       The resting state is the SVG's own coordinates and carries no transform
+       at all — the offset below is what is added, and only while armed. That
+       is what makes the final frame identical whether the animation ran,
+       was interrupted, or never started, which is the only way "every piece
+       sits on the plate" is a guarantee rather than a hope. */
+    .plate-stage[data-anim="true"] .plate-piece {
+      opacity: 0;
+      /* 2D translate, not translate3d. An SVG element takes CSS transforms,
+         but a 3D function asks for a 3D rendering context it cannot have, and
+         the whole declaration is dropped — which left the pieces fading in
+         without ever moving. Verified from the computed style, where the
+         hidden state reported transform: none while opacity animated fine. */
+      transform: translate(var(--fx, 0), var(--fy, 0)) scale(0.94);
+      transition:
+        opacity 420ms var(--ease-material),
+        transform 620ms var(--ease-soft);
+      transition-delay: calc(var(--i, 0) * 85ms);
+      transform-origin: 200px 190px;
+    }
+
+    .plate-stage[data-anim="true"][data-shown="true"] .plate-piece {
+      opacity: 1;
+      transform: translate(0, 0) scale(1);
     }
   }
 

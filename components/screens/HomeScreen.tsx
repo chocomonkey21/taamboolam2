@@ -3,6 +3,7 @@
 import { Arrangement } from "../Arrangement";
 import { ButtonLink, TextLink } from "../Button";
 import { Datum } from "../Datum";
+import { NameOrigin } from "../NameOrigin";
 import { FloorLedger } from "../FloorLedger";
 import { HouseValues } from "../HouseValues";
 import { Parallax } from "../Parallax";
@@ -216,29 +217,13 @@ export function HomeScreen() {
             </Reveal>
           </div>
 
-          {/* Where the name comes from.
-
-              A different register from the paragraphs above — those describe a
-              house, this explains a word — so it gets its own column rather
-              than another paragraph in the same measure. The site is named
-              after a gesture of hospitality and said so nowhere, which was a
-              strange silence on a page about hospitality, and stranger still
-              once the site's own icon became a betel leaf. */}
-          <div className="rule-atmos mt-14 grid gap-x-8 gap-y-5 border-t pt-8 md:mt-16 md:grid-cols-12">
-            <h3 className="type-h3 text-atmos-ink md:col-span-3">
-              {t.about.nameHeading}
-            </h3>
-            <div className="md:col-span-7 md:col-start-5">
-              {t.about.nameBody.map((paragraph, i) => (
-                <p
-                  key={i}
-                  className={`type-body text-ink-soft ${i ? "mt-4" : ""}`}
-                >
-                  {paragraph}
-                </p>
-              ))}
-            </div>
-          </div>
+          {/* "Where the name comes from" used to sit here, in the same
+              measure and the same cream as the paragraphs above it. It is a
+              different register — those describe a house, this explains a
+              word — and giving it no different treatment made it read as an
+              afterthought stapled to a section about something else. It is
+              now its own band directly below: see components/NameOrigin.tsx.
+              The copy moved unchanged. */}
 
           {/* The one line that says who this suits, set apart on a hairline
               rather than folded into the paragraph above it. */}
@@ -272,6 +257,12 @@ export function HomeScreen() {
           </p>
         </div>
       </section>
+
+      {/* ── The name ─────────────────────────────────────────────────────
+          Placed here rather than earlier because the reader has just been
+          told what the house is and shown it. The word is the last thing
+          explained before the page turns to how the house is arranged. */}
+      <NameOrigin />
 
       {/* ── 3 · The plan, and the levels ─────────────────────────────────
           One section, because they are one idea: every guest floor is the

@@ -134,8 +134,15 @@ export type Content = {
      * still now that the site's own icon is a betel leaf. Kept to two short
      * paragraphs: this is an origin, not an encyclopaedia entry.
      */
+    /** Sits over the heading in the tray section, the way every other
+     *  section on the site is labelled. */
+    nameEyebrow: string;
     nameHeading: string;
     nameBody: string[];
+    /** The accessible name of the drawn tray. It has to name the six things
+     *  in it, because a reader who cannot see it gets the paragraph and this
+     *  and nothing else. */
+    plateLabel: string;
     note: string;
   };
 
