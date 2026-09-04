@@ -3,7 +3,8 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
-import { NAV_ITEMS } from "@/lib/site";
+import { whatsappLink } from "@/lib/enquiry";
+import { NAV_ITEMS, site } from "@/lib/site";
 import { LanguageToggle } from "./LanguageToggle";
 import { useSite } from "./SiteProvider";
 import { Wordmark } from "./Wordmark";
@@ -229,15 +230,39 @@ export function MobileEnquire() {
           backdropFilter: "saturate(1.1) blur(12px)",
         }}
       >
-        <div className="flex items-center justify-between gap-3">
+        {/* Two ways to start, because on a phone in India they are genuinely
+            two ways and not a primary and a fallback. WhatsApp used to appear
+            only on the enquiry page, which meant somebody browsing on a phone
+            never saw the option they were most likely to want — they had to
+            find the form first to be told they did not have to fill it in.
+
+            The form keeps the solid button: it is the one that carries dates
+            and numbers, and it is what the owner would rather receive.
+            WhatsApp sits beside it as an outline, and opens with one line
+            already written so nobody faces an empty chat.
+
+            The labels shorten here. "Enquire about a stay" and "WhatsApp"
+            together overflow a 375px bar once the language toggle is in it,
+            and a wrapped action bar reads as a bug. */}
+        <div className="flex items-center gap-2.5">
           <span className="sm:hidden">
             <LanguageToggle />
           </span>
+
+          <a
+            href={whatsappLink(site.contact.whatsapp, t.nav.whatsappOpener)}
+            target="_blank"
+            rel="noreferrer noopener"
+            className="btn type-label ml-auto inline-flex min-h-11 items-center rounded-full border border-stone-deep px-4 text-ink active:bg-lime"
+          >
+            {t.footer.whatsapp}
+          </a>
+
           <Link
             href="/enquire"
-            className="btn btn-solid type-label ml-auto inline-flex min-h-11 items-center rounded-full bg-clay px-5 text-paper active:bg-clay-deep"
+            className="btn btn-solid type-label inline-flex min-h-11 items-center rounded-full bg-clay px-5 text-paper active:bg-clay-deep"
           >
-            {t.nav.mobileEnquire}
+            {t.nav.enquire}
           </Link>
         </div>
       </div>

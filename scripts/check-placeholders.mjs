@@ -30,10 +30,13 @@ const pending = [];
    domain to SEND from: the owner's address is a Gmail one, which can receive
    but can never be a verified sender. Until that exists the form cannot mail
    anybody, and it says so rather than pretending. */
-if (!process.env.ENQUIRY_FROM_EMAIL) {
+/* Mail is configured in the hosting project, not here, so this can only check
+   that a local run has it — and a local run usually should not. Warn only when
+   somebody is building for production without it. */
+if (process.env.NODE_ENV === "production" && !process.env.ENQUIRY_FROM_EMAIL) {
   pending.push([
-    "No verified sending domain — the enquiry form cannot send mail",
-    "Set ENQUIRY_FROM_EMAIL to an address on a domain verified with Resend",
+    "ENQUIRY_FROM_EMAIL is not set for this build — the form cannot send",
+    "Set it in the hosting project to an address on the verified domain",
   ]);
 }
 
@@ -44,10 +47,13 @@ if (/mapLinkIsPlaceholder:\s*true/.test(site)) {
   ]);
 }
 
-if (site.includes("https://taamboolam.com")) {
+/* The domain is live and confirmed. What can still go wrong is the canonical
+   drifting from what the host serves, so this checks the two agree rather than
+   checking the value is filled in at all. */
+if (!site.includes('url: "https://www.taamboolam.com"')) {
   pending.push([
-    "Site URL is assumed to be taamboolam.com — confirm before launch",
-    "lib/site.ts → url (affects sitemap, robots and share previews)",
+    "site.url no longer matches the canonical origin",
+    "lib/site.ts → url must equal whichever of www / apex Vercel redirects TO",
   ]);
 }
 

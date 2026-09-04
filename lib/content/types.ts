@@ -69,6 +69,13 @@ export type Content = {
     skipToContent: string;
     mainLabel: string;
     mobileEnquire: string;
+    /**
+     * The message the mobile WhatsApp button opens with.
+     *
+     * Short on purpose. It exists so the guest is not staring at an empty
+     * chat wondering what to type — not to write the enquiry for them.
+     */
+    whatsappOpener: string;
   };
 
   /** Sits under the wordmark so the name is never unexplained. */

@@ -1,32 +1,33 @@
-# For the owner — what the site needs from you
+# For the owner
 
-Everything below is either waiting on you, or is a placeholder that must be
-replaced before the site goes live. Nothing on this list requires a developer:
-each item names the one file it lives in.
+The site is live. Nothing here is blocking it — this is a record of what is
+confirmed, what the site deliberately does not do, and the few things that
+would still improve it. Nothing on this list requires a developer to
+understand: each item names the one file it lives in.
+
+For accounts, logins and what to do when something breaks, see `HANDOFF.md`.
 
 ---
 
-## 1. Things that are still placeholders
+## 1. The site is live
 
-These are **wrong on purpose** — they are stand-ins, and they are obvious so
-they cannot be shipped by accident.
+**https://www.taamboolam.com**
 
-| What | Currently | Where it lives |
-|---|---|---|
-| Phone / WhatsApp number | `+91 98765 43210` | `lib/site.ts` → `contact.phone`, `contact.whatsapp` |
-| Google Maps link | A plain address search, not your pin | `lib/site.ts` → `location.mapLink` |
-
-The site says so out loud: under the map link in the footer it prints "The exact
-pin is still being confirmed." That line disappears on its own once you set
-`mapLinkIsPlaceholder: false` in `lib/site.ts`.
-
-**Already correct and confirmed** — no action needed:
+Nothing on the site is a placeholder any more. The phone number, the enquiry
+address, the map pin and the postcode are all yours and all confirmed:
 
 - Taamboolam / ತಾಂಬೂಲಂ  *(corrected — the site previously carried ತಂಬೋಲಂ)*
-- 50-1, 46th Cross, Sarakki Main Road, 8th Block, Jayanagar, Bengaluru 560078
-- Next to Sampradha Hospitals and Sangeetha Mobiles
+- +91 91082 40269, on the site and behind the WhatsApp button
 - taamboolaminn@gmail.com
+- 50-1, 46th Cross, Sarakki Main Road, 8th Block, Jayanagar, Bengaluru 560078
+- Next to Sammprada Hospital and Sangeetha Mobiles
 - https://www.instagram.com/taamboolam/
+
+The map now drops a real pin rather than running a search. It was worked out
+from the address and then checked against the landmark — the point it resolves
+to is 63 metres from Sammprada Hospital, which is why we were willing to
+publish it. **If it is wrong, it is thirty seconds to fix:** open Google Maps
+on your phone, long-press the house, Share, Copy link, and send us the link.
 
 ---
 
@@ -104,25 +105,24 @@ Kannada until somebody reads it.
 
 ---
 
-## 5. Email
+## 5. Email — connected
 
-The enquiry form has no mail account behind it yet. Until it does, it **refuses
-to pretend**: submitting shows "The enquiry form cannot send mail right now.
-Please write to us directly and we will answer." It never shows a thank-you for
-a message that went nowhere.
+The enquiry form sends. Each enquiry arrives with the subject line
+`Enquiry from <name> — 2 adults, 1 child`, with **reply-to set to the guest**,
+so hitting reply in Gmail writes straight back to them. The guest gets their
+own copy in whichever language they filled the form in.
 
-To turn it on:
+Two things worth knowing:
 
-- [ ] Create a Resend account and verify the sending domain
-- [ ] Set `RESEND_API_KEY` in the hosting project
-- [ ] Set `ENQUIRY_TO_EMAIL` to the inbox you actually read
-- [ ] Set `ENQUIRY_FROM_EMAIL` to an address on the verified domain
-- [ ] Send one real enquiry through the live form and confirm it arrives
+- **Nothing is stored.** The record of an enquiry is the email in your inbox.
+  If you delete it, it is gone — there is no database behind the site.
+- **If the mail service ever fails**, the form says so plainly rather than
+  showing a thank-you for a message that went nowhere. A guest who sees that
+  message is being told the truth, and the WhatsApp button still works.
 
-Once it is on, each enquiry arrives with the subject line
-`Enquiry from <name> — 2 adults, 1 child`, with **reply-to set to the guest**, so
-hitting reply writes straight back to them. The guest gets a copy in whichever
-language they used.
+Guests can also send the whole enquiry over WhatsApp instead — the button fills
+in everything they have typed, so it arrives as a written message rather than
+an empty chat.
 
 ---
 
@@ -143,3 +143,37 @@ conversation, not a bug:
   of a room are answered by you
 - The private fourth floor is named once, as not accessible, and is never
   photographed or offered
+
+---
+
+## 7. Still open — none of it blocking
+
+**Practical questions guests ask, that the site cannot yet answer.** Wi-Fi, air
+conditioning and hot water are now mentioned, but without saying where. These
+are the ones still missing entirely:
+
+- [ ] Is the air conditioning in **every** bedroom, or some?
+- [ ] Hot water in **every** bathroom?
+- [ ] Check-in and check-out times
+- [ ] Are towels and bed linen provided? Is there daily housekeeping?
+- [ ] Is laundry possible?
+- [ ] May guests bring non-vegetarian food into the house, or is that also not
+      permitted?
+
+**Naturopathy.** Your Instagram mentions naturo-treatment. It is deliberately
+not on the site, because describing a treatment wrongly is worse than omitting
+it. Send a sentence or two in your own words and it goes in.
+
+**Which floor is which.** The photographs arrived unlabelled. We assumed Floor
+1 is the one with maroon-and-white tiled bedrooms, Floor 2 the blue kitchen,
+Floor 3 the patterned tiles throughout. **Please confirm or correct** — it is a
+two-line fix.
+
+**Four photographs that do not exist.** A bathroom, a balcony, a walk-in
+closet, and the terrace in daylight without people in it. Nothing has been
+substituted for them. A guest deciding on a whole floor genuinely does want to
+see a bathroom; even good phone photographs in daylight would help.
+
+**The neighbourhood.** Three or four lines from you about Jayanagar — what is
+worth walking to, the nearest metro, where you would actually send a guest for
+breakfast — and we will write it into the Experience page.
