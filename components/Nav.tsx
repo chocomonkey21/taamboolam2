@@ -4,7 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { whatsappLink } from "@/lib/enquiry";
-import { NAV_ITEMS, site } from "@/lib/site";
+import { NAV_ITEMS, site, type NavKey } from "@/lib/site";
 import { LanguageToggle } from "./LanguageToggle";
 import { useSite } from "./SiteProvider";
 import { Wordmark } from "./Wordmark";
@@ -79,7 +79,8 @@ export function Nav() {
   // Light type only while floating over the hero photograph.
   const overHero = isHome && !scrolled;
 
-  const labels: Record<string, string> = {
+  /* NavKey, not string — see the note in Footer.tsx. */
+  const labels: Record<NavKey, string> = {
     home: t.nav.home,
     about: t.nav.about,
     experience: t.nav.experience,

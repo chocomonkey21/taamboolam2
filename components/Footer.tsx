@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { NAV_ITEMS, site } from "@/lib/site";
+import { NAV_ITEMS, site, type NavKey } from "@/lib/site";
 import { ButtonLink } from "./Button";
 import { LanguageToggle } from "./LanguageToggle";
 import { MapPanel } from "./MapPanel";
@@ -39,8 +39,14 @@ export function Footer() {
   const linkClass =
     "type-body inline-flex min-h-11 items-center text-ink-soft underline decoration-transparent decoration-1 underline-offset-4 transition-colors duration-200 hover:text-ink hover:decoration-current";
 
-  const labels: Record<string, string> = {
+  /* Keyed on NavKey rather than string, so a page added to NAV_ITEMS cannot
+     be forgotten here. It already was once: About went into the list, the
+     footer looked it up in a Record<string, string> that had no entry for it,
+     and rendered a link with no text — invisible on the page and still
+     reachable by keyboard. Typed this way that is a build error instead. */
+  const labels: Record<NavKey, string> = {
     home: t.nav.home,
+    about: t.nav.about,
     experience: t.nav.experience,
     enquire: t.nav.enquire,
   };
