@@ -272,7 +272,19 @@
      text face and a face actually drawn for this size. */
   .type-display {
     font-size: clamp(2.75rem, 10.5vw, 7rem);
-    line-height: 0.98;
+    /* 1.04, and not a rounder-looking 0.98, because of what Fraunces
+       actually draws. Measured off the live font: its tallest ascender inks
+       0.74em above the baseline and its deepest descender 0.25em below, so
+       two stacked lines need 0.99em between baselines before their ink can
+       stop touching. At 0.98 they overlapped by 0.01em — nothing on a
+       one-line heading, and a visible collision on a wrapped one at 100px,
+       where a descender from the line above lands inside a letter below and
+       the word reads as broken rather than as tight.
+
+       type-h1 (1.06) and type-h2 (1.14) were measured the same way and clear
+       it with 0.07em and 0.15em to spare. This is the only heading size that
+       did not. If it is ever tightened again, 0.99 is the floor. */
+    line-height: 1.04;
     letter-spacing: -0.028em;
     font-variation-settings: "SOFT" 40, "opsz" 144;
   }
