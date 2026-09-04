@@ -60,8 +60,11 @@ export function Footer() {
           <div className="md:col-span-5">
             <p className="type-annotation">{t.footer.findUs}</p>
 
-            <div className="mt-5">
-              <Wordmark size="lg" asLink={false} />
+            {/* container-type makes this div the thing the wordmark measures
+                itself against, so the name is sized by its own column rather
+                than by the window. See the note in Wordmark.tsx. */}
+            <div className="mt-5 [container-type:inline-size]">
+              <Wordmark size="column" asLink={false} />
             </div>
             <p className="type-lead mt-4 max-w-[26ch] text-ink-soft">
               {t.wordmarkContext}

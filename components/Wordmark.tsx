@@ -17,7 +17,7 @@ export function Wordmark({
   asLink = true,
 }: {
   className?: string;
-  size?: "sm" | "lg";
+  size?: "sm" | "lg" | "column";
   asLink?: boolean;
 }) {
   const { locale } = useSite();
@@ -33,8 +33,28 @@ export function Wordmark({
      size increase in exchange for the tracking it cannot take; this applies
      the same idea here rather than leaving the wordmark looking like it
      shrank when the language switches. */
+  /* "column" is the hero setting measured against its CONTAINER instead of
+     the viewport, and it exists because the footer put this mark in a 5-of-12
+     column while sizing it in vw. Between the md breakpoint and about 1200px
+     the two disagree badly: at 900 the name ran 110px past its column and
+     straight under the map panel beside it. cqw asks the column how wide it
+     is, so the mark can no longer outgrow the box it is in. The hero keeps
+     "lg" — it is full-bleed, where vw is the right question.
+
+     The coefficient is measured, not guessed. Set solid with 0.2em tracking,
+     TAAMBOOLAM runs about 9.2x its own font-size. The mark is allowed to use
+     the gutter beside its column, which is what the original design did and
+     is why this looked right on a wide screen — what it must not reach is the
+     map panel, and that sits one column further over, so the usable width is
+     about 1.2x the column. 9.2 into 1.2 gives 13cqw as the ceiling; 12.5
+     keeps roughly 60px of clearance at every width between the md breakpoint
+     and the container cap. Measured at 768, 900 and 1280. */
   const scale =
-    size === "lg"
+    size === "column"
+      ? kannadaFirst
+        ? "text-[clamp(1.9rem,14cqw,4.4rem)]"
+        : "text-[clamp(1.5rem,12.5cqw,3.75rem)]"
+      : size === "lg"
       ? kannadaFirst
         ? "text-[clamp(2.3rem,7.5vw,4.4rem)]"
         : "text-[clamp(1.95rem,6.4vw,3.75rem)]"
@@ -73,7 +93,7 @@ export function Wordmark({
           beside the English/ಕನ್ನಡ toggle, which already states the second
           language plainly. Dropping it there is a legibility fix, not a
           simplification for its own sake. */}
-      {size === "lg" ? (
+      {size === "lg" || size === "column" ? (
         <span
           aria-hidden="true"
           className="font-heading text-[0.62em] leading-none opacity-70"

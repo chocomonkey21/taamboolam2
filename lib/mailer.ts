@@ -65,7 +65,8 @@ const TO = process.env.ENQUIRY_TO_EMAIL ?? site.contact.email;
  * would look configured and fail at the provider, which is the worst of both.
  */
 const FROM =
-  process.env.ENQUIRY_FROM_EMAIL ?? `Taamboolam <enquiries@taamboolam.com>`;
+  process.env.ENQUIRY_FROM_EMAIL ??
+  `Taamboolam <enquiries@send.taamboolam.com>`;
 
 export function isMailConfigured(): boolean {
   return Boolean(process.env.RESEND_API_KEY);
