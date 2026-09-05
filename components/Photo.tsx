@@ -22,6 +22,7 @@ export function Photo({
   rounded = true,
   ratio,
   caption = "none",
+  captionClassName = "",
   objectPosition,
   zoomable = false,
   bare = false,
@@ -35,6 +36,22 @@ export function Photo({
   ratio?: string;
   /** "below" prints the caption under the image when the copy provides one. */
   caption?: "none" | "below";
+  /**
+   * Placement for that caption, for the layouts where "under the photograph"
+   * is not where it belongs.
+   *
+   * A caption defaults to the width of its photograph, which is right while
+   * the photograph is the width of a column. Two layouts break that: one runs
+   * the photograph full-bleed, where the caption would start hard against the
+   * edge of the window with none of the page's padding, and one pulls a second
+   * photograph up over the first, where it lands on top of the caption. Both
+   * need to say where the words go, and neither should have to stop using
+   * `caption="below"` and give up the figure/figcaption pairing to do it.
+   *
+   * Replaces the default measure rather than adding to it — the callers that
+   * set this are positioning the caption, and a 46ch cap fights that.
+   */
+  captionClassName?: string;
   objectPosition?: string;
   /** Offer this photograph at full size when it is tapped or clicked. */
   zoomable?: boolean;
@@ -121,7 +138,9 @@ export function Photo({
     return (
       <figure className="w-full">
         {framed}
-        <figcaption className="type-caption mt-3 max-w-[46ch]">
+        <figcaption
+          className={`type-caption mt-3 ${captionClassName || "max-w-[46ch]"}`}
+        >
           {copy.caption}
         </figcaption>
       </figure>
