@@ -104,7 +104,7 @@ export const en: Content = {
     },
 
     foodStill: {
-      alt: "A flatbread cooking on a clay griddle over a low fire.",
+      alt: "A steel thali on a dark wooden table: potato curry, a mixed vegetable dish, chapatis and a spoonful of spice powder.",
       caption: "Cooked when you ask for it. There is no menu and no set time.",
     },
 

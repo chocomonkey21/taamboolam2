@@ -149,10 +149,11 @@ export function ExperienceScreen() {
           <div className="relative mt-10 grid gap-10 md:mt-14 md:grid-cols-12 md:gap-8">
             {/* The photograph leads on this page and is followed rather than
                 flanked, which is the reverse of the home page's treatment of
-                the same subject. Held to a third of the width: it is a 760px
-                frame lifted from the owner's video, and stretching it across
-                two thirds would show the reader the compression instead of
-                the food. */}
+                the same subject. Held to a third of the width — which used to
+                be a constraint and is now a choice. It was a 760px frame cut
+                from a video, and anything wider showed the reader the
+                compression instead of the food; the picture is a real 1200
+                now, so the width is simply what suits the column. */}
             <Reveal variant="photo" className="md:col-span-4">
               <Photo
                 id="foodStill"
