@@ -6,6 +6,7 @@
 import sharp from "sharp";
 import { mkdirSync, existsSync } from "node:fs";
 import path from "node:path";
+import { upscalePhotos } from "./upscale-photos.mjs";
 
 const SRC =
   "C:/Users/User/Downloads/Taamboolam webdesign photos videos-20260902T161613Z-1-001/Taamboolam webdesign photos videos";
@@ -181,3 +182,22 @@ console.log(`\n${results.length} photographs written to ${OUT}`);
 console.log(
   `total ${Math.round(results.reduce((a, r) => a + r.kb, 0) / 1024)} MB`,
 );
+
+/* Then enlarge the ones that need it, in the same run.
+ *
+ * This script and upscale-photos.mjs write the same filenames. This one builds
+ * them from the owner's originals, at the size the original allows; that one
+ * enlarges the ten shown full-bleed, in place. So running this alone silently
+ * reverted that pass — ten photographs quietly went back to being too small
+ * for the slots they fill, with nothing on screen or in the console to say so,
+ * and HANDOFF.md tells the owner to run exactly this script to swap a photo.
+ *
+ * Chaining them is the fix rather than a warning to remember: a warning is
+ * only as good as whoever is reading the terminal, and this failure is
+ * invisible in the browser. Anything already at its target width is skipped,
+ * so this cannot enlarge an enlargement.
+ */
+console.log("");
+console.log("Enlarging the full-bleed photographs:");
+console.log("");
+await upscalePhotos(OUT);
