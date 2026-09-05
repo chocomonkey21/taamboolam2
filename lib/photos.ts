@@ -100,5 +100,5 @@ export const photos: Record<PhotoId, PhotoMeta> = {
      the only image with an alpha channel — see scripts/cut-plate.mjs, which is
      where it is regenerated. Do not run it through build-photos.mjs: that
      script writes JPEGs and would fill the transparency with black. */
-  taamboolamTray: { src: "/images/taamboolam-tray.png", ratio: "760 / 566" },
+  taamboolamTray: { src: "/images/taamboolam-tray.png", ratio: "1 / 1" },
 };
