@@ -6,12 +6,20 @@
  * and the whole site updates — aspect ratios, gallery behaviour, captions and
  * reveals are all defined against the id, not against the file.
  *
- * THESE ARE THE OWNER'S OWN PHOTOGRAPHS. The stock imagery this site shipped
- * with is gone. Each file is built from one of the originals the owner sent by
+ * THESE ARE THE OWNER'S OWN PHOTOGRAPHS, WITH ONE EXCEPTION. Every file but
+ * `foodStill` is built from an original the owner sent, by
  * scripts/build-photos.mjs, which holds the source filename, the crop and the
  * grade for every slot — that script is where an image is swapped, and running
  * it again regenerates the whole set consistently. See public/images/README.md
  * for what came from where and what is still missing.
+ *
+ * The exception is `foodStill`, which is a licensed stock photograph. It
+ * replaced a frame lifted from a video the owner had been sent, which was both
+ * too small for the slot and a picture of somebody else's cooking anyway. It
+ * stands in until she sends a photograph of a meal. The whole of
+ * assets/stock/README.md is about that one file, including what has to be true
+ * of anything that replaces it — the copy beside it promises the food is
+ * vegetarian, and most thali photographs are not.
  *
  * Alt text and captions are translated and live in lib/content/en.ts and
  * lib/content/kn.ts, under `photos`.

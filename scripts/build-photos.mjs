@@ -21,6 +21,14 @@ const FRAMES =
 const SRC_SEPT = "C:/Users/ASUS/Downloads/new pictures";
 
 /**
+ * The one source that is not the owner's, and the only one committed to this
+ * repository rather than living on somebody's machine. See
+ * assets/stock/README.md for what it is, where it came from, and what has to
+ * be true of anything that replaces it.
+ */
+const STOCK = "assets/stock";
+
+/**
  * `--only=a.jpg,b.jpg` builds just those outputs.
  *
  * The two source roots live on different machines, so a full run is only
@@ -207,7 +215,35 @@ const jobs = [
   },
 
   // ── Food ────────────────────────────────────────────────────────────
-  { out: "food-still.jpg", frame: "food_11.jpg", w: 760, ar: 4 / 5, upscale: true },
+  /* The only photograph on this site that the owner did not take.
+     
+     It was a frame from a video she sent: 474px wide, shown at 1200, so it was
+     soft and blocky. Worse than soft, it was wrong — a roti on a clay tawa on
+     sand, which is not this house's kitchen and is not the "South Indian home
+     cooking, made fresh and organic" that the page beside it promises. It came
+     in as a WhatsApp forward, so it had never been her food either. All twelve
+     frames of that clip are the same shot, so there was nothing better to cut
+     to, and her only real food photograph is a flash-lit tiffin of vermicelli.
+     
+     Chosen for more than looks. The copy says "All of it vegetarian, like the
+     house", and several better-composed thali photographs carry a meat or fish
+     dish somewhere in frame — two candidates were rejected on exactly that.
+     This one is vegetarian in every compartment. It is also steel on dark
+     wood, which is the palette this section already sits in, and a steel plate
+     rhymes with the taamboolam tray on the About page.
+     
+     `position: "left"` because the tray runs off the right of the frame into a
+     bowl of cashews and a glass of curd: the food is on the left, and a
+     centred 4:5 crop halves the chapatis. No `upscale` — this is a genuine
+     1200 out of a 2400px source. */
+  {
+    out: "food-still.jpg",
+    root: STOCK,
+    src: "thali.jpg",
+    w: 1200,
+    ar: 4 / 5,
+    position: "left",
+  },
 
   // ── The Experience page ─────────────────────────────────────────────
   { out: "experience-opening.jpg", src: "IMG-20260902-WA0005.jpg", w: 1600, ar: 21 / 9 },

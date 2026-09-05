@@ -44,9 +44,6 @@ import { pathToFileURL } from "node:url";
  */
 const FULL_BLEED = 2560;
 
-/** Column photographs that fall just short of a 30vw slot at 2x on a laptop. */
-const COLUMN = 1200;
-
 const TARGETS = {
   "hero.jpg": FULL_BLEED,
   "intro.jpg": FULL_BLEED,
@@ -57,7 +54,6 @@ const TARGETS = {
   "floor-1-b.jpg": FULL_BLEED,
   "floor-2-b.jpg": FULL_BLEED,
   "floor-3-b.jpg": FULL_BLEED,
-  "food-still.jpg": COLUMN,
 };
 
 /**

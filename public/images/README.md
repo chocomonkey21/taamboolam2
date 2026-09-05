@@ -57,7 +57,7 @@ happen.
 | `craft-tiles.jpg` | Home — how it is made | Cane chairs on the painted tile border *(Sept batch)* |
 | `craft-joinery.jpg` | Home — how it is made | Cabinets and woven pendant shades |
 | `craft-cane.jpg` | Home — how it is made | A woven cane pendant, lit *(Sept batch)* |
-| `food-still.jpg` | Home + Experience | A flatbread on a clay griddle *(from video)* |
+| `food-still.jpg` | Home + Experience | A vegetarian steel thali on dark wood — **the one photograph here that is not the owner's.** See `assets/stock/README.md` |
 | `arrival-night.jpg` | Home — closing band, and Experience — closing band | The covered ground floor at night |
 | `floor-1-a.jpg` | Home ledger + Experience | Floor 1 — a bedroom |
 | `floor-1-b.jpg` | Experience — Floor 1 | Floor 1 — the living room |
