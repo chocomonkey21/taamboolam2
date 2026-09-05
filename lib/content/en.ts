@@ -6,9 +6,9 @@ export const en: Content = {
   switchTo: "Switch to Kannada",
 
   meta: {
-    homeTitle: "Taamboolam — a homestay in Jayanagar, Bengaluru",
+    homeTitle: "Taamboolam — a homestay in JP Nagar, Bengaluru",
     homeDescription:
-      "A family home in Jayanagar, Bengaluru, kept as a homestay. Three guest floors and a terrace. Rooms are taken one at a time, by enquiry, and the owner answers every message personally.",
+      "A family home in JP Nagar, Bengaluru, kept as a homestay. Three guest floors and a terrace. Rooms are taken one at a time, by enquiry, and the owner answers every message personally.",
     experienceTitle: "The Experience",
     experienceDescription:
       "The story of the house, floor by floor — three guest floors, each with two guest bedrooms and a master bedroom, their own living room, dining area and kitchen, and a terrace above them all.",
@@ -17,7 +17,7 @@ export const en: Content = {
       "Ask about staying at Taamboolam, or about a small gathering. There is no instant booking. The owner reads every enquiry.",
     aboutTitle: "About",
     aboutDescription:
-      "A family home in Jayanagar kept as a homestay, and the offering it is named after.",
+      "A family home in JP Nagar kept as a homestay, and the offering it is named after.",
     privacyTitle: "Privacy",
     privacyDescription:
       "What the enquiry form collects, where it goes, and what is kept. No analytics, no tracking, and nothing stored on this site.",
@@ -34,7 +34,7 @@ export const en: Content = {
     whatsappOpener: "Hello — I would like to ask about staying at Taamboolam.",
   },
 
-  wordmarkContext: "A homestay in Jayanagar, Bengaluru",
+  wordmarkContext: "A homestay in JP Nagar, Bengaluru",
 
   cta: {
     enquire: "Enquire about a stay",
@@ -156,7 +156,7 @@ export const en: Content = {
     eyebrow: "About",
     heading: "A house somebody made",
     body: [
-      "Taamboolam is a family home in Jayanagar that was built slowly and is still cared for by the people who built it. The tiles, the joinery, the cane and the small things on the shelves were chosen one at a time rather than specified in a schedule, and none of it was bought to look like anything in particular.",
+      "Taamboolam is a family home in JP Nagar that was built slowly and is still cared for by the people who built it. The tiles, the joinery, the cane and the small things on the shelves were chosen one at a time rather than specified in a schedule, and none of it was bought to look like anything in particular.",
       "It is not a hotel and it does not behave like one: no front desk, no key card, no menu card. What it asks in return is that you treat it as a house — one that other people are also living in while you are here.",
     ],
     nameEyebrow: "The name",
@@ -248,7 +248,7 @@ export const en: Content = {
 
   home: {
     hero: {
-      location: "Jayanagar, Bengaluru",
+      location: "JP Nagar, Bengaluru",
       description:
         "A family home of three guest floors and a terrace, kept as a homestay. Rooms are taken one at a time, by enquiry.",
     },

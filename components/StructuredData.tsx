@@ -34,7 +34,7 @@ export function StructuredData({ locale }: { locale: Locale }) {
     address: {
       "@type": "PostalAddress",
       streetAddress: "50-1, 46th Cross, Sarakki Main Road",
-      addressLocality: "Jayanagar, Bengaluru",
+      addressLocality: "JP Nagar, Bengaluru",
       addressRegion: "Karnataka",
       postalCode: "560078",
       addressCountry: "IN",
