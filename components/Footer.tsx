@@ -5,6 +5,7 @@ import { NAV_ITEMS, site, type NavKey } from "@/lib/site";
 import { ButtonLink } from "./Button";
 import { LanguageToggle } from "./LanguageToggle";
 import { MapPanel } from "./MapPanel";
+import { Photo } from "./Photo";
 import { useSite } from "./SiteProvider";
 import { MaterialStrip, TileCourse } from "./TileMotif";
 import { Wordmark } from "./Wordmark";
@@ -117,6 +118,26 @@ export function Footer() {
             <p className="type-caption mt-6 max-w-[46ch]">
               {t.footer.gatherings}
             </p>
+
+            {/* The tray the house is named after, and the last thing on the
+                site. A taamboolam is what a South Indian household hands you
+                on your way out, so the closing note of the page is the right
+                and only place for it — it is doing the same job here that it
+                does at a front door.
+
+                It is a cut-out on the bare limewash rather than a photograph
+                in a frame: there is already one framed rectangle in this
+                footer, the map, and a second one directly opposite would turn
+                the closing scene into a pair of panels. Small on purpose. It
+                is a gesture at the end of a page, not an exhibit.
+
+                Not zoomable, and not a link. Nothing follows it. */}
+            <Photo
+              id="taamboolamTray"
+              rounded={false}
+              sizes="(min-width: 768px) 15rem, 60vw"
+              className="mt-12 w-[60%] max-w-[15rem] md:mt-14"
+            />
           </div>
 
           {/* ── Arriving ──────────────────────────────────────────────── */}

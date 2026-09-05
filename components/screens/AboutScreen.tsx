@@ -2,7 +2,6 @@
 
 import { Datum } from "../Datum";
 import { Reveal } from "../Reveal";
-import { TaamboolamPlate } from "../TaamboolamPlate";
 import { TileCourse } from "../TileMotif";
 import { useSite } from "../SiteProvider";
 
@@ -56,6 +55,48 @@ export function AboutScreen() {
 
       <TileCourse />
 
+      {/* ── Her words ─────────────────────────────────────────────────────
+          The owner wrote this herself and asked for it as written. It is the
+          only passage on the site in someone's voice rather than in the house
+          style, so it is set as a quotation rather than folded into the prose:
+          wider leading, no measure-width column of body text, and an eyebrow
+          that says whose voice it is before the first line lands. Read as
+          ordinary copy it would look like the writing slipped. Read as hers,
+          it is the best thing on the page. */}
+      <section
+        className="texture-limewash relative bg-atmos"
+        data-atmosphere="house"
+        aria-labelledby="owner-words"
+      >
+        <div className="container-content section-rhythm">
+          <p id="owner-words" className="type-eyebrow text-atmos-accent">
+            {t.about.ownerEyebrow}
+          </p>
+
+          <blockquote className="mt-8 max-w-[52rem]">
+            {/* Deliberately unanimated. Every other block on this page
+                reveals, and six lines wiping in one after another would turn
+                a quiet thing into a performance. They just sit there. */}
+            {t.about.ownerWords.map((line, i) => (
+              <p
+                key={i}
+                className={`type-lead text-balance text-atmos-ink/85 ${i ? "mt-7" : ""}`}
+              >
+                {line}
+              </p>
+            ))}
+
+            {/* She set this apart from the rest with a line of dots. The rule
+                is that line of dots. */}
+            <p className="rule-atmos type-body measure mt-12 border-t pt-7 text-atmos-ink/75">
+              {t.about.ownerEssence}
+            </p>
+          </blockquote>
+        </div>
+      </section>
+
+      <TileCourse />
+
       {/* ── The word ──────────────────────────────────────────────────── */}
       <section
         className="texture-limewash relative bg-atmos"
@@ -63,13 +104,15 @@ export function AboutScreen() {
         aria-labelledby="name-origin"
       >
         <div className="container-content section-rhythm">
-          {/* Text left, tray right. The tray pins on desktop and the writing
-            goes past it, so the six lines below and the six things on the
-            dish are the same list read at the same speed: by the time a
-            reader reaches "Kumkum", the kumkum is on the tray. Below md it
-            unpins and simply stacks, text first. */}
-        <div className="grid gap-12 md:grid-cols-12 md:items-start md:gap-10">
-          <div className="md:col-span-5">
+          {/* This was text in a narrow left column beside a drawn tray that
+              pinned on the right, so the six lines and the six things on the
+              dish were read at the same speed. The drawing is gone — there is
+              a photograph of a real taamboolam in the footer now, which is
+              what the drawing stood in for — so the column has nothing to sit
+              beside. Rather than leave the writing at five columns with seven
+              empty ones next to it, the prose takes its own measure and the
+              six elements run underneath in two columns. */}
+          <div className="md:max-w-[46rem]">
             <p className="type-eyebrow text-atmos-accent">{t.about.nameEyebrow}</p>
             <h2 id="name-origin" className="type-h2 mt-5 text-atmos-ink">
               {t.about.nameHeading}
@@ -83,31 +126,22 @@ export function AboutScreen() {
               </p>
             ))}
 
-            {/* The gloss. Not new material — the paragraph above already says
-                it in a sentence. Set out one to a line it becomes a key to
-                the drawing, and gives the pinned tray the distance it needs
-                to be laid one piece at a time. */}
-            <ul className="rule-atmos mt-12 border-t">
-              {t.about.elements.map((element) => (
-                <li
-                  key={element.name}
-                  className="rule-atmos border-b py-6 md:py-9"
-                >
-                  <h3 className="type-label text-atmos-accent">{element.name}</h3>
-                  <p className="type-body measure mt-2 text-atmos-ink/75">
-                    {element.carries}
-                  </p>
-                </li>
-              ))}
-            </ul>
           </div>
 
-          {/* Sticky needs the column to sit at the start of the row rather
-              than be centred in it, or there is no travel to stick through. */}
-          <div className="md:col-span-6 md:col-start-7 md:sticky md:top-[16vh] md:self-start">
-            <TaamboolamPlate className="mx-auto w-full max-w-[20rem] sm:max-w-[24rem] md:max-w-none" />
-          </div>
-        </div>
+          {/* The gloss. Not new material — the paragraph above already says it
+              in a sentence. One to a line it becomes a list of what is on the
+              tray, which is worth having in words now that the drawing of it
+              is gone. */}
+          <ul className="rule-atmos mt-12 border-t md:mt-14 md:grid md:grid-cols-2 md:gap-x-12">
+            {t.about.elements.map((element) => (
+              <li key={element.name} className="rule-atmos border-b py-6 md:py-7">
+                <h3 className="type-label text-atmos-accent">{element.name}</h3>
+                <p className="type-body mt-2 text-atmos-ink/75">
+                  {element.carries}
+                </p>
+              </li>
+            ))}
+          </ul>
 
           <p className="type-annotation mt-10">{t.about.gestureNote}</p>
         </div>

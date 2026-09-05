@@ -45,7 +45,8 @@ export type PhotoId =
   | "invitation"
   | "experienceOpening"
   | "experienceGathering"
-  | "experienceClose";
+  | "experienceClose"
+  | "taamboolamTray";
 
 export type PhotoMeta = {
   src: string;
@@ -93,4 +94,11 @@ export const photos: Record<PhotoId, PhotoMeta> = {
 
   experienceOpening: { src: "/images/experience-opening.jpg", ratio: "21 / 9" },
   experienceGathering: { src: "/images/gathering-sky.jpg", ratio: "21 / 9" },
+
+  /* The tray the house is named after, cut off the table it was photographed
+     on so it can sit straight on the footer's limewash. The only PNG here, and
+     the only image with an alpha channel — see scripts/cut-plate.mjs, which is
+     where it is regenerated. Do not run it through build-photos.mjs: that
+     script writes JPEGs and would fill the transparency with black. */
+  taamboolamTray: { src: "/images/taamboolam-tray.png", ratio: "760 / 566" },
 };

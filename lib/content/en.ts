@@ -112,6 +112,10 @@ export const en: Content = {
       alt: "A bamboo water feature standing in a stone bowl on a patterned tiled floor.",
     },
 
+    taamboolamTray: {
+      alt: "A taamboolam tray: jasmine and chrysanthemums, a coconut, bananas, limes, brass lamps and a grinding stone, arranged on a steel plate.",
+    },
+
     invitation: {
       alt: "The covered ground floor at night, lit warmly, with plants along a timber screen.",
     },
@@ -171,6 +175,17 @@ export const en: Content = {
       { name: "Turmeric", carries: "Auspiciousness, and a blessing on the road." },
       { name: "Kumkum", carries: "Welcome, marked rather than spoken." },
     ],
+    ownerEyebrow: "In her words",
+    ownerWords: [
+      "Silent within that speaks to yourself while enjoying your stay!",
+      "In the Hustle of the outside noise..you feel the bliss within the stay!",
+      "Gentle colours of the walls and the natural tiles that breathe free and pure you feel the Calm Quiet and beautiful life within the stay!",
+      "Serene spaces within the walls with green plants cute little garden here and there that relieve your stressed mind and body!",
+      "You get to be there.. Be with you your family/ your friends / your guests fully without the outside disturbances!",
+      "Tailored with care organic mattresses/ beds, pillows, sheets, curtains sooth your body as you get to bed and sleep.. you wake up to feel fresh, breathe happy!",
+    ],
+    ownerEssence:
+      "And Empathy is the essence of Taamboolam.. Your Hosts care for you, understand you, be with you to make you feel comfortable, satisfied and happy with your stay..She makes sure you SMILE with gratitude while checking out.",
     gestureNote:
       "None of it is worth much. That is the point of it: what is given is the gesture, not the goods.",
     note: "Best suited to guests who would rather stay in a home than in a room.",
@@ -295,7 +310,7 @@ export const en: Content = {
       eyebrow: "Gatherings",
       heading: "Occasionally, the house holds more than guests",
       body: [
-        "Sometimes the house is used for something other than a stay — a yoga morning, a music or art session, a workshop, a family occasion. The terrace is where it happens, and it holds about fifty with tables, or a hundred with chairs alone. These are never listed and never bookable: they happen because somebody wrote and asked, and the fit was right for both sides.",
+        "Sometimes the house is used for something other than a stay — a yoga morning, a music or art session, a workshop, a family occasion. The terrace is where it happens, and what it holds depends on how it is set — ask when you write. These are never listed and never bookable: they happen because somebody wrote and asked, and the fit was right for both sides.",
       ],
       note: "If you have something in mind, say so in your enquiry and describe it. Parties are the one thing the house does not do.",
     },
@@ -419,9 +434,11 @@ export const en: Content = {
     practicalHeading: "Practical things",
     practicalLabel: "The practical details",
     practical: [
-      "Floors 1, 2 and 3 are the guest floors. The fourth and fifth floors are private and are not accessible to guests. The terrace is above them, at the top of the house.",
+      "Floors 1, 2 and 3 are the guest floors. The fourth floor is private, but can sometimes be arranged — ask when you write. The fifth floor is not let. The terrace is above them all, at the top of the house.",
       "The terrace is open to everyone staying in the house.",
       "There is Wi-Fi, air conditioning and hot water.",
+      "Extra beds and mats can be arranged. Anyone coming beyond the people you enquired for must be mentioned before the visit, and is charged separately.",
+      "For families with a baby: a cradle, changing pillows, and a feeding pillow for new mothers.",
       "There is a lift, and there are stairs.",
       "Parking is available on the ground floor for small to medium vehicles, scooters and bikes.",
     ],
@@ -499,7 +516,7 @@ export const en: Content = {
     pages: "Pages",
     privacy: "Privacy",
     gatherings:
-      "Gatherings on the terrace are possible — about fifty with tables, or a hundred with chairs alone — by direct enquiry only.",
+      "Gatherings on the terrace are possible, by direct enquiry only.",
     rights: "All rights reserved.",
     designedBy: "Designed by",
   },
@@ -528,6 +545,7 @@ export const en: Content = {
     visitGathering: "Planning a small gathering",
     visitOther: "Something else",
     floorPreference: "Floor preference",
+    floorFourth: "Fourth floor — private, ask",
     floorAny: "No preference",
     message: "Anything you would like us to know",
     messageHint:

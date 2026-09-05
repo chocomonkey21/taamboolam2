@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { content, isLocale } from "@/lib/content";
 import {
   emptyEnquiry,
+  floorPreferenceLabel,
   formatDate,
   validateEnquiry,
   type EnquiryFields,
@@ -210,10 +211,7 @@ export async function POST(request: Request) {
     other: owner.form.visitOther,
   }[values.visitType];
 
-  const floorLabel =
-    values.floorPreference === "any"
-      ? owner.form.floorAny
-      : owner.floors[values.floorPreference].label;
+  const floorLabel = floorPreferenceLabel(values.floorPreference, owner);
 
   const details = `<table style="border-collapse:collapse;width:100%;margin:0 0 24px">
     ${row("Name", name)}
