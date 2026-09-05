@@ -255,6 +255,15 @@ export function FloorChapter({
               ratio="21 / 9"
               sizes="(min-width: 768px) 92vw, 92vw"
               caption="below"
+              /* Out from under the photograph that overlaps this one. The
+                 small frame below is pulled up six rems to sit on this band,
+                 and it covered the caption completely on desktop — the words
+                 were behind the picture, not missing, which is why it read as
+                 a broken overlap rather than as absent text. It takes the
+                 left third, so the caption clears it and lands under the
+                 prose column instead. Below md nothing overlaps and the
+                 caption sits where it always did. */
+              captionClassName="md:pl-[42%]"
               zoomable
             />
           </Reveal>
@@ -297,6 +306,13 @@ export function FloorChapter({
               sizes="100vw"
               className="!min-h-[18rem] md:!min-h-0"
               caption="below"
+              /* This photograph is deliberately full-bleed, outside the
+                 container, and the caption was inheriting that: it began at
+                 the very edge of the window with none of the page's padding,
+                 so the first word was cut in half by the screen. The picture
+                 stays full width; its caption takes the page's own measure
+                 and lines up with the heading above it. */
+              captionClassName="container-content"
             />
           </Reveal>
 
