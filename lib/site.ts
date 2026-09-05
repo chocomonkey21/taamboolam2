@@ -63,35 +63,26 @@ export const site = {
   location: {
     addressLines: [
       "50-1, 46th Cross, Sarakki Main Road",
-      "1st Phase, JP Nagar",
-      "Bengaluru 560078",
+      "8th Block, Jayanagar",
+      "Bengaluru 560070",
     ],
     /**
      * The pin, supplied by the owner from the house's own Google Maps record
      * — not derived. It replaced a geocoded guess that had sat 23m off.
      *
-     * The address above now follows Google rather than diverging from it.
-     * It used to read "8th Block, Jayanagar", which this note recorded as a
-     * known discrepancy on the grounds that it was the owner's own wording.
-     * That was the wrong call: a guest routing to the house reads the address
-     * on the site and the address in Maps side by side, and two different
-     * neighbourhoods for one pin reads as an error in the listing. Google
-     * files this stretch of Sarakki Main Road as "1st Phase, J. P. Nagar" —
-     * verified against the Sammprada Hospital record next door, "Sarakki Main
-     * Rd, VR Layout, 1st Phase, J. P. Nagar, Bengaluru, Karnataka 560078".
-     *
-     * Rendered "JP Nagar" rather than Google's formal "J. P. Nagar": it is
-     * the form in Google's own business titles for the area, the form
-     * everyone local writes, and it does not collide with the full stops that
-     * end sentences in body copy, where this name also appears.
-     *
-     * The layout line (TMC / VR) is deliberately not carried into the address.
-     * Nobody has confirmed which one the house sits in, and an invented one is
-     * worse than an omitted one when the postcode already resolves it.
+     * The address is the owner's own wording: "8th Block, Jayanagar", not
+     * Google's filing of the same point under "1st Phase, J. P. Nagar". A
+     * short-lived version of this file followed Google instead, on the
+     * reasoning that a guest comparing the site to Maps side by side would
+     * read two different neighbourhoods as an error. The owner corrected
+     * that: the address on the house's own paperwork says Jayanagar, and
+     * that is what stays, regardless of how Google files the sub-locality.
      *
      * The landmark is "Sammprada Hospital", the name the business is
-     * registered under and therefore the one a guest searching will find. The
-     * postcode is 560078, confirmed by the owner.
+     * registered under and therefore the one a guest searching will find.
+     * The postcode is 560070, as given by the owner — corrected from an
+     * earlier 560078, which was never confirmed against anything but a
+     * neighbouring business listing.
      */
     /**
      * "Directions", not "search". A dir/ link opens Google's routing straight

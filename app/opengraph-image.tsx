@@ -7,7 +7,7 @@ import { tokens } from "@/lib/tokens";
 
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
-export const alt = `${site.name} — a homestay in JP Nagar, Bengaluru`;
+export const alt = `${site.name} — a homestay in Jayanagar, Bengaluru`;
 
 /**
  * Social card. Same restraint as the site: ivory ground, the wordmark, one

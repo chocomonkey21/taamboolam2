@@ -1,6 +1,6 @@
 # Taamboolam
 
-Website for Taamboolam, a family homestay in JP Nagar, south Bengaluru.
+Website for Taamboolam, a family homestay in Jayanagar, south Bengaluru.
 
 **Live at https://www.taamboolam.com**
 

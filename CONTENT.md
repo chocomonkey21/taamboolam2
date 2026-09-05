@@ -19,7 +19,7 @@ address, the map pin and the postcode are all yours and all confirmed:
 - Taamboolam / ತಾಂಬೂಲಂ  *(corrected — the site previously carried ತಂಬೋಲಂ)*
 - +91 91082 40269, on the site and behind the WhatsApp button
 - taamboolaminn@gmail.com
-- 50-1, 46th Cross, Sarakki Main Road, 1st Phase, JP Nagar, Bengaluru 560078
+- 50-1, 46th Cross, Sarakki Main Road, 8th Block, Jayanagar, Bengaluru 560070
 - Next to Sammprada Hospital and Sangeetha Mobiles
 - https://www.instagram.com/taamboolam/
 
@@ -174,6 +174,6 @@ closet, and the terrace in daylight without people in it. Nothing has been
 substituted for them. A guest deciding on a whole floor genuinely does want to
 see a bathroom; even good phone photographs in daylight would help.
 
-**The neighbourhood.** Three or four lines from you about JP Nagar — what is
+**The neighbourhood.** Three or four lines from you about Jayanagar — what is
 worth walking to, the nearest metro, where you would actually send a guest for
 breakfast — and we will write it into the Experience page.
