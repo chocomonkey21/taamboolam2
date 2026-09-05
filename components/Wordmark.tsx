@@ -48,19 +48,33 @@ export function Wordmark({
      map panel, and that sits one column further over, so the usable width is
      about 1.2x the column. 9.2 into 1.2 gives 13cqw as the ceiling; 12.5
      keeps roughly 60px of clearance at every width between the md breakpoint
-     and the container cap. Measured at 768, 900 and 1280. */
+     and the container cap. Measured at 768, 900 and 1280.
+
+     Those three widths are all at or above md, and that was the hole in it.
+     Below md the footer stops being a twelve-column grid: the column becomes
+     the whole page, so there is no gutter beside it and 1.2x of the column is
+     1.2x of the viewport. On a 360px phone the mark set 39.5px and ran 368px
+     wide inside a 316px container, pushing the document 30px wider than the
+     screen — which is invisible on the page itself but drags the fixed header
+     out with it and clips the nav plate off the right edge. That is what the
+     owner photographed; the nav was the symptom and this was the cause.
+
+     So the gutter allowance is now claimed only where a gutter exists. Below
+     md the mark is held inside its own container: 9.2x a 10cqw setting is 92%
+     of the column, which fits with room for the trailing letter-space. At md
+     and up nothing changes. */
   const scale =
     size === "column"
       ? kannadaFirst
-        ? "text-[clamp(1.9rem,14cqw,4.4rem)]"
-        : "text-[clamp(1.5rem,12.5cqw,3.75rem)]"
+        ? "text-[clamp(1.9rem,11cqw,4.4rem)] md:text-[clamp(1.9rem,14cqw,4.4rem)]"
+        : "text-[clamp(1.5rem,10cqw,3.75rem)] md:text-[clamp(1.5rem,12.5cqw,3.75rem)]"
       : size === "lg"
       ? kannadaFirst
         ? "text-[clamp(2.3rem,7.5vw,4.4rem)]"
         : "text-[clamp(1.95rem,6.4vw,3.75rem)]"
       : kannadaFirst
-        ? "text-[20px] sm:text-[22px]"
-        : "text-[17px] sm:text-[19px]";
+        ? "text-[clamp(16px,4.8vw,20px)] sm:text-[22px]"
+        : "text-[clamp(14px,4.1vw,17px)] sm:text-[19px]";
 
   const inner = (
     <span

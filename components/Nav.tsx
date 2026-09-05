@@ -108,7 +108,7 @@ export function Nav() {
           {/* ── The nameplate ─────────────────────────────────────────── */}
           <div
             {...plateState}
-            className={`${plate} pointer-events-auto px-4 py-2 sm:px-5 sm:py-2.5`}
+            className={`${plate} pointer-events-auto px-3 py-2 sm:px-5 sm:py-2.5`}
           >
             <Wordmark />
           </div>
@@ -147,32 +147,45 @@ export function Nav() {
               })}
             </ul>
 
-            {/* The two pages a reader might be looking for on a phone. The
-                third, Enquire, is the button fixed to the bottom of the
-                viewport, and Home is the nameplate.
+            {/* The one other page a reader might want on a phone. Enquire is
+                the button fixed to the bottom of the viewport, and Home is the
+                nameplate.
 
-                About is NOT here, and that is measured rather than forgotten.
-                At 390 the nameplate is 193px and this plate 191px, which with
-                the gap already exceeds the padded container by about 46px:
-                adding "About" clipped "The Experience" mid-word, and Kannada
-                is wider still. Two text links and the wordmark do not fit on a
-                phone. About is reachable from the footer, which carries the
-                full NAV_ITEMS list. Closing that properly means a compact menu
-                or freeing the bottom bar, not squeezing this plate.
+                THIS ROW OVERFLOWED ON A REAL PHONE and the owner sent a
+                photograph of it. Both plates are sized by their contents and
+                neither can shrink, so the row needed a fixed 384px: it fitted
+                the 390 this was checked at, and clipped "The Experience"
+                mid-word on every 360px Android and even on a 375px iPhone.
+                Checking one width proved nothing, because nothing here scaled.
+
+                Now the nameplate does scale — the wordmark is clamped against
+                vw in Wordmark.tsx — and this plate is dropped below 360, where
+                no honest wordmark size leaves room for it. Experience is still
+                reachable there from the hero button and the footer.
+
+                About is NOT here, and that is measured rather than forgotten:
+                two text links and the wordmark do not fit on a phone. It is in
+                the footer, which carries the full NAV_ITEMS list.
 
                 whitespace-nowrap is load-bearing: the plate is sized by its
-                contents, and at 390px "The Experience" wrapped to two lines,
-                which turned a small object on the wall into a tall lozenge
-                nearly touching the nameplate. */}
-            <Link
-              href="/experience"
-              aria-current={
-                pathname.startsWith("/experience") ? "page" : undefined
-              }
-              className="type-label inline-flex min-h-11 items-center px-1.5 whitespace-nowrap opacity-80 transition-opacity duration-200 hover:opacity-100 md:hidden"
-            >
-              {t.nav.experience}
-            </Link>
+                contents, and "The Experience" wrapping to two lines turns a
+                small object on the wall into a tall lozenge.
+
+                The visibility sits on this wrapper rather than on the link, so
+                the link owns `inline-flex` and nothing else competes with it —
+                two display utilities on one element are decided by stylesheet
+                order rather than by intent. */}
+            <span className="max-[359px]:hidden md:hidden">
+              <Link
+                href="/experience"
+                aria-current={
+                  pathname.startsWith("/experience") ? "page" : undefined
+                }
+                className="type-label inline-flex min-h-11 items-center px-1.5 whitespace-nowrap opacity-80 transition-opacity duration-200 hover:opacity-100"
+              >
+                {t.nav.experience}
+              </Link>
+            </span>
 
             {/* Wrapped, not given a `hidden` class of its own: LanguageToggle
                 already sets display, and two display utilities on one element
