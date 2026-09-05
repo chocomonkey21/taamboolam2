@@ -1,6 +1,7 @@
 "use client";
 
 import { Datum } from "../Datum";
+import { Photo } from "../Photo";
 import { Reveal } from "../Reveal";
 import { TileCourse } from "../TileMotif";
 import { useSite } from "../SiteProvider";
@@ -104,28 +105,46 @@ export function AboutScreen() {
         aria-labelledby="name-origin"
       >
         <div className="container-content section-rhythm">
-          {/* This was text in a narrow left column beside a drawn tray that
-              pinned on the right, so the six lines and the six things on the
-              dish were read at the same speed. The drawing is gone — there is
-              a photograph of a real taamboolam in the footer now, which is
-              what the drawing stood in for — so the column has nothing to sit
-              beside. Rather than leave the writing at five columns with seven
-              empty ones next to it, the prose takes its own measure and the
-              six elements run underneath in two columns. */}
-          <div className="md:max-w-[46rem]">
-            <p className="type-eyebrow text-atmos-accent">{t.about.nameEyebrow}</p>
-            <h2 id="name-origin" className="type-h2 mt-5 text-atmos-ink">
-              {t.about.nameHeading}
-            </h2>
-            {t.about.nameBody.map((paragraph, i) => (
-              <p
-                key={i}
-                className={`type-body measure text-atmos-ink/80 ${i ? "mt-4" : "mt-6"}`}
-              >
-                {paragraph}
-              </p>
-            ))}
+          {/* The paragraph and the thing it describes, side by side.
 
+              This section explains what a taamboolam is and, until now, showed
+              nothing — the prose sat at its own measure and the right half of
+              the band was empty turmeric, while the only photograph of an
+              actual tray was down in the footer with no words near it. Both
+              halves were weaker apart than together.
+
+              Centred against the prose rather than aligned to its top: the
+              tray is a circle, and a circle hung from a text baseline reads as
+              having slipped. */}
+          <div className="grid gap-10 md:grid-cols-12 md:items-center md:gap-12">
+            <div className="md:col-span-6">
+              <p className="type-eyebrow text-atmos-accent">{t.about.nameEyebrow}</p>
+              <h2 id="name-origin" className="type-h2 mt-5 text-atmos-ink">
+                {t.about.nameHeading}
+              </h2>
+              {t.about.nameBody.map((paragraph, i) => (
+                <p
+                  key={i}
+                  className={`type-body measure text-atmos-ink/80 ${i ? "mt-4" : "mt-6"}`}
+                >
+                  {paragraph}
+                </p>
+              ))}
+            </div>
+
+            {/* Wrapped in the site's photo reveal so it settles the way every
+                other photograph here does, rather than being the one image
+                that simply appears. Capped and centred below md, where it sits
+                under the prose instead of beside it. */}
+            <Reveal variant="photo" className="md:col-span-5 md:col-start-8">
+              <Photo
+                id="taamboolamTray"
+                rounded={false}
+                bare
+                sizes="(min-width: 768px) 26rem, 72vw"
+                className="mx-auto w-[72%] max-w-[16rem] sm:max-w-[19rem] md:w-full md:max-w-[26rem]"
+              />
+            </Reveal>
           </div>
 
           {/* The gloss. Not new material — the paragraph above already says it

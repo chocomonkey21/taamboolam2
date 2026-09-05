@@ -24,6 +24,7 @@ export function Photo({
   caption = "none",
   objectPosition,
   zoomable = false,
+  bare = false,
 }: {
   id: PhotoId;
   priority?: boolean;
@@ -37,6 +38,17 @@ export function Photo({
   objectPosition?: string;
   /** Offer this photograph at full size when it is tapped or clicked. */
   zoomable?: boolean;
+  /**
+   * The asset is a cut-out with transparent edges rather than a rectangular
+   * photograph, so the slot must not paint a ground behind it.
+   *
+   * The tint below exists so a rectangle of the right size is visible while the
+   * file loads. Behind a shape with alpha corners it is not a loading state, it
+   * is a permanent square of the wrong colour around a circle — which is
+   * exactly how the tray read on the turmeric band, --atmos-tint being a step
+   * darker than --atmos-bg by design.
+   */
+  bare?: boolean;
 }) {
   const { t, photoManifest } = useSite();
   const lightbox = useLightbox();
@@ -79,7 +91,7 @@ export function Photo({
       style={{
         // "auto" means the parent already sets the height (the hero).
         aspectRatio: aspect === "auto" ? undefined : aspect,
-        backgroundColor: "var(--atmos-tint)",
+        backgroundColor: bare ? undefined : "var(--atmos-tint)",
       }}
       className={`relative w-full overflow-hidden ${radius} ${className}`}
     >
