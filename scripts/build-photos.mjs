@@ -12,7 +12,30 @@ const SRC =
   "C:/Users/User/Downloads/Taamboolam webdesign photos videos-20260902T161613Z-1-001/Taamboolam webdesign photos videos";
 const FRAMES =
   "C:/Users/User/AppData/Local/Temp/claude/C--Users-User--claude/091edb96-ba42-4118-9e5b-d8e68016bc85/scratchpad/vf";
-const OUT = process.argv[2] ?? "public/images";
+/**
+ * A second batch, sent 5 September 2026, after the site was already built.
+ * Kept as its own root rather than merged into the folder above: these are the
+ * owner's files exactly as they arrived, and nothing here writes to either
+ * directory.
+ */
+const SRC_SEPT = "C:/Users/ASUS/Downloads/new pictures";
+
+/**
+ * `--only=a.jpg,b.jpg` builds just those outputs.
+ *
+ * The two source roots live on different machines, so a full run is only
+ * possible where both are mounted. Without a way to build a subset the choice
+ * was between rebuilding nothing and hand-editing files outside this script,
+ * and the second is how a registry stops describing what is actually on disk.
+ */
+const args = process.argv.slice(2);
+const only = args
+  .find((a) => a.startsWith("--only="))
+  ?.slice("--only=".length)
+  .split(",")
+  .map((v) => v.trim())
+  .filter(Boolean);
+const OUT = args.find((a) => !a.startsWith("--")) ?? "public/images";
 
 mkdirSync(OUT, { recursive: true });
 
@@ -52,7 +75,24 @@ const jobs = [
   // ── The floors ──────────────────────────────────────────────────────
   { out: "floor-1-a.jpg", src: "IMG-20260902-WA0007.jpg", w: 1100, ar: 4 / 5 },
   { out: "floor-1-b.jpg", src: "IMG-20260902-WA0003.jpg", w: 1500, ar: 3 / 2 },
-  { out: "floor-2-a.jpg", src: "IMG-20260902-WA0016.jpg", w: 1100, ar: 4 / 5 },
+  /* Was IMG-20260902-WA0016: a bare mattress against a curtain in flat olive
+     light, and comfortably the weakest photograph on the site — it made the
+     second floor look like the room nobody wanted. This is the same kind of
+     room shot properly: a turned wooden bed, a yellow wall, daylight, and the
+     patterned floor showing.
+
+     A landscape source in a portrait slot, so it cannot hold the whole bed.
+     Cropped from x140, which keeps the headboard whole and loses the foot: a
+     bed cut off at the foot reads as a crop, one cut off at the head reads as
+     a mistake. */
+  {
+    out: "floor-2-a.jpg",
+    root: SRC_SEPT,
+    src: "WhatsApp Image 2026-09-05 at 7.05.58 AM.jpeg",
+    crop: { left: 140, top: 0, width: 719, height: 899 },
+    w: 719,
+    tone: (p) => grade(p, { sat: 0.98 }),
+  },
   { out: "floor-2-b.jpg", src: "IMG-20260902-WA0009.jpg", w: 1500, ar: 3 / 2 },
   { out: "floor-3-a.jpg", src: "IMG-20260902-WA0017.jpg", w: 1100, ar: 4 / 5 },
   { out: "floor-3-b.jpg", src: "IMG-20260902-WA0018.jpg", w: 1500, ar: 3 / 2 },
@@ -96,12 +136,25 @@ const jobs = [
   // Low and tight on the painted border where it meets the red oxide floor.
   // A squarer crop higher up put half a bed in the frame, and a bed under a
   // heading that says "how it is made" reads as a bedroom, not a material.
+  /* Was a 446px detail of a painted border against red oxide, enlarged 2x to
+     fill the slot, with the corner of a bed intruding at the top. It showed
+     the material and nothing else.
+
+     This frame argues the same point better and at native size: the painted
+     border, the yellow tile panel, cane chairs standing on it, and a doorway
+     behind. It is the bottom square of the source — the lowest the crop can
+     sit — so the dark doorway at the top is unavoidable, and small.
+
+     Saturation down rather than up. The wall is already a strong red and the
+     house grade would have made it the loudest thing on the page. */
   {
     out: "craft-tiles.jpg",
-    src: "IMG-20260902-WA0021.jpg",
-    crop: { left: 60, top: 620, width: 446, height: 446 },
+    root: SRC_SEPT,
+    src: "WhatsApp Image 2026-09-05 at 7.05.57 AM.jpeg",
+    crop: { left: 0, top: 700, width: 899, height: 899 },
     w: 900,
     upscale: true,
+    tone: (p) => grade(p, { sat: 0.95 }),
   },
   // 16:9, because this is now the wide photograph that opens "how it is
   // made" on the home page. It was a square, and the layout cover-cropped
@@ -112,14 +165,46 @@ const jobs = [
     crop: { left: 40, top: 30, width: 1520, height: 855 },
     w: 1520,
   },
+  /* Was a 450px corner lifted out of the hero and doubled in size: the back
+     of a cane chair with a palm behind it. Cane was in the frame, but as
+     furniture in a room rather than as the thing being shown.
+
+     A woven pendant lit from inside is the argument itself — the weave is the
+     subject — and it is the one photograph in the house already in the site's
+     palette, ochre on near-black.
+
+     Not the night tone, which lifts shadows: here the black around the lamp is
+     the composition, and opening it would leave grey. Contrast is nudged and
+     saturation pulled back instead, because the phone rendered the glow a
+     harder orange than the room was. */
   {
     out: "craft-cane.jpg",
-    src: "IMG-20260902-WA0002.jpg",
-    crop: { left: 1150, top: 230, width: 450, height: 450 },
+    root: SRC_SEPT,
+    src: "WhatsApp Image 2026-09-05 at 7.00.01 AM.jpeg",
+    crop: { left: 60, top: 265, width: 820, height: 820 },
     w: 900,
     upscale: true,
+    tone: (p) =>
+      p.linear([1.02, 1.0, 0.98], [0, 0, 0]).modulate({ saturation: 0.92 }),
   },
-  { out: "values-corner.jpg", src: "IMG-20260902-WA0022.jpg", w: 1066, ar: 4 / 5 },
+  /* Was a bamboo water feature in a stone bowl. Well shot, but a
+     garden-centre object that could stand in any courtyard in the city, under
+     a section about what this house values.
+
+     A framed Kalamkari on a plain wall says the specific thing instead: one
+     hand-drawn object, chosen and hung, which is what the About copy claims
+     about everything here. Cream wall, so the house grade applies unchanged.
+
+     899 is the source's full width. The slot used to ask for 1066 and this
+     cannot supply it without inventing pixels — and the frame fills the crop,
+     so there is nothing to gain by enlarging. */
+  {
+    out: "values-corner.jpg",
+    root: SRC_SEPT,
+    src: "WhatsApp Image 2026-09-05 at 7.05.58 AM (2).jpeg",
+    crop: { left: 0, top: 47, width: 899, height: 1124 },
+    w: 899,
+  },
 
   // ── Food ────────────────────────────────────────────────────────────
   { out: "food-still.jpg", frame: "food_11.jpg", w: 760, ar: 4 / 5, upscale: true },
@@ -130,10 +215,22 @@ const jobs = [
 
 const results = [];
 
-for (const job of jobs) {
+const selected = only ? jobs.filter((j) => only.includes(j.out)) : jobs;
+if (only) {
+  const unknown = only.filter((o) => !jobs.some((j) => j.out === o));
+  if (unknown.length)
+    throw new Error(`--only names no such output: ${unknown.join(", ")}`);
+  console.log(`--only: building ${selected.length} of ${jobs.length}\n`);
+}
+
+for (const job of selected) {
   const from = job.frame
     ? path.join(FRAMES, job.frame)
-    : path.join(SRC, job.src);
+    : path.join(job.root ?? SRC, job.src);
+  /* Still a hard error, never a skip. A missing source means the photograph on
+     the site right now was built from something this machine cannot see, and
+     quietly leaving the old file in place would report a rebuild that did not
+     happen. Use --only to build the subset whose sources you have. */
   if (!existsSync(from)) throw new Error(`missing source: ${from}`);
 
   let pipe = sharp(from).rotate();
@@ -179,6 +276,8 @@ for (const r of results) {
   );
 }
 console.log(`\n${results.length} photographs written to ${OUT}`);
+if (only)
+  console.log(`(subset build — ${jobs.length - selected.length} left untouched)`);
 console.log(
   `total ${Math.round(results.reduce((a, r) => a + r.kb, 0) / 1024)} MB`,
 );

@@ -70,7 +70,7 @@ export const en: Content = {
       alt: "A wide living room with cane chairs, potted palms and a plain painted wall.",
       caption: "Floor 1 — the living room, shared by the three bedrooms on this floor.",
     },
-    floor2a: { alt: "A quiet bedroom with a dark headboard, a wooden floor and light curtains." },
+    floor2a: { alt: "A turned wooden bed under a yellow wall, beside a curtained window and a patterned tile floor." },
     floor2b: {
       alt: "A blue kitchen with a cane dining set, a kettle and a small fridge.",
       caption: "Floor 2 — the kitchen and dining area, for the guests staying on this floor.",
@@ -94,13 +94,13 @@ export const en: Content = {
     },
 
     craftTiles: {
-      alt: "A close view of a painted tile border meeting a polished red oxide floor.",
+      alt: "Cane chairs on a red oxide floor, beside a painted tile border and a panel of yellow tiles.",
     },
     craftJoinery: {
       alt: "Wood and glass kitchen cabinets under three woven pendant shades.",
     },
     craftCane: {
-      alt: "The woven lattice back of a cane chair, with a palm behind it.",
+      alt: "A woven cane pendant shade lit from inside, glowing against a dark wall.",
     },
 
     foodStill: {
@@ -109,7 +109,7 @@ export const en: Content = {
     },
 
     valuesCorner: {
-      alt: "A bamboo water feature standing in a stone bowl on a patterned tiled floor.",
+      alt: "A framed Kalamkari drawing of a goddess seated on a lotus, hung on a plain cream wall.",
     },
 
     taamboolamTray: {

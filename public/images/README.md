@@ -33,23 +33,35 @@ Total: 21 files, about 3 MB. The stock set it replaced was 24 files and 27 MB.
 
 ---
 
+## Two source batches
+
+Most of these were built from the folder the owner sent on 2 September 2026.
+Four were rebuilt on 5 September from a second batch — marked *(Sept batch)*
+below, and sourced from a different root in `scripts/build-photos.mjs`.
+
+The two roots are on different machines, so a full rebuild is only possible
+where both are mounted. `node scripts/build-photos.mjs --only=craft-cane.jpg`
+builds a subset; without `--only` the script errors on the first source it
+cannot see, rather than skipping it and reporting a rebuild that did not
+happen.
+
 ## The slots
 
 | File | Where it appears | What it shows |
 |---|---|---|
 | `hero.jpg` | Home — full screen | The cane living room |
 | `intro.jpg` | Home — wide band | Kitchen and dining, patterned floor |
-| `values-corner.jpg` | Home — About | The bamboo water bowl |
+| `values-corner.jpg` | Home — About | A framed Kalamkari on a plain wall *(Sept batch)* |
 | `plan-living.jpg` | Home — the plan | A floor's shared living room |
 | `plan-kitchen.jpg` | Home — the plan | The kitchen: kettle, microwave, fridge, **no stove** |
-| `craft-tiles.jpg` | Home — how it is made | Painted tile border on red oxide |
+| `craft-tiles.jpg` | Home — how it is made | Cane chairs on the painted tile border *(Sept batch)* |
 | `craft-joinery.jpg` | Home — how it is made | Cabinets and woven pendant shades |
-| `craft-cane.jpg` | Home — how it is made | The lattice back of a cane chair |
+| `craft-cane.jpg` | Home — how it is made | A woven cane pendant, lit *(Sept batch)* |
 | `food-still.jpg` | Home + Experience | A flatbread on a clay griddle *(from video)* |
 | `arrival-night.jpg` | Home — closing band, and Experience — closing band | The covered ground floor at night |
 | `floor-1-a.jpg` | Home ledger + Experience | Floor 1 — a bedroom |
 | `floor-1-b.jpg` | Experience — Floor 1 | Floor 1 — the living room |
-| `floor-2-a.jpg` | Home ledger + Experience | Floor 2 — a bedroom |
+| `floor-2-a.jpg` | Home ledger + Experience | Floor 2 — a bedroom *(Sept batch)* |
 | `floor-2-b.jpg` | Experience — Floor 2 | Floor 2 — kitchen and dining |
 | `floor-3-a.jpg` | Home ledger + Experience | Floor 3 — a bedroom on the patterned floor |
 | `floor-3-b.jpg` | Experience — Floor 3 | Floor 3 — kitchen and dining |
