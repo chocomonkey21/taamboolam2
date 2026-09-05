@@ -6,9 +6,13 @@ export type VisitType = (typeof VISIT_TYPES)[number];
 /**
  * What a guest may ask for.
  *
- * "floor4" and "floor5" are deliberately absent: the house has five floors and
- * only the first three are let, so the private two must never appear as a
- * preference anywhere. The terrace sits above them all. "terrace" is
+ * "floor4" is here and "floor5" is not, which looks arbitrary and is not. The
+ * house has five floors. Three are let. The fifth is the family's and is never
+ * offered. The fourth is private too, but the owner will sometimes arrange it,
+ * so a guest is allowed to ask for it — in this form, and nowhere else: the
+ * fourth floor is not a chapter on the Experience page and has no `floors`
+ * entry, which is why its label lives in `form.floorFourth` rather than in
+ * `floors.floor4`. Do not "tidy" it into the floor chapters. "terrace" is
  * here because guests do ask for it — it is shared by everyone staying, and
  * saying so in an enquiry tells the owner something useful.
  *
@@ -20,9 +24,28 @@ export const FLOOR_PREFERENCES = [
   "floor1",
   "floor2",
   "floor3",
+  "floor4",
   "terrace",
 ] as const;
 export type FloorPreference = (typeof FLOOR_PREFERENCES)[number];
+
+/**
+ * The human name for a floor preference, in the reader's language.
+ *
+ * Not every preference is a floor chapter. "any" is not a floor at all, and
+ * the fourth floor is private — it is offered in the form and has no entry in
+ * `floors`, so indexing that record with the raw value throws. Both the
+ * owner's email and the WhatsApp message need this, so it lives here rather
+ * than twice.
+ */
+export function floorPreferenceLabel(
+  preference: FloorPreference,
+  t: Content,
+): string {
+  if (preference === "any") return t.form.floorAny;
+  if (preference === "floor4") return t.form.floorFourth;
+  return t.floors[preference].label;
+}
 
 export type EnquiryFields = {
   name: string;
@@ -271,7 +294,9 @@ export function whatsappEnquiry(values: EnquiryFields, t: Content): string {
   push(people);
 
   if (values.floorPreference !== "any") {
-    push(`${t.form.floorPreference}: ${t.floors[values.floorPreference].label}`);
+    push(
+      `${t.form.floorPreference}: ${floorPreferenceLabel(values.floorPreference, t)}`,
+    );
   }
 
   push(values.email);

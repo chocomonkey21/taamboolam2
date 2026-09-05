@@ -161,6 +161,19 @@ export type Content = {
      */
     elements: { name: string; carries: string }[];
     /** The point the list must not be allowed to bury. */
+    /**
+     * The owner's own words, sent as she wrote them.
+     *
+     * Kept verbatim: her punctuation, her capitals, her line breaks. Only two
+     * plain typos were corrected. This is the one passage on the site not
+     * written to the house style, and that is the point of it — it is signed
+     * by its register. `ownerEyebrow` exists so a reader knows they have
+     * changed voice rather than met a lapse in the copy.
+     */
+    ownerEyebrow: string;
+    ownerWords: string[];
+    /** The closing thought, which she set apart from the rest herself. */
+    ownerEssence: string;
     gestureNote: string;
     note: string;
   };
@@ -309,6 +322,12 @@ export type Content = {
     visitOther: string;
     floorPreference: string;
     floorAny: string;
+    /**
+     * The fourth floor is the family's own and is not part of the house's
+     * public story, but it can sometimes be arranged. It is offered here, in
+     * the form, and nowhere else — see FLOOR_PREFERENCES in lib/enquiry.ts.
+     */
+    floorFourth: string;
     message: string;
     messageHint: string;
     gatheringDetails: string;

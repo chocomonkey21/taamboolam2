@@ -398,14 +398,17 @@ export function EnquiryForm() {
               set("floorPreference", e.target.value as FloorPreference)
             }
           >
-            {/* Floors 1 to 3 and the terrace. There is no fourth floor here
-                and there must not be one — it is private and is not let. The
-                list is the same one the server validates against; see
+            {/* Floors 1 to 3, the fourth on request, and the terrace. The
+                fourth floor is private and appears nowhere else on the site;
+                it is offered here because the owner will sometimes arrange
+                it, and its label says so. The fifth floor is never offered.
+                The list is the same one the server validates against; see
                 FLOOR_PREFERENCES in lib/enquiry.ts. */}
             <option value="any">{t.form.floorAny}</option>
             <option value="floor1">{t.floors.floor1.label}</option>
             <option value="floor2">{t.floors.floor2.label}</option>
             <option value="floor3">{t.floors.floor3.label}</option>
+            <option value="floor4">{t.form.floorFourth}</option>
             <option value="terrace">{t.floors.terrace.label}</option>
           </select>
         )}
