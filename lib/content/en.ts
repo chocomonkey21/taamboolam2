@@ -438,7 +438,7 @@ export const en: Content = {
       "The terrace is open to everyone staying in the house.",
       "There is Wi-Fi, air conditioning and hot water.",
       "Extra beds and mats can be arranged. Anyone coming beyond the people you enquired for must be mentioned before the visit, and is charged separately.",
-      "For families with a baby: a cradle, changing pillows in both baby and adult sizes, and a feeding pillow for new mothers.",
+      "For families with a baby: a cradle, changing pillows, and a feeding pillow for new mothers.",
       "There is a lift, and there are stairs.",
       "Parking is available on the ground floor for small to medium vehicles, scooters and bikes.",
     ],

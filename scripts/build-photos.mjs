@@ -11,7 +11,7 @@ const SRC =
   "C:/Users/User/Downloads/Taamboolam webdesign photos videos-20260902T161613Z-1-001/Taamboolam webdesign photos videos";
 const FRAMES =
   "C:/Users/User/AppData/Local/Temp/claude/C--Users-User--claude/091edb96-ba42-4118-9e5b-d8e68016bc85/scratchpad/vf";
-const OUT = process.argv[2] ?? "C:/Vibe Coding/Real Stuff/taamboolam2/public/images";
+const OUT = process.argv[2] ?? "public/images";
 
 mkdirSync(OUT, { recursive: true });
 
